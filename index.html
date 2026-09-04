@@ -237,6 +237,32 @@ footer{
 .titre-chip.unlocked{border-color:var(--gold); color:var(--text);}
 .titre-chip b{display:block; color:var(--gold-bright); font-family:'Cinzel'; font-size:0.85rem; margin-bottom:3px;}
 
+/* ---- CLASSEMENT ---- */
+.leaderboard{
+  background:var(--panel); border:1px solid var(--line); border-radius:6px;
+  overflow:hidden; margin-top:20px;
+}
+.leaderboard-row{
+  display:flex; align-items:center; gap:16px;
+  padding:14px 20px; border-bottom:1px solid var(--line);
+}
+.leaderboard-row:last-child{border-bottom:none;}
+.leaderboard-row.me{background:rgba(201,162,39,0.08); border-left:2px solid var(--gold);}
+.lb-rank{
+  font-family:'Cinzel'; font-size:1rem; color:var(--text-dim);
+  width:28px; text-align:center; flex-shrink:0;
+}
+.leaderboard-row:nth-child(1) .lb-rank{color:var(--gold-bright); font-size:1.2rem;}
+.lb-info{flex:1; min-width:0;}
+.lb-pseudo{font-size:0.96rem; color:var(--text); font-weight:500;}
+.lb-titre{font-size:0.76rem; color:var(--gold-bright); font-family:'Cinzel'; margin-top:2px;}
+.lb-votes{
+  font-family:'Cinzel'; font-size:0.85rem; color:var(--text-dim);
+  white-space:nowrap; text-align:right;
+}
+.lb-votes b{color:var(--gold-bright); font-size:1.1rem;}
+.leaderboard-empty{padding:30px 20px; text-align:center; color:var(--text-dim); font-size:0.9rem;}
+
 /* ---- MODAL PSEUDO ---- */
 .modal-overlay{
   display:none; position:fixed; inset:0; z-index:100;
@@ -263,6 +289,19 @@ footer{
   nav{padding:14px 16px;}
   .navlinks button{padding:8px 10px; font-size:0.85rem;}
   .hero{padding:60px 12px 40px;}
+  .profil-card{padding:28px 18px;}
+  .profil-niveau{font-size:2.6rem;}
+  .titres-list{grid-template-columns:repeat(2, 1fr);}
+  .modal-box{padding:26px 20px;}
+}
+
+@media (max-width:400px){
+  .brand{font-size:1rem; gap:6px;}
+  .brand svg{width:22px; height:22px;}
+  .navlinks{gap:2px;}
+  .navlinks button{padding:7px 8px; font-size:0.78rem;}
+  .titres-list{grid-template-columns:1fr 1fr;}
+}
 }
 </style>
 </head>
@@ -277,6 +316,7 @@ footer{
     <button id="nav-home" onclick="goTo('home')">Accueil</button>
     <button id="nav-polls" onclick="goTo('polls')">Sondages</button>
     <button id="nav-profil" onclick="goTo('profil')">Profil</button>
+    <button id="nav-classement" onclick="goTo('classement')">Classement</button>
   </div>
 </nav>
 
@@ -340,6 +380,15 @@ footer{
     <div id="profil-content"></div>
   </section>
 
+  <!-- CLASSEMENT -->
+  <section id="view-classement" class="view">
+    <div class="page-head">
+      <h2>Classement</h2>
+      <p>Les membres les plus actifs de la guilde, classés par nombre de votes.</p>
+    </div>
+    <div id="classement-content"></div>
+  </section>
+
 </main>
 
 <footer>Guilde Aegis — World of Warcraft Classic+</footer>
@@ -398,7 +447,7 @@ const TITLES = [
   {level:5,  title:"Tueur de Sangliers"},
   {level:10, title:"Profiteur de TP"},
   {level:15, title:"Sac à PV"},
-  {level:20, title:"Dieu très Ancien"},
+  {level:20, title:"Dieu très ancien"},
 ];
 
 function getTitleInfo(votes){
@@ -443,9 +492,11 @@ function goTo(view){
   document.getElementById('nav-home').classList.toggle('active', view==='home');
   document.getElementById('nav-polls').classList.toggle('active', view==='polls');
   document.getElementById('nav-profil').classList.toggle('active', view==='profil');
+  document.getElementById('nav-classement').classList.toggle('active', view==='classement');
   window.scrollTo({top:0, behavior:'smooth'});
   if(view==='polls') renderPolls();
   if(view==='profil') renderProfil();
+  if(view==='classement') renderClassement();
 }
 
 function renderCatTabs(){
@@ -490,6 +541,14 @@ async function fetchMemberStats(pseudo){
     const data = await res.json();
     return data || {votes:0};
   }catch(e){ console.error('fetch member stats error', e); return {votes:0}; }
+}
+
+async function fetchLeaderboard(){
+  try{
+    const res = await fetch(`${API_URL}?action=leaderboard`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  }catch(e){ console.error('fetch leaderboard error', e); return []; }
 }
 
 function countsToArray(poll, raw){
@@ -644,6 +703,36 @@ async function renderProfil(){
     </div>
     <div class="titres-list">${titresHtml}</div>
   `;
+}
+
+async function renderClassement(){
+  const content = document.getElementById('classement-content');
+  content.innerHTML = `<div class="leaderboard"><div class="leaderboard-empty">Chargement…</div></div>`;
+
+  const members = await fetchLeaderboard();
+  const myPseudo = getPseudo();
+
+  if(!members.length){
+    content.innerHTML = `<div class="leaderboard"><div class="leaderboard-empty">Personne n'a encore voté. Sois le premier !</div></div>`;
+    return;
+  }
+
+  const rows = members.map((m, i) => {
+    const {current} = getTitleInfo(m.votes || 0);
+    const isMe = myPseudo && m.pseudo.toLowerCase() === myPseudo.toLowerCase();
+    return `
+      <div class="leaderboard-row ${isMe ? 'me' : ''}">
+        <div class="lb-rank">${i+1}</div>
+        <div class="lb-info">
+          <div class="lb-pseudo">${m.pseudo}${isMe ? ' (toi)' : ''}</div>
+          <div class="lb-titre">${current ? current.title : 'Sans titre'}</div>
+        </div>
+        <div class="lb-votes"><b>${m.votes}</b> niveau</div>
+      </div>
+    `;
+  }).join('');
+
+  content.innerHTML = `<div class="leaderboard">${rows}</div>`;
 }
 
 goTo('home');
