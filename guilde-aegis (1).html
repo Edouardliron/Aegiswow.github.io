@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guilde Aegis</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --void:#0c1015;
+  --panel:#151b23;
+  --panel-2:#1b232d;
+  --line:#2a3441;
+  --gold:#c9a227;
+  --gold-bright:#e6c25c;
+  --ember:#8a3232;
+  --text:#e9e4d6;
+  --text-dim:#8f9aa8;
+  --bar-bg:#232c37;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.10), transparent 60%),
+    var(--void);
+  color:var(--text);
+  font-family:'Inter', -apple-system, sans-serif;
+  min-height:100vh;
+  line-height:1.5;
+}
+h1,h2,h3,.brand{
+  font-family:'Cinzel', Georgia, serif;
+  font-weight:600;
+  letter-spacing:0.02em;
+}
+a{color:inherit;}
+::selection{background:var(--gold); color:#1a1a1a;}
+
+/* ---- NAV ---- */
+nav{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 28px;
+  background:rgba(12,16,21,0.88);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.brand{font-size:1.15rem; color:var(--gold-bright); display:flex; align-items:center; gap:10px; cursor:pointer;}
+.brand svg{width:26px; height:26px;}
+.navlinks{display:flex; gap:6px;}
+.navlinks button{
+  background:none; border:none; color:var(--text-dim);
+  font-family:'Inter'; font-size:0.92rem; font-weight:500;
+  padding:8px 16px; border-radius:4px; cursor:pointer;
+  transition:color .15s, background .15s;
+}
+.navlinks button:hover{color:var(--text);}
+.navlinks button.active{color:var(--gold-bright); background:var(--panel-2);}
+
+main{max-width:920px; margin:0 auto; padding:0 24px 80px;}
+.view{display:none;}
+.view.active{display:block;}
+
+/* ---- HERO ---- */
+.hero{
+  text-align:center;
+  padding:88px 20px 56px;
+}
+.hero .emblem{width:96px; height:96px; margin:0 auto 26px;}
+.hero h1{
+  font-size:clamp(2.4rem, 6vw, 3.6rem);
+  color:var(--text);
+  text-shadow:0 0 40px rgba(201,162,39,0.15);
+}
+.hero h1 .em{color:var(--gold-bright);}
+.hero p{
+  max-width:480px; margin:18px auto 0;
+  color:var(--text-dim); font-size:1.05rem;
+}
+.hero .cta{
+  margin-top:34px;
+  display:inline-flex; align-items:center; gap:8px;
+  background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color:#1a1408; font-weight:600; font-family:'Inter';
+  border:none; padding:13px 30px; border-radius:3px;
+  font-size:0.98rem; cursor:pointer;
+  box-shadow:0 4px 24px rgba(201,162,39,0.25);
+  transition:transform .15s, box-shadow .15s;
+}
+.hero .cta:hover{transform:translateY(-1px); box-shadow:0 6px 30px rgba(201,162,39,0.35);}
+
+/* ---- PILLARS ---- */
+.pillars{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line);
+  margin:40px 0 70px; border-radius:6px; overflow:hidden;
+}
+.pillar{background:var(--panel); padding:28px 22px;}
+.pillar h3{font-size:1.02rem; color:var(--gold-bright); margin-bottom:8px; font-weight:600;}
+.pillar p{color:var(--text-dim); font-size:0.88rem;}
+
+.intro-block{
+  border-left:2px solid var(--gold);
+  padding:4px 0 4px 22px;
+  margin-bottom:56px;
+  color:var(--text-dim);
+  font-size:0.98rem;
+}
+.intro-block strong{color:var(--text); font-weight:500;}
+
+/* ---- SONDAGES ---- */
+.page-head{padding:48px 0 20px;}
+.page-head h2{font-size:1.9rem; color:var(--text);}
+.page-head p{color:var(--text-dim); margin-top:8px; font-size:0.95rem;}
+
+.cat-tabs{
+  display:flex; gap:8px; flex-wrap:wrap;
+  margin:26px 0 34px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:14px;
+}
+.cat-tabs button{
+  background:var(--panel); border:1px solid var(--line); color:var(--text-dim);
+  font-family:'Inter'; font-size:0.86rem; font-weight:500;
+  padding:8px 15px; border-radius:20px; cursor:pointer;
+  transition:all .15s;
+}
+.cat-tabs button:hover{border-color:var(--gold); color:var(--text);}
+.cat-tabs button.active{background:var(--gold); border-color:var(--gold); color:#1a1408;}
+
+.poll-card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:6px;
+  margin-bottom:16px;
+  overflow:hidden;
+}
+.poll-head{
+  padding:20px 22px;
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  cursor:pointer;
+}
+.poll-head h3{font-size:1.02rem; font-weight:600; color:var(--text); font-family:'Inter';}
+.poll-meta{font-size:0.78rem; color:var(--text-dim); white-space:nowrap;}
+.poll-body{
+  padding:0 22px 22px;
+  display:none;
+  border-top:1px solid var(--line);
+  padding-top:18px;
+}
+.poll-body.open{display:block;}
+
+.opt-row{
+  display:flex; align-items:center; gap:12px;
+  padding:9px 0;
+  cursor:pointer;
+}
+.opt-row input{accent-color:var(--gold);}
+.opt-row label{font-size:0.92rem; color:var(--text); cursor:pointer;}
+
+.vote-btn{
+  margin-top:14px;
+  background:none; border:1px solid var(--gold); color:var(--gold-bright);
+  font-family:'Inter'; font-weight:600; font-size:0.86rem;
+  padding:9px 20px; border-radius:3px; cursor:pointer;
+  transition:background .15s, color .15s;
+}
+.vote-btn:hover{background:var(--gold); color:#1a1408;}
+.vote-btn:disabled{opacity:0.4; cursor:not-allowed;}
+
+.results{margin-top:6px;}
+.kpi-total{
+  font-family:'Cinzel'; font-size:0.82rem; color:var(--text-dim);
+  margin-bottom:14px; letter-spacing:0.03em;
+}
+.kpi-total span{color:var(--gold-bright); font-size:1.05rem; font-weight:600;}
+.bar-row{margin-bottom:12px;}
+.bar-label{
+  display:flex; justify-content:space-between;
+  font-size:0.85rem; color:var(--text); margin-bottom:5px;
+}
+.bar-label b{color:var(--gold-bright); font-weight:600;}
+.bar-track{background:var(--bar-bg); height:8px; border-radius:4px; overflow:hidden;}
+.bar-fill{
+  height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-bright));
+  border-radius:4px; transition:width .5s ease;
+}
+.voted-tag{
+  display:inline-block; margin-top:12px; font-size:0.76rem; color:var(--text-dim);
+  border:1px solid var(--line); padding:4px 10px; border-radius:20px;
+}
+
+footer{
+  text-align:center; padding:40px 20px; color:var(--text-dim);
+  font-size:0.8rem; border-top:1px solid var(--line); margin-top:40px;
+}
+
+@media (max-width:640px){
+  .pillars{grid-template-columns:1fr;}
+  nav{padding:14px 16px;}
+  .navlinks button{padding:8px 10px; font-size:0.85rem;}
+  .hero{padding:60px 12px 40px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand" onclick="goTo('home')">
+    <svg viewBox="0 0 100 100" fill="none"><path d="M50 5 L90 20 L90 48 C90 75 72 92 50 98 C28 92 10 75 10 48 L10 20 Z" stroke="#e6c25c" stroke-width="4" fill="rgba(201,162,39,0.08)"/><path d="M50 22 L50 78 M32 40 L68 40" stroke="#e6c25c" stroke-width="4" stroke-linecap="round"/></svg>
+    Aegis
+  </div>
+  <div class="navlinks">
+    <button id="nav-home" onclick="goTo('home')">Accueil</button>
+    <button id="nav-polls" onclick="goTo('polls')">Sondages</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HOME -->
+  <section id="view-home" class="view">
+    <div class="hero">
+      <svg class="emblem" viewBox="0 0 100 100" fill="none"><path d="M50 5 L90 20 L90 48 C90 75 72 92 50 98 C28 92 10 75 10 48 L10 20 Z" stroke="#e6c25c" stroke-width="3" fill="rgba(201,162,39,0.08)"/><path d="M50 22 L50 78 M32 40 L68 40" stroke="#e6c25c" stroke-width="3" stroke-linecap="round"/></svg>
+      <h1>Guilde <span class="em">Aegis</span></h1>
+      <p>Une nouvelle bannière se lève pour World of Warcraft Classic+. Rejoignez-nous pour bâtir, ensemble, la guilde que nous voulons vraiment.</p>
+      <button class="cta" onclick="goTo('polls')">Voir les sondages →</button>
+    </div>
+
+    <div class="intro-block">
+      <strong>Aegis</strong>, du grec ancien : le bouclier qui protège. Avant même le lancement de Classic+, nous voulons construire notre guilde sur les retours de chacun — pas d'en imposer les règles depuis le sommet, mais de les faire émerger du groupe.
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <h3>Entraide</h3>
+        <p>Du leveling aux premiers raids, personne n'avance seul. Les vétérans épaulent les nouveaux venus.</p>
+      </div>
+      <div class="pillar">
+        <h3>Progression</h3>
+        <p>Un rythme de raid clair, des rôles assumés, et une vraie ambition sur le contenu Classic+.</p>
+      </div>
+      <div class="pillar">
+        <h3>Communauté</h3>
+        <p>Des événements réguliers, en jeu et hors jeu, pour que la guilde reste vivante entre deux raids.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- POLLS -->
+  <section id="view-polls" class="view">
+    <div class="page-head">
+      <h2>Sondages</h2>
+      <p>Vos réponses façonnent l'organisation de la guilde. Résultats visibles en direct, par tous les membres.</p>
+    </div>
+
+    <div class="cat-tabs" id="cat-tabs"></div>
+    <div id="polls-list"></div>
+  </section>
+
+</main>
+
+<footer>Guilde Aegis — World of Warcraft Classic+</footer>
+
+<script>
+const CATEGORIES = [
+  {id:'leveling', label:'Leveling'},
+  {id:'metiers', label:'Métiers'},
+  {id:'monde', label:'Monde'},
+  {id:'donjons', label:'Donjons'},
+  {id:'raids', label:'Raids'},
+];
+
+const POLLS = [
+  {id:'lvl-mode', category:'leveling', question:"Comment comptez-vous monter en niveau ?", options:["Solo","En duo","En groupe fixe","Ça dépendra du moment"]},
+  {id:'lvl-choix', category:'leveling', question:"Votre race / classe est-elle déjà choisie ?", options:["Oui, c'est définitif","Oui, mais ça peut changer","Pas encore décidé"]},
+  {id:'lvl-style', category:'leveling', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
+
+  {id:'met-choix', category:'metiers', question:"Quelles professions envisagez-vous ?", options:["Minage / Forge","Herboristerie / Alchimie","Dépeçage / Travail du cuir","Couture","Enchantement","Pas encore décidé"]},
+  {id:'met-priorite', category:'metiers', question:"Privilégierez-vous plutôt...", options:["Des métiers utiles au raid (Alchimie, Enchantement, Forge)","De la pure récolte (revenus, farm)","Peu importe, ce qui me plaît"]},
+  {id:'met-entraide', category:'metiers', question:"Seriez-vous partant pour une organisation d'entraide entre métiers (échange de mats, crafts prioritaires) ?", options:["Oui, complètement","Oui, ponctuellement","Non, je préfère être autonome"]},
+
+  {id:'monde-interet', category:'monde', question:"Qu'est-ce qui vous attire le plus dans le contenu monde ouvert ?", options:["World bosses","World PvP","Quêtes épiques / lore","Exploration / secrets cachés","Peu d'intérêt pour le monde ouvert"]},
+  {id:'monde-events', category:'monde', question:"Participeriez-vous à des sorties de guilde organisées en monde ouvert (chasse aux world bosses, farm de montures rares, etc.) ?", options:["Oui, avec plaisir","Si les horaires me conviennent","Pas vraiment intéressé"]},
+
+  {id:'donj-rythme', category:'donjons', question:"À quel rythme aimeriez-vous faire des donjons en semaine ?", options:["Tous les jours ou presque","2-3 fois par semaine","De temps en temps","Seulement pour progresser vers le raid"]},
+  {id:'donj-format', category:'donjons', question:"Vous préférez faire vos donjons...", options:["En groupe de guilde organisé","En groupe random / LFG","Peu importe, l'essentiel est de jouer"]},
+  {id:'donj-retro', category:'donjons', question:"Le farm de donjons rétro (anciens sets, transmog) vous intéresse-t-il ?", options:["Oui, beaucoup","Un peu, à l'occasion","Pas vraiment"]},
+
+  {id:'raid-soirs', category:'raids', question:"Quels soirs seriez-vous dispo pour raider ?", options:["Lun / Mer / Ven","Mar / Jeu","Week-end","Flexible selon les semaines","Aucun pour l'instant"]},
+  {id:'raid-role', category:'raids', question:"Quel rôle préférez-vous tenir en raid ?", options:["Tank","Soin","Dégâts (corps à corps)","Dégâts (distance)","Pas de préférence"]},
+  {id:'raid-loot', category:'raids', question:"Quel système de loot vous semble le plus juste ?", options:["Loot au DKP","Loot conseil (officiers)","Master Loot libre","Peu importe, à voir ensemble"]},
+];
+
+let currentCat = 'leveling';
+
+function goTo(view){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  document.getElementById('nav-home').classList.toggle('active', view==='home');
+  document.getElementById('nav-polls').classList.toggle('active', view==='polls');
+  window.scrollTo({top:0, behavior:'smooth'});
+  if(view==='polls') renderPolls();
+}
+
+function renderCatTabs(){
+  const wrap = document.getElementById('cat-tabs');
+  wrap.innerHTML = '';
+  CATEGORIES.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.textContent = c.label;
+    btn.className = c.id===currentCat ? 'active' : '';
+    btn.onclick = ()=>{ currentCat=c.id; renderPolls(); };
+    wrap.appendChild(btn);
+  });
+}
+
+async function safeGet(key, shared){
+  try{
+    const r = await window.storage.get(key, shared);
+    return r ? JSON.parse(r.value) : null;
+  }catch(e){ return null; }
+}
+async function safeSet(key, value, shared){
+  try{ await window.storage.set(key, JSON.stringify(value), shared); }
+  catch(e){ console.error('storage error', e); }
+}
+
+function renderPolls(){
+  renderCatTabs();
+  const list = document.getElementById('polls-list');
+  list.innerHTML = '';
+  const filtered = POLLS.filter(p=>p.category===currentCat);
+  filtered.forEach(poll=>{
+    const card = document.createElement('div');
+    card.className = 'poll-card';
+    card.innerHTML = `
+      <div class="poll-head" onclick="toggleCard('${poll.id}')">
+        <h3>${poll.question}</h3>
+        <span class="poll-meta" id="meta-${poll.id}">…</span>
+      </div>
+      <div class="poll-body" id="body-${poll.id}"></div>
+    `;
+    list.appendChild(card);
+    initPoll(poll);
+  });
+}
+
+function toggleCard(pollId){
+  const body = document.getElementById('body-'+pollId);
+  body.classList.toggle('open');
+}
+
+async function initPoll(poll){
+  const votesKey = 'aegis-votes:' + poll.id;
+  const votedKey = 'aegis-voted:' + poll.id;
+
+  let counts = await safeGet(votesKey, true);
+  if(!counts || counts.length !== poll.options.length){
+    counts = new Array(poll.options.length).fill(0);
+  }
+  const already = await safeGet(votedKey, false);
+
+  const total = counts.reduce((a,b)=>a+b,0);
+  document.getElementById('meta-'+poll.id).textContent = total + (total>1 ? ' votes' : ' vote');
+
+  const body = document.getElementById('body-'+poll.id);
+
+  if(already !== null){
+    body.innerHTML = renderResults(poll, counts) +
+      `<span class="voted-tag">Vous avez voté pour « ${poll.options[already.choice]} »</span>`;
+    return;
+  }
+
+  const optionsHtml = poll.options.map((opt,i)=>`
+    <div class="opt-row" onclick="document.getElementById('${poll.id}-${i}').checked=true">
+      <input type="radio" name="${poll.id}" id="${poll.id}-${i}" value="${i}">
+      <label for="${poll.id}-${i}">${opt}</label>
+    </div>
+  `).join('');
+
+  body.innerHTML = `
+    ${optionsHtml}
+    <button class="vote-btn" onclick="castVote('${poll.id}')">Voter</button>
+  `;
+}
+
+async function castVote(pollId){
+  const poll = POLLS.find(p=>p.id===pollId);
+  const selected = document.querySelector(`input[name="${pollId}"]:checked`);
+  if(!selected){
+    alert('Choisissez une option avant de voter.');
+    return;
+  }
+  const idx = parseInt(selected.value, 10);
+  const votesKey = 'aegis-votes:' + pollId;
+  const votedKey = 'aegis-voted:' + pollId;
+
+  let counts = await safeGet(votesKey, true);
+  if(!counts || counts.length !== poll.options.length){
+    counts = new Array(poll.options.length).fill(0);
+  }
+  counts[idx] += 1;
+  await safeSet(votesKey, counts, true);
+  await safeSet(votedKey, {choice: idx}, false);
+
+  await initPoll(poll);
+  const total = counts.reduce((a,b)=>a+b,0);
+  document.getElementById('meta-'+pollId).textContent = total + (total>1 ? ' votes' : ' vote');
+  document.getElementById('body-'+pollId).classList.add('open');
+}
+
+function renderResults(poll, counts){
+  const total = counts.reduce((a,b)=>a+b,0);
+  const rows = poll.options.map((opt,i)=>{
+    const pct = total>0 ? Math.round((counts[i]/total)*100) : 0;
+    return `
+      <div class="bar-row">
+        <div class="bar-label"><span>${opt}</span><b>${pct}% · ${counts[i]}</b></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+      </div>
+    `;
+  }).join('');
+  return `<div class="results"><div class="kpi-total"><span>${total}</span> ${total>1?'votes':'vote'} au total</div>${rows}</div>`;
+}
+
+goTo('home');
+</script>
+
+</body>
+</html>
