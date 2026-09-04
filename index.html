@@ -443,11 +443,11 @@ let currentCat = 'classes';
 
 // Paliers de titres : à personnaliser librement (ajoute/retire des lignes)
 const TITLES = [
-  {level:1,  title:"PNJ Inutile"},
-  {level:5,  title:"Tueur de Sangliers"},
-  {level:10, title:"Profiteur de TP"},
-  {level:15, title:"Sac à PV"},
-  {level:20, title:"Dieu très ancien"},
+  {level:1,  title:"Recrue"},
+  {level:5,  title:"Aspirant"},
+  {level:10, title:"Vétéran"},
+  {level:15, title:"Élite"},
+  {level:20, title:"Chèvre"},
 ];
 
 function getTitleInfo(votes){
@@ -512,7 +512,7 @@ function renderCatTabs(){
 }
 
 // Colle ici l'URL de ton Web App Google Apps Script (voir instructions de déploiement)
-const API_URL = 'https://script.google.com/macros/s/AKfycbxywMsaNWmp9eTspvKhIWo0t5_hhVyGaUKiVXqLzfbIIV9OKOS9bu0_yYUCcHnkq_2c_g/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycby8q6TwJBBXaZVh__GbbYtqjlRcge_I-hSY6ME_mH1ab4-4BuaUhtQ1cZGX-bpbWVowhw/exec';
 
 async function fetchResults(pollId){
   try{
