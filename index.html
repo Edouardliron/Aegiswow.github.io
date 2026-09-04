@@ -301,7 +301,7 @@ footer{
     </div>
 
     <div class="intro-block">
-      <strong>Aegis</strong> Avant même le lancement de Classic+, nous voulons construire notre guilde sur les retours de chacun — pas d'en imposer les règles depuis le sommet, mais de les faire émerger du groupe.
+      <strong>Aegis</strong> Avant même le lancement de Classic+, nous voulons construire notre guilde sur les retours de chacun — pas d'en imposer les règles depuis le sommet, mais de les faire émerger du groupe. Mais pour certains d'entres voous c'est mort désolé on ne pourra plus rien faire sorry bro.
     </div>
 
     <div class="pillars">
@@ -324,7 +324,7 @@ footer{
   <section id="view-polls" class="view">
     <div class="page-head">
       <h2>Sondages</h2>
-      <p>Vos réponses façonnent l'organisation de la guilde. Résultats visibles en direct, par tous les membres.</p>
+      <p>Vos sondages vous donnerons des Hauts Faits ! et surtout on est là pour s'amusez alors donne ta vision du jeu que tu veux.</p>
     </div>
 
     <div class="cat-tabs" id="cat-tabs"></div>
@@ -355,12 +355,15 @@ const CATEGORIES = [
 ];
 
 const POLLS = [
-  {id:'cls-paliers', category:'classes', question:"Voulez vous des paliers de leveling comme SOD ?", options:["Oui","Non","Osef"]},
-  {id:'cls-choix', category:'classes', question:"Votre race / classe est-elle déjà choisie ?", options:["Oui, c'est définitif","Oui, mais ça peut changer","Pas encore décidé"]},
-  {id:'cls-style', category:'classes', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
+  {id:'cls-paliers', category:'classes', question:"Quel faction préfères-tu ?", options:["Alliance","Horde"]},
+  {id:'cls-choix', category:'classes', question:"Veux-tu des nouvelles races/ classe ?", options:["Oui j'ai toujours voulu être un murloc","Non, Nain c'est trop beau","Pas encore décidé"]},
+  {id:'cls-style', category:'classes', question:"Quelles classes veux tu voir côté alliance ?", options:["Nain chaman","Draeneï chaman","Une nouvelle"]},
+  {id:'cls-style', category:'classes', question:"Quelles classes veux tu voir côté horde ?", options:["Tauren Paladin","Elfe de sang paladin","Une nouvelle"]},
+  {id:'cls-style', category:'classes', question:"Veux-tu des nouvelles classes dans le jeu ally et horde ?", options:["Oui oui Chauuuuuud","Non pas trop déjà avec 8 j'ai du mal"]},
 
   {id:'lvl-mode', category:'leveling', question:"Voulez vous des paliers de leveling comme SOD ?", options:["Oui","Non","Osef"]},
-  {id:'lvl-choix', category:'leveling', question:"Votre race / classe est-elle déjà choisie ?", options:["Oui, c'est définitif","Oui, mais ça peut changer","Pas encore décidé"]},
+  {id:'lvl-mode', category:'leveling', question:"Comment veux-tu faire ton leveling ?", options:["Solo","En duo","En groupe pour dormir dans les donjons"]},
+  {id:'lvl-choix', category:'leveling', question:"Aimerais-tu qu'il soit possible d'avoir le sac de couchage ?", options:["Oui de ouf je suis un clochard","Non, je dors uniquement à l'auberge, surtout celle de comté de l'or"]},
   {id:'lvl-style', category:'leveling', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
 
   {id:'met-choix', category:'metiers', question:"Quelles professions envisagez-vous ?", options:["Minage / Forge","Herboristerie / Alchimie","Dépeçage / Travail du cuir","Couture","Enchantement","Pas encore décidé"]},
