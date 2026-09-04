@@ -197,6 +197,67 @@ footer{
   font-size:0.8rem; border-top:1px solid var(--line); margin-top:40px;
 }
 
+/* ---- PROFIL ---- */
+.profil-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:6px;
+  padding:36px 30px; text-align:center; margin-top:20px;
+}
+.profil-pseudo{font-size:1.4rem; color:var(--text); margin-bottom:4px;}
+.profil-titre{
+  display:inline-block; color:var(--gold-bright); font-family:'Cinzel';
+  font-size:0.95rem; letter-spacing:0.03em; margin-bottom:26px;
+}
+.profil-niveau{
+  font-family:'Cinzel'; font-size:3.2rem; color:var(--gold-bright);
+  line-height:1; margin-bottom:2px;
+}
+.profil-niveau-label{font-size:0.78rem; color:var(--text-dim); margin-bottom:26px; letter-spacing:0.03em;}
+.profil-progress-track{
+  background:var(--bar-bg); height:10px; border-radius:5px; overflow:hidden;
+  max-width:320px; margin:0 auto 10px;
+}
+.profil-progress-fill{
+  height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-bright));
+  border-radius:5px; transition:width .5s ease;
+}
+.profil-progress-label{font-size:0.8rem; color:var(--text-dim);}
+.profil-change{
+  margin-top:24px; background:none; border:none; color:var(--text-dim);
+  font-size:0.8rem; text-decoration:underline; cursor:pointer;
+}
+.profil-change:hover{color:var(--gold-bright);}
+.titres-list{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+  gap:10px; margin-top:34px;
+}
+.titre-chip{
+  border:1px solid var(--line); border-radius:6px; padding:14px 12px;
+  font-size:0.8rem; color:var(--text-dim); text-align:left;
+}
+.titre-chip.unlocked{border-color:var(--gold); color:var(--text);}
+.titre-chip b{display:block; color:var(--gold-bright); font-family:'Cinzel'; font-size:0.85rem; margin-bottom:3px;}
+
+/* ---- MODAL PSEUDO ---- */
+.modal-overlay{
+  display:none; position:fixed; inset:0; z-index:100;
+  background:rgba(8,10,13,0.82); backdrop-filter:blur(3px);
+  align-items:center; justify-content:center; padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:var(--panel); border:1px solid var(--gold);
+  border-radius:6px; padding:32px 28px; max-width:360px; width:100%;
+  text-align:center;
+}
+.modal-box h3{color:var(--gold-bright); font-size:1.1rem; margin-bottom:10px;}
+.modal-box p{color:var(--text-dim); font-size:0.86rem; margin-bottom:18px;}
+.modal-box input{
+  width:100%; background:var(--void); border:1px solid var(--line); color:var(--text);
+  padding:11px 14px; border-radius:4px; font-family:'Inter'; font-size:0.92rem;
+  margin-bottom:14px;
+}
+.modal-box input:focus{outline:none; border-color:var(--gold);}
+
 @media (max-width:640px){
   .pillars{grid-template-columns:1fr;}
   nav{padding:14px 16px;}
@@ -215,8 +276,18 @@ footer{
   <div class="navlinks">
     <button id="nav-home" onclick="goTo('home')">Accueil</button>
     <button id="nav-polls" onclick="goTo('polls')">Sondages</button>
+    <button id="nav-profil" onclick="goTo('profil')">Profil</button>
   </div>
 </nav>
+
+<div class="modal-overlay" id="pseudo-modal">
+  <div class="modal-box">
+    <h3>Choisis ton pseudo</h3>
+    <p>Il sert à suivre ta progression (niveau, titre) au fil de tes votes. Utilise ton pseudo en jeu pour que la guilde te reconnaisse.</p>
+    <input type="text" id="pseudo-input" maxlength="24" placeholder="Ex: Aegoric" onkeydown="if(event.key==='Enter')submitPseudo()">
+    <button class="vote-btn" style="width:100%;" onclick="submitPseudo()">Valider</button>
+  </div>
+</div>
 
 <main>
 
@@ -260,13 +331,22 @@ footer{
     <div id="polls-list"></div>
   </section>
 
+  <!-- PROFIL -->
+  <section id="view-profil" class="view">
+    <div class="page-head">
+      <h2>Profil</h2>
+      <p>Ton niveau progresse à chaque vote sur un sondage. Certains paliers débloquent un titre.</p>
+    </div>
+    <div id="profil-content"></div>
+  </section>
+
 </main>
 
 <footer>Guilde Aegis — World of Warcraft Classic+</footer>
 
 <script>
 const CATEGORIES = [
-  {id:'raids', label:'Classes'},
+  {id:'classes', label:'Classes'},
   {id:'leveling', label:'Leveling'},
   {id:'metiers', label:'Métiers'},
   {id:'monde', label:'Monde'},
@@ -275,11 +355,11 @@ const CATEGORIES = [
 ];
 
 const POLLS = [
-  {id:'lvl-mode', category:'Classes', question:"Voulez vous des palies de leveling comme SOD ?", options:["Oui","Non","Osef"]},
-  {id:'lvl-choix', category:'Classes', question:"Votre race / classe est-elle déjà choisie ?", options:["Oui, c'est définitif","Oui, mais ça peut changer","Pas encore décidé"]},
-  {id:'lvl-style', category:'Classes', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
+  {id:'cls-paliers', category:'classes', question:"Voulez vous des paliers de leveling comme SOD ?", options:["Oui","Non","Osef"]},
+  {id:'cls-choix', category:'classes', question:"Votre race / classe est-elle déjà choisie ?", options:["Oui, c'est définitif","Oui, mais ça peut changer","Pas encore décidé"]},
+  {id:'cls-style', category:'classes', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
 
-  {id:'lvl-mode', category:'leveling', question:"Voulez vous des palies de leveling comme SOD ?", options:["Oui","Non","Osef"]},
+  {id:'lvl-mode', category:'leveling', question:"Voulez vous des paliers de leveling comme SOD ?", options:["Oui","Non","Osef"]},
   {id:'lvl-choix', category:'leveling', question:"Votre race / classe est-elle déjà choisie ?", options:["Oui, c'est définitif","Oui, mais ça peut changer","Pas encore décidé"]},
   {id:'lvl-style', category:'leveling', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
 
@@ -299,15 +379,62 @@ const POLLS = [
   {id:'raid-loot', category:'raids', question:"Quel système de loot vous semble le plus juste ?", options:["Loot au DKP","Loot conseil (officiers)","Master Loot libre","Peu importe, à voir ensemble"]},
 ];
 
-let currentCat = 'leveling';
+let currentCat = 'classes';
+
+// Paliers de titres : à personnaliser librement (ajoute/retire des lignes)
+const TITLES = [
+  {level:1,  title:"Recrue"},
+  {level:5,  title:"Aspirant"},
+  {level:10, title:"Vétéran"},
+  {level:15, title:"Élite"},
+  {level:20, title:"Chèvre"},
+];
+
+function getTitleInfo(votes){
+  let current = null, next = null;
+  for(const t of TITLES){
+    if(votes >= t.level) current = t;
+    else { next = t; break; }
+  }
+  return {current, next};
+}
+
+let pendingAfterPseudo = null;
+
+function getPseudo(){ return localStorage.getItem('aegis-pseudo'); }
+
+function ensurePseudo(callback){
+  const p = getPseudo();
+  if(p){ callback(p); return; }
+  pendingAfterPseudo = callback;
+  document.getElementById('pseudo-input').value = '';
+  document.getElementById('pseudo-modal').classList.add('open');
+  document.getElementById('pseudo-input').focus();
+}
+
+function submitPseudo(){
+  const input = document.getElementById('pseudo-input');
+  const val = input.value.trim();
+  if(!val){ input.focus(); return; }
+  localStorage.setItem('aegis-pseudo', val);
+  document.getElementById('pseudo-modal').classList.remove('open');
+  if(pendingAfterPseudo){ const cb = pendingAfterPseudo; pendingAfterPseudo = null; cb(val); }
+}
+
+function changePseudo(){
+  localStorage.removeItem('aegis-pseudo');
+  ensurePseudo(()=>renderProfil());
+}
 
 function goTo(view){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view).classList.add('active');
   document.getElementById('nav-home').classList.toggle('active', view==='home');
   document.getElementById('nav-polls').classList.toggle('active', view==='polls');
+  document.getElementById('nav-profil').classList.toggle('active', view==='profil');
   window.scrollTo({top:0, behavior:'smooth'});
   if(view==='polls') renderPolls();
+  if(view==='profil') renderProfil();
 }
 
 function renderCatTabs(){
@@ -323,7 +450,7 @@ function renderCatTabs(){
 }
 
 // Colle ici l'URL de ton Web App Google Apps Script (voir instructions de déploiement)
-const API_URL = 'https://script.google.com/macros/s/AKfycbyn7cS7me7AunGhznqmPf4kx3ST7fN-B8nzAKtamRWakmO5rsies2DkU59xMvT0yj87BQ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxywMsaNWmp9eTspvKhIWo0t5_hhVyGaUKiVXqLzfbIIV9OKOS9bu0_yYUCcHnkq_2c_g/exec';
 
 async function fetchResults(pollId){
   try{
@@ -333,17 +460,25 @@ async function fetchResults(pollId){
   }catch(e){ console.error('fetch results error', e); return {}; }
 }
 
-async function sendVote(pollId, optionIndex){
+async function sendVote(pollId, optionIndex, pseudo){
   try{
     const res = await fetch(API_URL, {
       method: 'POST',
       // Ne pas mettre de header 'Content-Type: application/json' ici :
       // ça évite une requête preflight que Apps Script ne gère pas.
-      body: JSON.stringify({action:'vote', pollId, optionIndex})
+      body: JSON.stringify({action:'vote', pollId, optionIndex, pseudo})
     });
     const data = await res.json();
     return data || {};
   }catch(e){ console.error('send vote error', e); return {}; }
+}
+
+async function fetchMemberStats(pseudo){
+  try{
+    const res = await fetch(`${API_URL}?action=memberStats&pseudo=${encodeURIComponent(pseudo)}`);
+    const data = await res.json();
+    return data || {votes:0};
+  }catch(e){ console.error('fetch member stats error', e); return {votes:0}; }
 }
 
 function countsToArray(poll, raw){
@@ -423,20 +558,23 @@ async function castVote(pollId){
     return;
   }
   const idx = parseInt(selected.value, 10);
-  const btn = document.querySelector(`#body-${pollId} .vote-btn`);
-  if(btn){ btn.disabled = true; btn.textContent = 'Envoi…'; }
 
-  const raw = await sendVote(pollId, idx);
-  setLocalVote(pollId, idx);
+  ensurePseudo(async (pseudo) => {
+    const btn = document.querySelector(`#body-${pollId} .vote-btn`);
+    if(btn){ btn.disabled = true; btn.textContent = 'Envoi…'; }
 
-  const counts = countsToArray(poll, raw);
-  const total = counts.reduce((a,b)=>a+b,0);
-  document.getElementById('meta-'+pollId).textContent = total + (total>1 ? ' votes' : ' vote');
+    const raw = await sendVote(pollId, idx, pseudo);
+    setLocalVote(pollId, idx);
 
-  const body = document.getElementById('body-'+pollId);
-  body.innerHTML = renderResults(poll, counts) +
-    `<span class="voted-tag">Vous avez voté pour « ${poll.options[idx]} »</span>`;
-  body.classList.add('open');
+    const counts = countsToArray(poll, raw.results || {});
+    const total = counts.reduce((a,b)=>a+b,0);
+    document.getElementById('meta-'+pollId).textContent = total + (total>1 ? ' votes' : ' vote');
+
+    const body = document.getElementById('body-'+pollId);
+    body.innerHTML = renderResults(poll, counts) +
+      `<span class="voted-tag">Vous avez voté pour « ${poll.options[idx]} »</span>`;
+    body.classList.add('open');
+  });
 }
 
 function renderResults(poll, counts){
@@ -451,6 +589,50 @@ function renderResults(poll, counts){
     `;
   }).join('');
   return `<div class="results"><div class="kpi-total"><span>${total}</span> ${total>1?'votes':'vote'} au total</div>${rows}</div>`;
+}
+
+async function renderProfil(){
+  const content = document.getElementById('profil-content');
+  const pseudo = getPseudo();
+
+  if(!pseudo){
+    content.innerHTML = `
+      <div class="profil-card">
+        <p style="color:var(--text-dim); margin-bottom:20px;">Tu n'as pas encore de pseudo enregistré. Choisis-en un pour suivre ta progression.</p>
+        <button class="cta" onclick="ensurePseudo(()=>renderProfil())">Choisir mon pseudo</button>
+      </div>
+    `;
+    return;
+  }
+
+  content.innerHTML = `<div class="profil-card"><p style="color:var(--text-dim);">Chargement…</p></div>`;
+
+  const stats = await fetchMemberStats(pseudo);
+  const votes = stats.votes || 0;
+  const {current, next} = getTitleInfo(votes);
+  const nextLevel = next ? next.level : null;
+  const prevLevel = current ? current.level : 0;
+  const span = nextLevel ? (nextLevel - prevLevel) : 1;
+  const progressPct = nextLevel ? Math.min(100, Math.round(((votes - prevLevel) / span) * 100)) : 100;
+
+  const titresHtml = TITLES.map(t => `
+    <div class="titre-chip ${votes >= t.level ? 'unlocked' : ''}">
+      <b>Niveau ${t.level}</b>${t.title}
+    </div>
+  `).join('');
+
+  content.innerHTML = `
+    <div class="profil-card">
+      <div class="profil-pseudo">${pseudo}</div>
+      <div class="profil-titre">${current ? current.title : 'Sans titre'}</div>
+      <div class="profil-niveau">${votes}</div>
+      <div class="profil-niveau-label">${votes>1?'VOTES · NIVEAU':'VOTE · NIVEAU'} ${votes}</div>
+      <div class="profil-progress-track"><div class="profil-progress-fill" style="width:${progressPct}%"></div></div>
+      <div class="profil-progress-label">${nextLevel ? `${nextLevel - votes} vote${nextLevel-votes>1?'s':''} avant « ${next.title} » (niveau ${nextLevel})` : 'Titre maximum atteint !'}</div>
+      <button class="profil-change" onclick="changePseudo()">Ce n'est pas moi, changer de pseudo</button>
+    </div>
+    <div class="titres-list">${titresHtml}</div>
+  `;
 }
 
 goTo('home');
