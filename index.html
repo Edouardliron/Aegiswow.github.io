@@ -355,30 +355,38 @@ const CATEGORIES = [
 ];
 
 const POLLS = [
-  {id:'cls-paliers', category:'classes', question:"Quel faction préfères-tu ?", options:["Alliance","Horde"]},
-  {id:'cls-choix', category:'classes', question:"Veux-tu des nouvelles races/ classe ?", options:["Oui j'ai toujours voulu être un murloc","Non, Nain c'est trop beau","Pas encore décidé"]},
-  {id:'cls-style', category:'classes', question:"Quelles classes veux tu voir côté alliance ?", options:["Nain chaman","Draeneï chaman","Une nouvelle"]},
-  {id:'cls-style', category:'classes', question:"Quelles classes veux tu voir côté horde ?", options:["Tauren Paladin","Elfe de sang paladin","Une nouvelle"]},
-  {id:'cls-style', category:'classes', question:"Veux-tu des nouvelles classes dans le jeu ally et horde ?", options:["Oui oui Chauuuuuud","Non pas trop déjà avec 8 j'ai du mal"]},
+  {id:'cls-faction', category:'classes', question:"Quel faction préfères-tu ?", options:["Alliance","Horde"]},
+  {id:'cls-nouvelles-races', category:'classes', question:"Veux-tu des nouvelles races/ classe ?", options:["Oui j'ai toujours voulu être un murloc","Non, Nain c'est trop beau","Pas encore décidé"]},
+  {id:'cls-ally-classes', category:'classes', question:"Quelles classes veux tu voir côté alliance ?", options:["Nain chaman","Draeneï chaman","Une nouvelle"]},
+  {id:'cls-horde-classes', category:'classes', question:"Quelles classes veux tu voir côté horde ?", options:["Tauren Paladin","Elfe de sang paladin","Une nouvelle"]},
+  {id:'cls-nouvelles-classes', category:'classes', question:"Veux-tu des nouvelles classes dans le jeu ally et horde ?", options:["Oui oui Chauuuuuud","Non pas trop déjà avec 8 j'ai du mal"]},
+  {id:'cls-raid-main', category:'classes', question:"En raid main tu veux jouer quoi ?", options:["Tank - BDSM","Heal - Je fais caca dans la nature","DPS Cac - Mes pieds sont si beaux","DPS Range - La presbytie mon pote","Support - Si ça sort"]},
 
-  {id:'lvl-mode', category:'leveling', question:"Voulez vous des paliers de leveling comme SOD ?", options:["Oui","Non","Osef"]},
+  {id:'lvl-paliers', category:'leveling', question:"Voulez vous des paliers de leveling comme SOD ?", options:["Oui","Non","Osef"]},
   {id:'lvl-mode', category:'leveling', question:"Comment veux-tu faire ton leveling ?", options:["Solo","En duo","En groupe pour dormir dans les donjons"]},
-  {id:'lvl-choix', category:'leveling', question:"Aimerais-tu qu'il soit possible d'avoir le sac de couchage ?", options:["Oui de ouf je suis un clochard","Non, je dors uniquement à l'auberge, surtout celle de comté de l'or"]},
+  {id:'lvl-sac', category:'leveling', question:"Aimerais-tu qu'il soit possible d'avoir le sac de couchage ?", options:["Oui de ouf je suis un clochard","Non, je dors uniquement à l'auberge, surtout celle de comté de l'or"]},
   {id:'lvl-style', category:'leveling', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
 
-  {id:'met-choix', category:'metiers', question:"Quelles professions envisagez-vous ?", options:["Minage / Forge","Herboristerie / Alchimie","Dépeçage / Travail du cuir","Couture","Enchantement","Pas encore décidé"]},
-  {id:'met-priorite', category:'metiers', question:"Privilégierez-vous plutôt...", options:["Des métiers utiles au raid (Alchimie, Enchantement, Forge)","De la pure récolte (revenus, farm)","Peu importe, ce qui me plaît"]},
-  {id:'met-entraide', category:'metiers', question:"Seriez-vous partant pour une organisation d'entraide entre métiers (échange de mats, crafts prioritaires) ?", options:["Oui, complètement","Oui, ponctuellement","Non, je préfère être autonome"]},
+  {id:'met-choix', category:'metiers', question:"Quelles professions envisagez-vous ?", options:["Ingénieur","Forgeron","Travail du cuir","Couture","Enchantement","Alchimiste"]},
+  {id:'met-priorite', category:'metiers', question:"Privilégierez-vous plutôt...", options:["Des métiers qui favoriserons le speedrun","Des métiers utiles au raid (Alchimie, Enchantement, Forge)","De la pure récolte (revenus, farm)","Peu importe, ce qui me plaît"]},
+  {id:'met-entraide', category:'metiers', question:"Seriez-vous partant pour une organisation d'entraide entre métiers (échange de mats, crafts prioritaires) ?", options:["Oui, je serai le Elon Musk du serveur","parfois, j'ai peu de temps","Non, j'ai des oursins dans les poches"]},
+  {id:'met-nouveau', category:'metiers', question:"Penses-tu que nous devrions avoir des nouveau métiers ?", options:["Oui bucheron c'est le feu","Non c'est déjà une purge"]},
+  {id:'met-valorisation', category:'metiers', question:"Veux-tu une valorisation des métiers ?", options:["Oui les patrons pour la pluspart sont claqué sous-terre","Non le +9 esprit sur baton c'est si BÔ"]},
 
   {id:'monde-interet', category:'monde', question:"Qu'est-ce qui vous attire le plus dans le contenu monde ouvert ?", options:["World bosses","World PvP","Quêtes épiques / lore","Exploration / secrets cachés","Peu d'intérêt pour le monde ouvert"]},
-  {id:'monde-events', category:'monde', question:"Participeriez-vous à des sorties de guilde organisées en monde ouvert (chasse aux world bosses, farm de montures rares, etc.) ?", options:["Oui, avec plaisir","Si les horaires me conviennent","Pas vraiment intéressé"]},
+  {id:'monde-events-jce', category:'monde', question:"Participeriez-vous à des sorties de guilde organisées en monde ouvert JCE (chasse aux world bosses, farm de montures rares, etc.) ?", options:["Oui, avec plaisir","Si les horaires me conviennent","Pas vraiment intéressé"]},
+  {id:'monde-events-jcj', category:'monde', question:"Participeriez-vous à des sorties de guilde organisées JCJ (Tunnel à poil dans Ogrimmar) ?", options:["Oui, j'ai une passion pour tapé","Non j'ai des raisins de Corinthe"]},
 
-  {id:'donj-rythme', category:'donjons', question:"À quel rythme aimeriez-vous faire des donjons en semaine ?", options:["Tous les jours ou presque","2-3 fois par semaine","De temps en temps","Seulement pour progresser vers le raid"]},
-  {id:'donj-format', category:'donjons', question:"Vous préférez faire vos donjons...", options:["En groupe de guilde organisé","En groupe random / LFG","Peu importe, l'essentiel est de jouer"]},
-  {id:'donj-retro', category:'donjons', question:"Le farm de donjons rétro (anciens sets, transmog) vous intéresse-t-il ?", options:["Oui, beaucoup","Un peu, à l'occasion","Pas vraiment"]},
+  {id:'donj-lfg', category:'donjons', question:"Veux-tu que la recherche de groupe soit intégrer dans le jeu ?", options:["Oui ! Marché pendant 30 min ça me gonfle","Oui, mais juste pour grouper, j'aime parler en trajet","Non ! Trop fan du chan RDG"]},
+  {id:'donj-format', category:'donjons', question:"Vous préférez faire vos donjons...", options:["En groupe de guilde","En groupe random / LFG","Peu importe, l'essentiel est de jouer"]},
+  {id:'donj-hm', category:'donjons', question:"Serais-tu pour l'intégration des donjons HM ?", options:["Oui de ouf","Oui si l'ilvl est mieux que le normal et moins bon que le raid","Non, c'est nul"]},
+  {id:'donj-mythic', category:'donjons', question:"Serais-tu pour l'intégration des donjons Mythic+ ?", options:["Oui c'est compétitif","Oui avec une restriction de l'Ilvl pour ne pas dépasser le raid","Non, c'est nul"]},
+  {id:'donj-nouveaux', category:'donjons', question:"Souhaitez-vous plus de nouveau donjon comme la Crypte de Karazhan à SOD ?", options:["Oui oui et oui","Non"]},
 
-  {id:'raid-soirs', category:'raids', question:"Quels soirs seriez-vous dispo pour raider ?", options:["Lun / Mer / Ven","Mar / Jeu","Week-end","Flexible selon les semaines","Aucun pour l'instant"]},
-  {id:'raid-role', category:'raids', question:"Quel rôle préférez-vous tenir en raid ?", options:["Tank","Soin","Dégâts (corps à corps)","Dégâts (distance)","Pas de préférence"]},
+  {id:'raid-speedrun', category:'raids', question:"Tu veux à nouveau la possibilité de faire du Speerun ?", options:["Oui, mon cerveau c'est ok","Oui mais pas toujours car ça épuise","Non ça va trop vite et trop cher"]},
+  {id:'raid-role', category:'raids', question:"Quel rôle préférez-vous tenir en raid ?", options:["Tank","Soin","Dégâts (corps à corps)","Dégâts (distance)","Support"]},
+  {id:'raid-format', category:'raids', question:"Quel format de raid tu veux voir sur Classic + ?", options:["10 joueurs uniquement","10 joueurs mini - Flex - 25 joueurs maxi","40 joueurs"]},
+  {id:'raid-difficulte', category:'raids', question:"Aimerais-tu que Classic+ fasse un vrai système de difficulté de raid (Exemple : HM, Mythic) ?", options:["Oui grave chaud","Oui mais pas de la merde comme SOD","Non comme sur classic"]},
   {id:'raid-loot', category:'raids', question:"Quel système de loot vous semble le plus juste ?", options:["Loot au DKP","Loot conseil (officiers)","Master Loot libre","Peu importe, à voir ensemble"]},
 ];
 
