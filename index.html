@@ -317,15 +317,40 @@ function renderCatTabs(){
   });
 }
 
-async function safeGet(key, shared){
+// Colle ici l'URL de ton Web App Google Apps Script (voir instructions de déploiement)
+const API_URL = 'COLLE_TON_URL_APPS_SCRIPT_ICI';
+
+async function fetchResults(pollId){
   try{
-    const r = await window.storage.get(key, shared);
-    return r ? JSON.parse(r.value) : null;
-  }catch(e){ return null; }
+    const res = await fetch(`${API_URL}?action=results&pollId=${encodeURIComponent(pollId)}`);
+    const data = await res.json();
+    return data || {};
+  }catch(e){ console.error('fetch results error', e); return {}; }
 }
-async function safeSet(key, value, shared){
-  try{ await window.storage.set(key, JSON.stringify(value), shared); }
-  catch(e){ console.error('storage error', e); }
+
+async function sendVote(pollId, optionIndex){
+  try{
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      // Ne pas mettre de header 'Content-Type: application/json' ici :
+      // ça évite une requête preflight que Apps Script ne gère pas.
+      body: JSON.stringify({action:'vote', pollId, optionIndex})
+    });
+    const data = await res.json();
+    return data || {};
+  }catch(e){ console.error('send vote error', e); return {}; }
+}
+
+function countsToArray(poll, raw){
+  return poll.options.map((_, i) => Number(raw[i]) || 0);
+}
+
+function getLocalVote(pollId){
+  const v = localStorage.getItem('aegis-voted:' + pollId);
+  return v === null ? null : parseInt(v, 10);
+}
+function setLocalVote(pollId, idx){
+  localStorage.setItem('aegis-voted:' + pollId, String(idx));
 }
 
 function renderPolls(){
@@ -354,23 +379,21 @@ function toggleCard(pollId){
 }
 
 async function initPoll(poll){
-  const votesKey = 'aegis-votes:' + poll.id;
-  const votedKey = 'aegis-voted:' + poll.id;
+  const body = document.getElementById('body-'+poll.id);
+  const meta = document.getElementById('meta-'+poll.id);
+  meta.textContent = '…';
+  body.innerHTML = '<p style="color:var(--text-dim); font-size:0.85rem;">Chargement…</p>';
 
-  let counts = await safeGet(votesKey, true);
-  if(!counts || counts.length !== poll.options.length){
-    counts = new Array(poll.options.length).fill(0);
-  }
-  const already = await safeGet(votedKey, false);
+  const raw = await fetchResults(poll.id);
+  const counts = countsToArray(poll, raw);
+  const already = getLocalVote(poll.id);
 
   const total = counts.reduce((a,b)=>a+b,0);
-  document.getElementById('meta-'+poll.id).textContent = total + (total>1 ? ' votes' : ' vote');
-
-  const body = document.getElementById('body-'+poll.id);
+  meta.textContent = total + (total>1 ? ' votes' : ' vote');
 
   if(already !== null){
     body.innerHTML = renderResults(poll, counts) +
-      `<span class="voted-tag">Vous avez voté pour « ${poll.options[already.choice]} »</span>`;
+      `<span class="voted-tag">Vous avez voté pour « ${poll.options[already]} »</span>`;
     return;
   }
 
@@ -395,21 +418,20 @@ async function castVote(pollId){
     return;
   }
   const idx = parseInt(selected.value, 10);
-  const votesKey = 'aegis-votes:' + pollId;
-  const votedKey = 'aegis-voted:' + pollId;
+  const btn = document.querySelector(`#body-${pollId} .vote-btn`);
+  if(btn){ btn.disabled = true; btn.textContent = 'Envoi…'; }
 
-  let counts = await safeGet(votesKey, true);
-  if(!counts || counts.length !== poll.options.length){
-    counts = new Array(poll.options.length).fill(0);
-  }
-  counts[idx] += 1;
-  await safeSet(votesKey, counts, true);
-  await safeSet(votedKey, {choice: idx}, false);
+  const raw = await sendVote(pollId, idx);
+  setLocalVote(pollId, idx);
 
-  await initPoll(poll);
+  const counts = countsToArray(poll, raw);
   const total = counts.reduce((a,b)=>a+b,0);
   document.getElementById('meta-'+pollId).textContent = total + (total>1 ? ' votes' : ' vote');
-  document.getElementById('body-'+pollId).classList.add('open');
+
+  const body = document.getElementById('body-'+pollId);
+  body.innerHTML = renderResults(poll, counts) +
+    `<span class="voted-tag">Vous avez voté pour « ${poll.options[idx]} »</span>`;
+  body.classList.add('open');
 }
 
 function renderResults(poll, counts){
