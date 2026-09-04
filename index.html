@@ -225,26 +225,26 @@ footer{
     <div class="hero">
       <svg class="emblem" viewBox="0 0 100 100" fill="none"><path d="M50 5 L90 20 L90 48 C90 75 72 92 50 98 C28 92 10 75 10 48 L10 20 Z" stroke="#e6c25c" stroke-width="3" fill="rgba(201,162,39,0.08)"/><path d="M50 22 L50 78 M32 40 L68 40" stroke="#e6c25c" stroke-width="3" stroke-linecap="round"/></svg>
       <h1>Guilde <span class="em">Aegis</span></h1>
-      <p>Une nouvelle bannière se lève pour World of Warcraft Classic+. Rejoignez-nous pour bâtir, ensemble, la guilde que nous voulons vraiment.</p>
+      <p>Une nouvelle bannière se lève pour World of Warcraft Classic+. Rejoignez-nous pour bâtir, ensemble, la guilde que nous voulons vraiment. Ouai ouai TA RACE</p>
       <button class="cta" onclick="goTo('polls')">Voir les sondages →</button>
     </div>
 
     <div class="intro-block">
-      <strong>Aegis</strong>, du grec ancien : le bouclier qui protège. Avant même le lancement de Classic+, nous voulons construire notre guilde sur les retours de chacun — pas d'en imposer les règles depuis le sommet, mais de les faire émerger du groupe.
+      <strong>Aegis</strong> Avant même le lancement de Classic+, nous voulons construire notre guilde sur les retours de chacun — pas d'en imposer les règles depuis le sommet, mais de les faire émerger du groupe.
     </div>
 
     <div class="pillars">
       <div class="pillar">
         <h3>Entraide</h3>
-        <p>Du leveling aux premiers raids, personne n'avance seul. Les vétérans épaulent les nouveaux venus.</p>
+        <p>Du leveling aux premiers raids, personne n'avance seul. Les vétérans épaulent les nouveaux venus. Faux tu vas transpirez mon gars ! On en chie tous !</p>
       </div>
       <div class="pillar">
         <h3>Progression</h3>
-        <p>Un rythme de raid clair, des rôles assumés, et une vraie ambition sur le contenu Classic+.</p>
+        <p>Un rythme de raid clair, des rôles assumés, et une vraie ambition sur le contenu Classic+. Encore Faux on parle tous en même temps ! Prépare tes dolipranes car à 00h00 sinon tu sera en erreur 404.</p>
       </div>
       <div class="pillar">
         <h3>Communauté</h3>
-        <p>Des événements réguliers, en jeu et hors jeu, pour que la guilde reste vivante entre deux raids.</p>
+        <p>Des événements réguliers, en jeu et hors jeu, pour que la guilde reste vivante entre deux raids. Pour une fois ça c'est vrai.</p>
       </div>
     </div>
   </section>
@@ -266,6 +266,7 @@ footer{
 
 <script>
 const CATEGORIES = [
+  {id:'raids', label:'Classes'},
   {id:'leveling', label:'Leveling'},
   {id:'metiers', label:'Métiers'},
   {id:'monde', label:'Monde'},
@@ -274,7 +275,11 @@ const CATEGORIES = [
 ];
 
 const POLLS = [
-  {id:'lvl-mode', category:'leveling', question:"Comment comptez-vous monter en niveau ?", options:["Solo","En duo","En groupe fixe","Ça dépendra du moment"]},
+  {id:'lvl-mode', category:'Classes', question:"Voulez vous des palies de leveling comme SOD ?", options:["Oui","Non","Osef"]},
+  {id:'lvl-choix', category:'Classes', question:"Votre race / classe est-elle déjà choisie ?", options:["Oui, c'est définitif","Oui, mais ça peut changer","Pas encore décidé"]},
+  {id:'lvl-style', category:'Classes', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
+
+  {id:'lvl-mode', category:'leveling', question:"Voulez vous des palies de leveling comme SOD ?", options:["Oui","Non","Osef"]},
   {id:'lvl-choix', category:'leveling', question:"Votre race / classe est-elle déjà choisie ?", options:["Oui, c'est définitif","Oui, mais ça peut changer","Pas encore décidé"]},
   {id:'lvl-style', category:'leveling', question:"Quel style de leveling préférez-vous ?", options:["Quêtes classiques","Farm de mobs / grind","Enchaîner les donjons","Un mix des trois"]},
 
