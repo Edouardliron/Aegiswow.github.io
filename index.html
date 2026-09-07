@@ -302,7 +302,12 @@ footer{
   .navlinks button{padding:7px 8px; font-size:0.78rem;}
   .titres-list{grid-template-columns:1fr 1fr;}
 }
-}
+
+/* ---- GRIMOIRE D'AZEROTH ---- */
+.grimoire-banner{background:radial-gradient(ellipse 700px 280px at 50% 0%,rgba(201,162,39,.12),transparent 65%),var(--panel);border:1px solid var(--gold);border-radius:6px;padding:28px 24px;margin:20px 0 30px;text-align:center}
+.grimoire-kicker{color:var(--gold-bright);font-family:'Cinzel';font-size:.76rem;letter-spacing:.12em;text-transform:uppercase}.grimoire-banner h3{color:var(--text);font-size:1.55rem;margin:7px 0 8px}.grimoire-banner p{color:var(--text-dim);font-size:.88rem;max-width:650px;margin:0 auto}.grimoire-deadline{margin-top:15px;color:var(--gold-bright);font-size:.8rem}.grimoire-status{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:18px}.grimoire-stat{min-width:105px;padding:10px 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:5px}.grimoire-stat b{display:block;color:var(--gold-bright);font-family:'Cinzel';font-size:1.15rem}.grimoire-stat span{display:block;color:var(--text-dim);font-size:.7rem;margin-top:2px}.grimoire-progress{height:8px;background:var(--bar-bg);border-radius:4px;overflow:hidden;margin:18px 0 5px}.grimoire-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:4px;transition:width .35s ease}.grimoire-progress-label{color:var(--text-dim);font-size:.72rem}.grimoire-rules{color:var(--text-dim);font-size:.78rem;line-height:1.6;margin:18px 0 26px;padding:14px 16px;border-left:2px solid var(--gold);background:rgba(201,162,39,.04)}
+.grimoire-card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:24px;margin-bottom:18px}.grimoire-card.easy{border-left:3px solid #6eaa52}.grimoire-card.normal{border-left:3px solid var(--gold)}.grimoire-card.medium{border-left:3px solid #c78b42}.grimoire-card.hard{border-left:3px solid #c06b3d}.grimoire-card.hardcore{border-left:3px solid #8a3232}.grimoire-card-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.grimoire-number{color:var(--text-dim);font-family:'Cinzel';font-size:.76rem}.grimoire-difficulty{font-size:.68rem;border:1px solid var(--line);border-radius:20px;padding:4px 9px;color:var(--text-dim)}.grimoire-card.easy .grimoire-difficulty{color:#91c875;border-color:#557b45}.grimoire-card.normal .grimoire-difficulty{color:var(--gold-bright);border-color:var(--gold)}.grimoire-card.medium .grimoire-difficulty{color:#e0a05f;border-color:#9a6634}.grimoire-card.hard .grimoire-difficulty{color:#e18b61;border-color:#8c4c32}.grimoire-card.hardcore .grimoire-difficulty{color:#e06d6d;border-color:#8a3232}.grimoire-question{font-size:1.02rem;line-height:1.55;color:var(--text);margin-bottom:17px}.grimoire-options{display:grid;gap:8px}.grimoire-option{width:100%;text-align:left;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:12px 14px;border-radius:4px;cursor:pointer;font-family:'Inter';font-size:.88rem;transition:border-color .15s,background .15s}.grimoire-option:hover{border-color:var(--gold);background:rgba(201,162,39,.06)}.grimoire-option.selected{border-color:var(--gold-bright);background:rgba(201,162,39,.12)}.grimoire-option:disabled{cursor:default}.grimoire-submit{margin-top:15px;background:linear-gradient(180deg,var(--gold-bright),var(--gold));color:#1a1408;border:none;padding:10px 18px;border-radius:3px;font-family:'Inter';font-weight:600;cursor:pointer}.grimoire-submit:disabled{opacity:.45;cursor:not-allowed}.grimoire-result{margin-top:15px;padding:13px 14px;border:1px solid var(--line);background:var(--panel-2);border-radius:4px}.grimoire-result.good{border-color:#557b45}.grimoire-result.bad{border-color:#8a3232}.grimoire-result-title{font-family:'Cinzel';color:var(--gold-bright);font-size:.9rem}.grimoire-result.bad .grimoire-result-title{color:#e06d6d}.grimoire-result p{color:var(--text-dim);font-size:.8rem;margin-top:5px}.grimoire-source{display:inline-block;margin-top:8px;color:var(--gold-bright);font-size:.72rem;text-decoration:underline}.grimoire-locked{padding:30px 20px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:6px;color:var(--text-dim);margin-bottom:18px}.grimoire-locked strong{display:block;color:var(--gold-bright);font-family:'Cinzel';font-size:1.1rem;margin-bottom:8px}.grimoire-final{text-align:center;padding:30px 20px;background:var(--panel);border:1px solid var(--gold);border-radius:6px;margin-top:26px}.grimoire-final-score{font-family:'Cinzel';font-size:3rem;color:var(--gold-bright);line-height:1}.grimoire-final-title{color:var(--text);font-family:'Cinzel';font-size:1.05rem;margin:8px 0}.grimoire-final p{color:var(--text-dim);font-size:.84rem}.grimoire-final-rules{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}.grimoire-final-rules div{background:var(--panel-2);border:1px solid var(--line);padding:10px 6px;border-radius:4px;font-size:.7rem;color:var(--text-dim)}.grimoire-final-rules b{display:block;color:var(--gold-bright);font-family:'Cinzel';margin-bottom:3px}
+@media(max-width:640px){.grimoire-final-rules{grid-template-columns:1fr 1fr}.grimoire-card{padding:19px 16px}}
 </style>
 </head>
 <body>
@@ -315,6 +320,7 @@ footer{
   <div class="navlinks">
     <button id="nav-home" onclick="goTo('home')">Accueil</button>
     <button id="nav-polls" onclick="goTo('polls')">Sondages</button>
+     <button id="nav-grimoire" onclick="goTo('grimoire')">Grimoire</button>
     <button id="nav-profil" onclick="goTo('profil')">Profil</button>
     <button id="nav-classement" onclick="goTo('classement')">Classement</button>
   </div>
@@ -371,6 +377,16 @@ footer{
     <div id="polls-list"></div>
   </section>
 
+
+  <!-- GRIMOIRE -->
+  <section id="view-grimoire" class="view">
+    <div class="page-head">
+      <h2>Grimoire d'Azeroth</h2>
+      <p>20 questions sur le WoW Classic de la guilde. Une réponse. Un destin. Aucun retour en arrière.</p>
+    </div>
+    <div id="grimoire-content"></div>
+  </section>
+
   <!-- PROFIL -->
   <section id="view-profil" class="view">
     <div class="page-head">
@@ -391,7 +407,7 @@ footer{
 
 </main>
 
-<footer>Guilde Aegis — World of Warcraft Classic+</footer>
+<footer>Guilde Aegis — World of Warcraft Classic+ · 📜 Grimoire d'Azeroth</footer>
 
 <script>
 const CATEGORIES = [
@@ -438,6 +454,187 @@ const POLLS = [
   {id:'raid-difficulte', category:'raids', question:"Aimerais-tu que Classic+ fasse un vrai système de difficulté de raid (Exemple : HM, Mythic) ?", options:["Oui grave chaud","Oui mais pas de la merde comme SOD","Non comme sur classic"]},
   {id:'raid-loot', category:'raids', question:"Quel système de loot vous semble le plus juste ?", options:["Loot au DKP","Loot conseil (officiers)","Master Loot libre","Peu importe, à voir ensemble"]},
 ];
+
+
+/* =========================================================
+   GRIMOIRE D'AZEROTH
+   MODIFICATION DES QUESTIONS :
+   correct = index de la bonne réponse (0=A, 1=B, 2=C, 3=D)
+   points = gain si bonne réponse. Une mauvaise réponse ne
+   retire jamais de points (voir grimoireSubmit plus bas) ;
+   penalty est conservé dans les données mais vaut 0 partout.
+   explanation = correction ; source = lien à vérifier
+   ========================================================= */
+const GRIMOIRE_DEADLINE='2026-09-10T23:59:59+02:00';
+const GRIMOIRE_QUESTIONS=[
+{id:'lore-01',difficulty:'easy',label:'Facile',question:"Quel est le véritable nom du dragon noir qui se fait passer pour Lady Katrana Prestor à Hurlevent ?",options:['Onyxia','Alexstrasza','Vaelastrasz','Sinestra'],correct:0,points:1,penalty:0,explanation:"Katrana Prestor est l'identité utilisée par Onyxia pour infiltrer la noblesse de Hurlevent.",source:'https://warcraft.wiki.gg/wiki/Onyxia_(Classic)'},
+{id:'lore-02',difficulty:'easy',label:'Facile',question:"Quel est le boss final de Molten Core dans le WoW Classic original ?",options:["Majordomo Executus","Golemagg l'Incinerateur","Ragnaros","Garr"],correct:2,points:1,penalty:0,explanation:'Ragnaros le Seigneur du Feu est le boss final de Molten Core.',source:'https://warcraft.wiki.gg/wiki/Molten_Core'},
+{id:'lore-03',difficulty:'easy',label:'Facile',question:"Quel dieu du sang les trolls Hakkari cherchent-ils à invoquer à Zul'Gurub ?",options:["G'huun",'Hakkar',"C'Thun","N'Zoth"],correct:1,points:1,penalty:0,explanation:"Les Hakkari et les Atal'ai sont liés au culte de Hakkar le Soulflayer.",source:'https://warcraft.wiki.gg/wiki/Zul_Gurub'},
+{id:'lore-04',difficulty:'easy',label:'Facile',question:"Quel est le boss final de Blackwing Lair dans le Classic original ?",options:['Nefarian','Razorgore','Chromaggus','Vaelastrasz'],correct:0,points:1,penalty:0,explanation:"Nefarian, fils aîné de Deathwing, règne sur Blackwing Lair.",source:'https://warcraft.wiki.gg/wiki/Blackwing_Lair'},
+{id:'lore-05',difficulty:'easy',label:'Facile',question:"Qui est le boss final de Naxxramas dans sa version originale à 40 joueurs ?",options:['Sapphiron',"Kel'Thuzad",'The Four Horsemen','Noth le Porte-Peste'],correct:1,points:1,penalty:0,explanation:'Kel\'Thuzad est l\'ultime rencontre de Naxxramas Classic.',source:'https://warcraft.wiki.gg/wiki/Naxxramas_(Classic)'},
+{id:'lore-06',difficulty:'normal',label:'Normal',question:"Qui donne la quête « Dark Iron Legacy » liée à la Shadowforge Key dans Blackrock Mountain ?",options:['Fineous Darkvire','Franclorn Forgewright','Emperor Dagran Thaurissan','Magmus'],correct:1,points:2,penalty:0,explanation:"Le fantôme de Franclorn Forgewright donne la quête. Il faut être soi-même mort pour lui parler.",source:'https://warcraft.wiki.gg/wiki/Dark_Iron_Legacy'},
+{id:'lore-07',difficulty:'normal',label:'Normal',question:"Avant de devenir le chef de la Confrérie des Défias, quel était le métier d'Edwin VanCleef ?",options:['Maître de la guilde des tailleurs','Maître de la guilde des maçons','Capitaine de la garde de Hurlevent','Conseiller de la Maison des Nobles'],correct:1,points:2,penalty:0,explanation:"Edwin VanCleef était le maître de la guilde des maçons, les Stonemasons, qui participèrent à la reconstruction de Hurlevent après la Première Guerre.",source:'https://warcraft.wiki.gg/wiki/Edwin_VanCleef'},
+{id:'lore-08',difficulty:'normal',label:'Normal',question:"Lors de la reconstruction de Hurlevent, quel événement transforme le conflit entre les maçons et la noblesse en véritable révolte ?",options:["Les Défias attaquent directement Hurlevent","Une pierre lancée pendant l'émeute tue la reine Tiffin Wrynn","Varian Wrynn bannit les maçons sans procès","Les orcs reviennent attaquer la ville"],correct:1,points:2,penalty:0,explanation:"L'émeute des maçons dégénère et une pierre frappe mortellement la reine Tiffin Wrynn. Cet événement marque un tournant majeur dans l'histoire de VanCleef et des futurs Défias.",source:'https://warcraft.wiki.gg/wiki/A_Window_to_the_Past'},
+{id:'lore-09',difficulty:'normal',label:'Normal',question:"Dans Uldaman, les légendes racontent que les Titans ont créé une première race de pierre avant les ancêtres des nains. De qui s'agit-il ?",options:['Les Anciens','Les Troggs','Les Qiraji','Les Vrykuls'],correct:1,points:2,penalty:0,explanation:"Les troggs sont présentés dans le contenu Classic d'Uldaman comme une première création ratée des Titans, avant le projet lié à la genèse des nains.",source:'https://warcraft.wiki.gg/wiki/Uldaman'},
+{id:'lore-10',difficulty:'normal',label:'Normal',question:"Quel Old God est directement au cœur de l'intrigue d'Ahn'Qiraj dans WoW Classic ?",options:["Yogg-Saron","N'Zoth","C'Thun","Y'Shaarj"],correct:2,points:2,penalty:0,explanation:"C'Thun est l'Ancien Dieu enfermé dans Ahn'Qiraj et constitue l'affrontement final du Temple d'Ahn'Qiraj en Classic.",source:'https://warcraft.wiki.gg/wiki/C%27Thun'},
+{id:'lore-11',difficulty:'medium',label:'Moyenne',question:"Dans Uldaman, quel artefact des Titans est présenté comme contenant les secrets de la création des nains ?",options:['Les Disques de Norgannon',"Le Marteau de Khaz'goroth",'Le Sceptre des Sables changeants','La Tablette de Volonté'],correct:0,points:3,penalty:0,explanation:"Les Disques de Norgannon sont les immenses artefacts des Titans conservés au fond d'Uldaman. Ils sont liés aux secrets de la genèse des nains et des créations des Titans.",source:'https://warcraft.wiki.gg/wiki/Uldaman'},
+{id:'lore-12',difficulty:'medium',label:'Moyenne',question:"Selon le lore de Classic, quelle était la nature originelle des ancêtres des nains avant qu'ils ne deviennent des êtres de chair ?",options:['Des esprits élémentaires','Des earthen, des êtres façonnés dans la pierre par les Titans','Des humains maudits par les Démonistes','Des troggs évolués'],correct:1,points:3,penalty:0,explanation:"Les earthen étaient des êtres de pierre façonnés par les Titans. Une transformation connue sous le nom de Curse of Flesh est ensuite liée à l'apparition des races mortelles, dont les nains.",source:'https://warcraft.wiki.gg/wiki/Earthen'},
+{id:'lore-13',difficulty:'medium',label:'Moyenne',question:"Lorsque les Titans affrontèrent les Anciens Dieux sur Azeroth, pourquoi décidèrent-ils finalement de les emprisonner plutôt que de simplement les arracher au monde ?",options:["Ils avaient peur des dragons","Les Anciens Dieux étaient trop nombreux pour être vaincus","Ils étaient si profondément enracinés qu'une extraction risquait de détruire Azeroth elle-même","Ils avaient juré de ne jamais tuer de créature ancienne"],correct:2,points:3,penalty:0,explanation:"Les Anciens Dieux étaient profondément enracinés dans Azeroth. Les retirer risquait d'endommager mortellement le monde et sa World-Soul ; la solution fut donc de les emprisonner.",source:'https://warcraft.wiki.gg/wiki/Old_God'},
+{id:'lore-14',difficulty:'medium',label:'Moyenne',question:"Quel peuple est devenu les Qiraji après avoir été transformé sous l'influence de C'Thun ?",options:['Les Vrykuls','Les Aqir',"Les Tol'vir",'Les Furbolgs'],correct:1,points:3,penalty:0,explanation:"Les Aqir installés dans la prison de C'Thun ont été progressivement altérés par son influence, donnant naissance aux Qiraji.",source:'https://warcraft.wiki.gg/wiki/C%27Thun'},
+{id:'lore-15',difficulty:'medium',label:'Moyenne',question:"Quel groupe secret de mages et de fanatiques est particulièrement associé au culte des Anciens Dieux dans le lore de WoW Classic ?",options:['Le Cercle cénarien','Le Marteau du Crépuscule','La Croisade écarlate','Le SI:7'],correct:1,points:3,penalty:0,explanation:"Le Marteau du Crépuscule, Twilight's Hammer, est un culte fanatique consacré aux forces des Anciens Dieux et apparaît notamment autour de Silithus et d'Ahn'Qiraj.",source:'https://warcraft.wiki.gg/wiki/Twilight%27s_Hammer_cult'},
+{id:'lore-16',difficulty:'hardcore',label:'Hardcore',question:"Quel événement de son enfance a profondément marqué Sally Whitemane et a nourri sa haine des morts-vivants ?",options:["Elle a vu sa famille succomber au Fléau et a dû affronter ses proches après leur transformation en morts-vivants","Elle a été capturée par les Orcs pendant la Deuxième Guerre et torturée à Blackrock","Elle a assisté à la chute de la Main d'argent lors de la mort d'Uther","Elle a été élevée par les Réprouvés avant de rejoindre Lordaeron"],correct:0,points:5,penalty:0,explanation:"Sally Whitemane a été confrontée très jeune au Fléau : sa famille a succombé à la peste des morts-vivants, et elle a dû détruire ses proches après leur transformation. Cette expérience a profondément alimenté sa haine du Fléau et son fanatisme contre les morts-vivants.",source:'https://warcraft.wiki.gg/wiki/Sally_Whitemane'},
+{id:'lore-17',difficulty:'hardcore',label:'Hardcore',question:"Dans l'histoire ancienne d'Azeroth, quel événement est associé directement à la destruction de Y'Shaarj par le titan Aman'Thul ?",options:['La création de la Porte des Ténèbres',"La naissance du Puits d'éternité à partir de la blessure laissée en Azeroth",'La chute de Lordaeron',"La création de la Croisade écarlate"],correct:1,points:5,penalty:0,explanation:"Aman'Thul arracha Y'Shaarj d'Azeroth. La blessure infligée au monde fit remonter son énergie et donna naissance au Puits d'éternité après stabilisation des énergies.",source:'https://warcraft.wiki.gg/wiki/War_between_the_titans_and_the_Old_Gods'},
+{id:'lore-18',difficulty:'hardcore',label:'Hardcore',question:"Pourquoi Ahn'Qiraj est-il particulièrement important dans l'histoire de C'Thun : que représentait le complexe avant son rôle de cité qiraji ?",options:['Une ancienne capitale humaine','Une station de recherche construite par les Titans','Un palais des dragons noirs','Une forteresse des elfes de la nuit'],correct:1,points:5,penalty:0,explanation:"Le complexe d'Ahn'Qiraj est décrit comme une ancienne station de recherche des Titans qui abritait C'Thun avant d'être occupé par les Aqir devenus les Qiraji.",source:'https://warcraft.wiki.gg/wiki/Ahn%27Qiraj'},
+{id:'lore-19',difficulty:'hardcore',label:'Hardcore',question:"Quel est le lien correct entre les Titans, Uldaman et les Disques de Norgannon ?",options:["Les Titans ont créé Uldaman comme prison de Ragnaros et les Disques sont des armes","Uldaman est un ancien complexe des Titans où sont conservés les Disques, liés à leurs créations et à leur histoire","Uldaman a été construit par les Qiraji pour cacher les Disques","Les Disques ont été fabriqués par les nains après leur transformation"],correct:1,points:5,penalty:0,explanation:"Uldaman est un ancien complexe titanique. Les Disques de Norgannon y ont été conservés et contiennent des connaissances essentielles sur les créations et l'histoire des Titans.",source:'https://warcraft.wiki.gg/wiki/Uldaman'},
+{id:'lore-20',difficulty:'hardcore',label:'Hardcore',question:"Parmi ces affirmations, laquelle décrit correctement les quatre Anciens Dieux associés à l'ancien Empire noir d'Azeroth ?",options:["C'Thun, Yogg-Saron, N'Zoth et Y'Shaarj","C'Thun, Hakkar, Ragnaros et Nefarian","C'Thun, Sargeras, N'Zoth et Yogg-Saron","Y'Shaarj, Hakkar, C'Thun et Deathwing"],correct:0,points:5,penalty:0,explanation:"Les quatre Anciens Dieux classiquement associés à l'ancien Empire noir sont C'Thun, Yogg-Saron, N'Zoth et Y'Shaarj. Attention : tous ne sont pas des boss de WoW Classic ; cette question porte sur le lore ancien lié à Azeroth.",source:'https://warcraft.wiki.gg/wiki/Old_God'}
+];
+function grimoireIsClosed(){return new Date()>new Date(GRIMOIRE_DEADLINE)}
+function grimoireLetter(i){return String.fromCharCode(65+i)}
+
+async function fetchGrimoireState(pseudo){
+  try{
+    const res = await fetch(`${API_URL}?action=grimoireState&pseudo=${encodeURIComponent(pseudo)}`);
+    const data = await res.json();
+    return {
+      answers: (data && data.answers) ? data.answers : {},
+      closed: !!(data && data.closed)
+    };
+  }catch(e){ console.error('fetch grimoire state error', e); return { answers:{}, closed:false }; }
+}
+
+async function postGrimoireAnswer(pseudo, questionId, chosenIndex){
+  try{
+    const res = await fetch(API_URL, {
+      method:'POST',
+      body: JSON.stringify({action:'grimoireAnswer', pseudo, questionId, chosenIndex})
+    });
+    return await res.json();
+  }catch(e){ console.error('post grimoire answer error', e); return {}; }
+}
+
+async function fetchGrimoireLeaderboard(){
+  try{
+    const res = await fetch(`${API_URL}?action=grimoireLeaderboard`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  }catch(e){ console.error('fetch grimoire leaderboard error', e); return []; }
+}
+
+function grimoireScoreFromAnswers(answers){
+  let score = 0;
+  GRIMOIRE_QUESTIONS.forEach(q=>{
+    const a = answers[q.id];
+    if(a) score += a.delta;
+  });
+  return score;
+}
+
+function grimoireTitle(s){if(s>=30)return'Gardien des Chroniques';if(s>=20)return'Maître du Lore';if(s>=12)return"Érudit d'Azeroth";if(s>=6)return'Archiviste';if(s>=1)return'Apprenti du Kirin Tor';return'Aucun titre'}
+
+function grimoireBanner(answers){
+  const n = GRIMOIRE_QUESTIONS.filter(q=>answers[q.id]).length;
+  const s = grimoireScoreFromAnswers(answers);
+  const total = GRIMOIRE_QUESTIONS.length;
+  const p = Math.round(n/total*100);
+  return `<div class="grimoire-banner"><div class="grimoire-kicker">Épreuve exceptionnelle · Aegis</div><h3>📜 Le Grimoire d'Azeroth</h3><p>20 questions sur le WoW Classic de la guilde. Certaines se répondent de mémoire. D'autres vont vous obliger à chercher.</p><div class="grimoire-deadline">Épreuve ouverte jusqu'au <strong>10 septembre 2026 à 23h59</strong></div><div class="grimoire-status"><div class="grimoire-stat"><b>${n}/${total}</b><span>Questions</span></div><div class="grimoire-stat"><b>${s}</b><span>Points</span></div><div class="grimoire-stat"><b>${grimoireTitle(s)}</b><span>Titre actuel</span></div></div><div class="grimoire-progress"><div class="grimoire-progress-fill" style="width:${p}%"></div></div><div class="grimoire-progress-label">${n} question${n>1?'s':''} validée${n>1?'s':''} sur ${total}</div></div>`;
+}
+
+function renderGrimoireQuestion(q,i,answers){
+  const a = answers[q.id];
+  const done = !!a;
+  if(done){
+    const ok = a.correct;
+    const d = a.delta;
+    return `<div class="grimoire-card ${q.difficulty}"><div class="grimoire-card-top"><span class="grimoire-number">Question ${i+1} / ${GRIMOIRE_QUESTIONS.length}</span><span class="grimoire-difficulty">Réponse scellée</span></div><div class="grimoire-question">${q.question}</div><div class="grimoire-options">${q.options.map((o,j)=>`<button type="button" class="grimoire-option${a.chosenIndex===j?' selected':''}" disabled><strong>${grimoireLetter(j)}.</strong> ${o}</button>`).join('')}</div><div class="grimoire-result ${ok?'good':'bad'}"><div class="grimoire-result-title">${ok?'🏆 Bonne réponse':'☠️ Mauvaise réponse'} · ${d>0?'+':''}${d} point${Math.abs(d)>1?'s':''}</div><p><strong>Bonne réponse : ${grimoireLetter(q.correct)}. ${q.options[q.correct]}</strong></p><p>${q.explanation}</p><a class="grimoire-source" href="${q.source}" target="_blank" rel="noopener noreferrer">Vérifier la source →</a></div></div>`;
+  }
+  const closed = grimoireIsClosed();
+  return `<div class="grimoire-card ${q.difficulty}"><div class="grimoire-card-top"><span class="grimoire-number">Question ${i+1} / ${GRIMOIRE_QUESTIONS.length}</span><span class="grimoire-difficulty">${q.label} · +${q.points} pt${q.points>1?'s':''} si juste</span></div><div class="grimoire-question">${q.question}</div><div class="grimoire-options">${q.options.map((o,j)=>`<button type="button" class="grimoire-option" data-grimoire-option="${q.id}" data-index="${j}" ${closed?'disabled':''} onclick="grimoireSelect('${q.id}',${j})"><strong>${grimoireLetter(j)}.</strong> ${o}</button>`).join('')}</div><button type="button" class="grimoire-submit" id="grimoire-submit-${q.id}" disabled onclick="grimoireSubmit('${q.id}')">${closed ? 'Grimoire clos' : 'Sceller ma réponse'}</button></div>`;
+}
+
+async function renderGrimoire(){
+  const content = document.getElementById('grimoire-content');
+  if(!content) return;
+  const pseudo = getPseudo();
+
+  if(!pseudo){
+    content.innerHTML = `
+      <div class="grimoire-card" style="text-align:center;">
+        <p style="color:var(--text-dim); margin-bottom:20px;">Choisis un pseudo pour commencer le Grimoire.</p>
+        <button class="cta" onclick="ensurePseudo(()=>renderGrimoire())">Choisir mon pseudo</button>
+      </div>
+    `;
+    return;
+  }
+
+  content.innerHTML = `<div class="grimoire-card"><p style="color:var(--text-dim);">Chargement…</p></div>`;
+
+  const state = await fetchGrimoireState(pseudo);
+  const answers = state.answers;
+  let h = grimoireBanner(answers);
+  h += `<div class="grimoire-rules"><strong>⚔️ Règles :</strong><br>Une seule réponse par question, scellée définitivement dès validation — impossible de revenir en arrière. Une bonne réponse rapporte les points indiqués (Facile +1 · Normal +2 · Moyenne +3 · Hardcore +5). Une mauvaise réponse n'apporte ni ne retire aucun point. Les réponses sont partagées avec la guilde : le classement du Grimoire est visible par tout le monde.</div>`;
+
+  const allAnswered = GRIMOIRE_QUESTIONS.every(q => answers[q.id]);
+  // On croise la date locale ET le statut renvoyé par le serveur (source de vérité en cas de doute).
+  const closed = grimoireIsClosed() || state.closed;
+
+  if(closed && !allAnswered){
+    const answeredCount = GRIMOIRE_QUESTIONS.filter(q=>answers[q.id]).length;
+    h += `<div class="grimoire-locked"><strong>🔒 Le Grimoire est désormais fermé</strong>L'épreuve s'est terminée le 10 septembre 2026 à 23h59. Tu as répondu à ${answeredCount}/20 questions ; les réponses restent consultables ci-dessous.</div>`;
+  }
+
+  h += GRIMOIRE_QUESTIONS.map((q,i) => renderGrimoireQuestion(q,i,answers)).join('');
+
+  if(allAnswered){
+    const s = grimoireScoreFromAnswers(answers);
+    h += `<div class="grimoire-final"><div class="grimoire-final-score">${s}</div><div class="grimoire-final-title">${grimoireTitle(s)}</div><p>Tu as terminé les 20 épreuves du Grimoire d'Azeroth.</p><div class="grimoire-final-rules"><div><b>5</b>Faciles</div><div><b>5</b>Normales</div><div><b>5</b>Moyennes</div><div><b>5</b>Hardcore</div></div></div>`;
+  }
+
+  // Classement du Grimoire, toujours visible : c'est ce qui rend l'épreuve compétitive.
+  const leaderboard = await fetchGrimoireLeaderboard();
+  const rowsHtml = leaderboard.length ? leaderboard.map((m,idx)=>{
+    const isMe = m.pseudo.toLowerCase() === pseudo.toLowerCase();
+    return `
+      <div class="leaderboard-row ${isMe?'me':''}">
+        <div class="lb-rank">${idx+1}</div>
+        <div class="lb-info">
+          <div class="lb-pseudo">${m.pseudo}${isMe?' (toi)':''}</div>
+          <div class="lb-titre">${grimoireTitle(m.score)}</div>
+        </div>
+        <div class="lb-votes"><b>${m.score>0?'+':''}${m.score}</b> pts</div>
+      </div>
+    `;
+  }).join('') : `<div class="leaderboard-empty">Personne n'a encore de score au Grimoire.</div>`;
+
+  h += `<div class="page-head" style="padding-top:36px; padding-bottom:8px;"><h2 style="font-size:1.3rem;">Classement du Grimoire</h2></div><div class="leaderboard">${rowsHtml}</div>`;
+
+  content.innerHTML = h;
+}
+
+function grimoireSelect(id,index){
+  if(grimoireIsClosed()) return;
+  document.querySelectorAll(`[data-grimoire-option="${id}"]`).forEach(b=>b.classList.toggle('selected',parseInt(b.dataset.index,10)===index));
+  const s = document.getElementById('grimoire-submit-'+id);
+  if(s){ s.disabled=false; s.dataset.selected=String(index); }
+}
+
+async function grimoireSubmit(id){
+  if(grimoireIsClosed()) return;
+  const s = document.getElementById('grimoire-submit-'+id);
+  if(!s || s.dataset.selected===undefined) return;
+  const q = GRIMOIRE_QUESTIONS.find(x=>x.id===id);
+  if(!q) return;
+  const a = parseInt(s.dataset.selected, 10);
+  if(!Number.isInteger(a) || a<0 || a>=q.options.length) return;
+
+  s.disabled = true;
+  s.textContent = 'Envoi…';
+
+  const pseudo = getPseudo();
+  // Le serveur (Code.gs) recalcule lui-même la bonne réponse et le score :
+  // on ne lui envoie que le choix du joueur, on ne fait pas confiance au client.
+  await postGrimoireAnswer(pseudo, id, a);
+  renderGrimoire();
+}
 
 let currentCat = 'classes';
 
@@ -494,10 +691,12 @@ function goTo(view){
   document.getElementById('nav-polls').classList.toggle('active', view==='polls');
   document.getElementById('nav-profil').classList.toggle('active', view==='profil');
   document.getElementById('nav-classement').classList.toggle('active', view==='classement');
+  if(document.getElementById('nav-grimoire')) document.getElementById('nav-grimoire').classList.toggle('active', view==='grimoire');
   window.scrollTo({top:0, behavior:'smooth'});
   if(view==='polls') renderPolls();
   if(view==='profil') renderProfil();
   if(view==='classement') renderClassement();
+  if(view==='grimoire') renderGrimoire();
 }
 
 function renderCatTabs(){
