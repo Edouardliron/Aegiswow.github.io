@@ -473,9 +473,58 @@ async function renderPolls(){
     list.appendChild(card);
   });
 
-  // Un seul aller-retour réseau pour TOUTE la catégorie, au lieu d'un par question.
-  const batch = await fetchResultsBatch(filtered.map(p=>p.id));
+  // Zone pour les camemberts de TOUTES les catégories, ajoutée en bas de la liste.
+  const chartsSection = document.createElement('div');
+  chartsSection.className = 'poll-charts-section';
+  chartsSection.innerHTML = `<h3 class="poll-charts-title">📊 Vue d'ensemble en camembert — toutes catégories</h3><div id="poll-charts-container"></div>`;
+  list.appendChild(chartsSection);
+
+  // Un seul aller-retour réseau pour L'ENSEMBLE des sondages (le serveur lit la feuille
+  // une seule fois de toute façon), ce qui permet de servir à la fois les barres de
+  // la catégorie affichée ET les camemberts de toutes les catégories, sans appel en plus.
+  const batch = await fetchResultsBatch(POLLS.map(p=>p.id));
   filtered.forEach(poll => renderPollFromData(poll, batch[poll.id] || {}));
+
+  const container = document.getElementById('poll-charts-container');
+  if(container){
+    container.innerHTML = CATEGORIES.map(cat => {
+      const catPolls = POLLS.filter(p => p.category === cat.id);
+      const cards = catPolls.map(poll => renderPieChart(poll, countsToArray(poll, batch[poll.id] || {}))).join('');
+      return `<div class="poll-charts-category"><h4 class="poll-charts-cat-title">${cat.label}</h4><div class="poll-charts-grid">${cards}</div></div>`;
+    }).join('');
+  }
+}
+
+const PIE_COLORS = ['#e6c25c','#4a7ba6','#c9526b','#5fbf82','#c9a227','#8f9aa8'];
+
+function renderPieChart(poll, counts){
+  const total = counts.reduce((a,b)=>a+b,0);
+  if(total === 0){
+    return `<div class="pie-card"><div class="pie-card-title">${poll.question}</div><p class="pie-empty">Pas encore de vote</p></div>`;
+  }
+
+  let cumulative = 0;
+  const stops = counts.map((c,i)=>{
+    const pct = (c/total)*100;
+    const start = cumulative;
+    cumulative += pct;
+    const color = PIE_COLORS[i % PIE_COLORS.length];
+    return `${color} ${start.toFixed(2)}% ${cumulative.toFixed(2)}%`;
+  }).join(', ');
+
+  const legend = poll.options.map((opt,i)=>{
+    const pct = total > 0 ? Math.round((counts[i]/total)*100) : 0;
+    const color = PIE_COLORS[i % PIE_COLORS.length];
+    return `<div class="pie-legend-item"><span class="pie-swatch" style="background:${color}"></span>${opt} <b>${pct}%</b></div>`;
+  }).join('');
+
+  return `
+    <div class="pie-card">
+      <div class="pie-card-title">${poll.question}</div>
+      <div class="pie-chart" style="background:conic-gradient(${stops});"></div>
+      <div class="pie-legend">${legend}</div>
+    </div>
+  `;
 }
 
 function toggleCard(pollId){
