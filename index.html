@@ -19,6 +19,7 @@
      <button id="nav-grimoire" onclick="goTo('grimoire')">Grimoire</button>
     <button id="nav-profil" onclick="goTo('profil')">Profil</button>
     <button id="nav-classement" onclick="goTo('classement')">Classement</button>
+    <button id="nav-blizzcon" onclick="goTo('blizzcon')">BlizzCon</button>
   </div>
 </nav>
 
@@ -40,6 +41,12 @@
       <h1>Guilde <span class="em">Aegis</span></h1>
       <p>Une nouvelle bannière se lève pour World of Warcraft Classic+. Rejoignez-nous pour bâtir, ensemble, la guilde que nous voulons vraiment. Ouai ouai TA RACE</p>
       <button class="cta" onclick="goTo('polls')">Voir les sondages →</button>
+    </div>
+
+    <div class="blizzcon-countdown" id="home-blizzcon-countdown">
+      <div class="blizzcon-countdown-kicker">🎪 BlizzCon 2026 — Cérémonie d'ouverture</div>
+      <div class="blizzcon-countdown-timer" id="home-countdown-timer">…</div>
+      <div class="blizzcon-countdown-sub">Samedi 12 septembre, 19h30 (heure de Paris)</div>
     </div>
 
     <div class="intro-block">
@@ -99,6 +106,23 @@
       <p>Les membres les plus actifs de la guilde, classés par nombre de votes.</p>
     </div>
     <div id="classement-content"></div>
+  </section>
+
+  <!-- BLIZZCON -->
+  <section id="view-blizzcon" class="view">
+    <div class="page-head">
+      <h2>🎪 BlizzCon 2026</h2>
+      <p>Tout ce qu'on sait (et surtout ce qu'on ne sait pas encore) sur l'avenir de Classic — et vos réactions en direct samedi.</p>
+    </div>
+
+    <div class="blizzcon-countdown" style="margin-bottom:24px;">
+      <div class="blizzcon-countdown-kicker">🎪 Cérémonie d'ouverture</div>
+      <div class="blizzcon-countdown-timer" id="blizzcon-page-countdown-timer">…</div>
+      <div class="blizzcon-countdown-sub">Samedi 12 septembre, 19h30 (heure de Paris)</div>
+    </div>
+
+    <div class="cat-tabs" id="blizzcon-tabs"></div>
+    <div id="blizzcon-content"></div>
   </section>
 
 </main>
