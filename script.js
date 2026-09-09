@@ -368,6 +368,7 @@ function changePseudo(){
 }
 
 function goTo(view){
+  stopMurPolling();
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view).classList.add('active');
   document.getElementById('nav-home').classList.toggle('active', view==='home');
@@ -375,11 +376,170 @@ function goTo(view){
   document.getElementById('nav-profil').classList.toggle('active', view==='profil');
   document.getElementById('nav-classement').classList.toggle('active', view==='classement');
   if(document.getElementById('nav-grimoire')) document.getElementById('nav-grimoire').classList.toggle('active', view==='grimoire');
+  if(document.getElementById('nav-blizzcon')) document.getElementById('nav-blizzcon').classList.toggle('active', view==='blizzcon');
   window.scrollTo({top:0, behavior:'smooth'});
   if(view==='polls') renderPolls();
   if(view==='profil') renderProfil();
   if(view==='classement') renderClassement();
   if(view==='grimoire') renderGrimoire();
+  if(view==='blizzcon') renderBlizzcon();
+}
+
+// ---------- Compte à rebours BlizzCon (global, tourne en continu) ----------
+const BLIZZCON_OPENING = '2026-09-12T19:30:00+02:00';
+
+function updateBlizzconCountdowns(){
+  const diffMs = new Date(BLIZZCON_OPENING) - new Date();
+  const els = [document.getElementById('home-countdown-timer'), document.getElementById('blizzcon-page-countdown-timer')];
+  let html;
+  if(diffMs <= 0){
+    html = `<span class="blizzcon-live">🔴 C'est parti !</span>`;
+  } else {
+    const totalSeconds = Math.floor(diffMs/1000);
+    const days = Math.floor(totalSeconds/86400);
+    const hours = Math.floor((totalSeconds%86400)/3600);
+    const minutes = Math.floor((totalSeconds%3600)/60);
+    const seconds = totalSeconds%60;
+    html = `
+      <div class="cd-unit"><span class="cd-num">${days}</span><span class="cd-label">Jour${days>1?'s':''}</span></div>
+      <div class="cd-unit"><span class="cd-num">${String(hours).padStart(2,'0')}</span><span class="cd-label">Heures</span></div>
+      <div class="cd-unit"><span class="cd-num">${String(minutes).padStart(2,'0')}</span><span class="cd-label">Min</span></div>
+      <div class="cd-unit"><span class="cd-num">${String(seconds).padStart(2,'0')}</span><span class="cd-label">Sec</span></div>
+    `;
+  }
+  els.forEach(el => { if(el) el.innerHTML = html; });
+}
+setInterval(updateBlizzconCountdowns, 1000);
+updateBlizzconCountdowns();
+
+// ---------- Chronique de Camelot ----------
+// Contenu 100% modifiable : mets à jour "status"/"badge"/"text" après la BlizzCon
+// pour refléter les vraies annonces (status: 'rumeur' | 'confirme' | 'officiel').
+const CAMELOT_CHRONICLE = [
+  { status:'officiel', badge:'Info officielle', title:"Dates et lieu de la BlizzCon 2026", text:"La BlizzCon 2026 se tient les 12 et 13 septembre à l'Anaheim Convention Center, avec une cérémonie d'ouverture le samedi à 19h30 (heure de Paris). Le programme confirme une session dédiée à Classic le premier jour et un panel Hardcore le second.", source:'https://timesaver.gg/blog/wow-classic-plus-blizzcon-2026-schedule-which-panel' },
+  { status:'rumeur', badge:'Rumeur', title:'« Project Camelot »', text:"Un nom de code repéré via datamining, associé par la communauté à un possible projet Classic+. Blizzard n'a confirmé ni son existence ni sa nature.", source:'https://misti.services/blog/wow-classic-plus-guide-blizzcon-2026' },
+  { status:'rumeur', badge:'Rumeur', title:'Une nouvelle classe « Spellblade »', text:"Une classe inédite évoquée dans des fichiers dataminés et les discussions communautaires. Aucune confirmation officielle à ce jour.", source:'https://misti.services/blog/wow-classic-plus-guide-blizzcon-2026' },
+  { status:'rumeur', badge:'Hypothèse', title:'Warlords of Draenor Classic ?', text:"Mists of Pandaria Classic ayant déjà atteint son dernier raid (le Siège d'Orgrimmar), Warlords Classic serait la suite logique — mais rien n'a été annoncé.", source:'https://wowvendor.com/media/wow/blizzcon-2026-overview/' },
+  { status:'officiel', badge:'À noter', title:"Toujours aucune annonce officielle de « Classic+ »", text:"Blizzard a seulement indiqué que plus de clarté sur l'avenir de Classic viendrait après le contenu du Temple Noir (Black Temple). Tout le reste — dates, classes, format — reste spéculation communautaire.", source:'https://misti.services/blog/wow-classic-plus-guide-blizzcon-2026' },
+];
+
+function renderChroniqueHtml(){
+  const cards = CAMELOT_CHRONICLE.map(c => `
+    <div class="chron-card">
+      <div class="chron-top">
+        <div class="chron-title">${c.title}</div>
+        <span class="chron-badge ${c.status}">${c.badge}</span>
+      </div>
+      <p class="chron-text">${c.text}</p>
+      <a class="chron-source" href="${c.source}" target="_blank" rel="noopener noreferrer">Source →</a>
+    </div>
+  `).join('');
+  return `<div class="chron-disclaimer">⚠️ Tout ce qui suit reflète l'état des rumeurs avant la BlizzCon 2026. Cette page sera mise à jour après l'événement avec les annonces réelles.</div>${cards}`;
+}
+
+// ---------- BlizzCon : sous-onglets Chronique / Mur ----------
+let blizzconTab = 'chronique';
+let murPollingHandle = null;
+
+function stopMurPolling(){ if(murPollingHandle){ clearInterval(murPollingHandle); murPollingHandle=null; } }
+
+function startMurPolling(){
+  stopMurPolling();
+  murPollingHandle = setInterval(()=>{
+    if(blizzconTab !== 'mur' || !document.getElementById('view-blizzcon').classList.contains('active')){
+      stopMurPolling();
+      return;
+    }
+    renderMur();
+  }, 6000);
+}
+
+function switchBlizzconTab(tab){
+  blizzconTab = tab;
+  renderBlizzconContent();
+}
+
+function renderBlizzconTabs(){
+  const wrap = document.getElementById('blizzcon-tabs');
+  const tabs = [
+    { id:'chronique', label:'📜 Chronique de Camelot' },
+    { id:'mur', label:'💬 Mur des réactions' },
+  ];
+  wrap.innerHTML = tabs.map(t => `<button class="${t.id===blizzconTab?'active':''}" onclick="switchBlizzconTab('${t.id}')">${t.label}</button>`).join('');
+}
+
+async function renderBlizzcon(){
+  await renderBlizzconContent();
+}
+
+async function renderBlizzconContent(){
+  stopMurPolling();
+  const content = document.getElementById('blizzcon-content');
+  renderBlizzconTabs();
+  if(blizzconTab === 'chronique'){
+    content.innerHTML = renderChroniqueHtml();
+  } else {
+    content.innerHTML = `<div class="mur-empty">Chargement…</div>`;
+    await renderMur();
+    startMurPolling();
+  }
+}
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+async function fetchReactions(){
+  try{
+    const res = await fetch(`${API_URL}?action=reactions`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  }catch(e){ console.error('fetch reactions error', e); return []; }
+}
+
+async function postReaction(pseudo, message){
+  try{
+    const res = await fetch(API_URL, {
+      method:'POST',
+      body: JSON.stringify({action:'postReaction', pseudo, message})
+    });
+    return await res.json();
+  }catch(e){ console.error('post reaction error', e); return {}; }
+}
+
+async function renderMur(){
+  const content = document.getElementById('blizzcon-content');
+  if(!content) return;
+  const pseudo = getPseudo();
+  const reactions = await fetchReactions();
+
+  const listHtml = reactions.length ? reactions.map(r=>{
+    const isMe = pseudo && r.pseudo.toLowerCase() === pseudo.toLowerCase();
+    let time = '';
+    try{ time = new Date(r.date).toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}); }catch(e){}
+    return `<div class="mur-item ${isMe?'me':''}"><div class="mur-item-top"><span class="mur-pseudo">${escapeHtml(r.pseudo)}</span><span class="mur-time">${time}</span></div><div class="mur-msg">${escapeHtml(r.message)}</div></div>`;
+  }).join('') : `<div class="mur-empty">Aucune réaction pour l'instant. Sois le premier à réagir !</div>`;
+
+  content.innerHTML = `
+    <div class="mur-form">
+      <input type="text" id="mur-input" maxlength="200" placeholder="${pseudo ? 'Ta réaction en direct...' : 'Choisis un pseudo pour réagir'}" onkeydown="if(event.key==='Enter'){event.preventDefault();sendMurReaction();}">
+      <button class="vote-btn" onclick="sendMurReaction()">Envoyer</button>
+    </div>
+    <div class="mur-list" id="mur-list">${listHtml}</div>
+  `;
+}
+
+function sendMurReaction(){
+  const input = document.getElementById('mur-input');
+  if(!input) return;
+  const message = input.value.trim();
+  if(!message) return;
+
+  ensurePseudo(async (pseudo) => {
+    input.disabled = true;
+    await postReaction(pseudo, message);
+    await renderMur();
+  });
 }
 
 function renderCatTabs(){
