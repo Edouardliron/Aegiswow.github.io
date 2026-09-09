@@ -405,6 +405,14 @@ async function fetchResults(pollId){
   }catch(e){ console.error('fetch results error', e); return {}; }
 }
 
+async function fetchResultsBatch(pollIds){
+  try{
+    const res = await fetch(`${API_URL}?action=resultsBatch&pollIds=${encodeURIComponent(pollIds.join(','))}`);
+    const data = await res.json();
+    return data || {};
+  }catch(e){ console.error('fetch results batch error', e); return {}; }
+}
+
 async function sendVote(pollId, optionIndex, pseudo){
   try{
     const res = await fetch(API_URL, {
@@ -446,11 +454,12 @@ function setLocalVote(pollId, idx){
   localStorage.setItem('aegis-voted:' + pollId, String(idx));
 }
 
-function renderPolls(){
+async function renderPolls(){
   renderCatTabs();
   const list = document.getElementById('polls-list');
   list.innerHTML = '';
   const filtered = POLLS.filter(p=>p.category===currentCat);
+
   filtered.forEach(poll=>{
     const card = document.createElement('div');
     card.className = 'poll-card';
@@ -459,11 +468,14 @@ function renderPolls(){
         <h3>${poll.question}</h3>
         <span class="poll-meta" id="meta-${poll.id}">…</span>
       </div>
-      <div class="poll-body" id="body-${poll.id}"></div>
+      <div class="poll-body" id="body-${poll.id}"><p style="color:var(--text-dim); font-size:0.85rem;">Chargement…</p></div>
     `;
     list.appendChild(card);
-    initPoll(poll);
   });
+
+  // Un seul aller-retour réseau pour TOUTE la catégorie, au lieu d'un par question.
+  const batch = await fetchResultsBatch(filtered.map(p=>p.id));
+  filtered.forEach(poll => renderPollFromData(poll, batch[poll.id] || {}));
 }
 
 function toggleCard(pollId){
@@ -471,13 +483,11 @@ function toggleCard(pollId){
   body.classList.toggle('open');
 }
 
-async function initPoll(poll){
+function renderPollFromData(poll, raw){
   const body = document.getElementById('body-'+poll.id);
   const meta = document.getElementById('meta-'+poll.id);
-  meta.textContent = '…';
-  body.innerHTML = '<p style="color:var(--text-dim); font-size:0.85rem;">Chargement…</p>';
+  if(!body || !meta) return;
 
-  const raw = await fetchResults(poll.id);
   const counts = countsToArray(poll, raw);
   const already = getLocalVote(poll.id);
 
@@ -501,6 +511,12 @@ async function initPoll(poll){
     ${optionsHtml}
     <button class="vote-btn" onclick="castVote('${poll.id}')">Voter</button>
   `;
+}
+
+// Conservée pour rafraîchir UNE seule carte après un vote (voir castVote plus bas).
+async function initPoll(poll){
+  const raw = await fetchResults(poll.id);
+  renderPollFromData(poll, raw);
 }
 
 async function castVote(pollId){
