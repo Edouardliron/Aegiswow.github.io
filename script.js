@@ -395,7 +395,7 @@ function renderCatTabs(){
 }
 
 // Colle ici l'URL de ton Web App Google Apps Script (voir instructions de déploiement)
-const API_URL = 'https://script.google.com/macros/s/AKfycbxkGvgQjgrFw4tGM0YNMasMJOocV3G6FwEK6MG45Em-xfaJn6qkAae_78tbOF2OBisQqQ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxy39J1Y-6cLHdYSdUJ4t-Y_BgkJEQyq4XBRN16AyLhpInH-q9dofowlyuCT9yhkH1xnQ/exec';
 
 async function fetchResults(pollId){
   try{
