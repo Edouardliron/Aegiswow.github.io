@@ -496,12 +496,48 @@ async function renderBlizzconContent(){
   const content = document.getElementById('blizzcon-content');
   renderBlizzconTabs();
   if(blizzconTab === 'chronique'){
-    content.innerHTML = renderChroniqueHtml();
+    await renderChronique(content);
   } else {
     content.innerHTML = `<div class="mur-empty">Chargement…</div>`;
     await renderMur();
     startMurPolling();
   }
+}
+
+async function fetchNewsFeed(){
+  try{
+    const res = await fetch(`${API_URL}?action=newsFeed`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  }catch(e){ console.error('fetch news feed error', e); return []; }
+}
+
+function renderNewsFeedHtml(items){
+  if(!items.length){
+    return `<h3 class="poll-charts-title" style="margin-top:36px;">📰 Actus en direct (Wowhead Classic)</h3><p class="chron-text">Pas encore d'actu récupérée automatiquement — la première synchronisation (toutes les 6h) n'a peut-être pas encore eu lieu.</p>`;
+  }
+  const rows = items.map(n=>{
+    let dateLabel = '';
+    try{ dateLabel = new Date(n.pubDate).toLocaleDateString('fr-FR', {day:'2-digit', month:'short'}); }catch(e){}
+    return `
+      <div class="chron-card">
+        <div class="chron-top">
+          <div class="chron-title">${escapeHtml(n.title)}</div>
+          <span class="chron-badge datamine">${dateLabel}</span>
+        </div>
+        <p class="chron-text">${escapeHtml(n.summary)}</p>
+        <a class="chron-source" href="${n.link}" target="_blank" rel="noopener noreferrer">Lire sur Wowhead →</a>
+      </div>
+    `;
+  }).join('');
+  return `<h3 class="poll-charts-title" style="margin-top:36px;">📰 Actus en direct (Wowhead Classic)</h3>${rows}`;
+}
+
+async function renderChronique(content){
+  content.innerHTML = renderChroniqueHtml() + `<div id="news-feed-slot"><p class="chron-text">Chargement des actus en direct…</p></div>`;
+  const news = await fetchNewsFeed();
+  const slot = document.getElementById('news-feed-slot');
+  if(slot) slot.outerHTML = renderNewsFeedHtml(news);
 }
 
 function escapeHtml(str){
