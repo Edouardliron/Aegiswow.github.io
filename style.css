@@ -316,6 +316,7 @@ footer{
   white-space:nowrap;
 }
 .chron-badge.rumeur{border-color:#9a6634; color:#e0a05f;}
+.chron-badge.datamine{border-color:#3d6a8a; color:#6eaad4;}
 .chron-badge.confirme{border-color:#557b45; color:#91c875;}
 .chron-badge.officiel{border-color:var(--gold); color:var(--gold-bright);}
 .chron-text{color:var(--text-dim); font-size:0.9rem; line-height:1.6; margin-bottom:10px;}
