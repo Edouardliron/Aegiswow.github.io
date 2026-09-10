@@ -5,6 +5,7 @@ const CATEGORIES = [
   {id:'monde', label:'Monde'},
   {id:'donjons', label:'Donjons'},
   {id:'raids', label:'Raids'},
+  {id:'membres', label:'🎭 Membres'},
 ];
 
 const POLLS = [
@@ -41,6 +42,21 @@ const POLLS = [
   {id:'raid-format', category:'raids', question:"Quel format de raid tu veux voir sur Classic + ?", options:["10 joueurs uniquement","10 joueurs mini - Flex - 25 joueurs maxi","40 joueurs"]},
   {id:'raid-difficulte', category:'raids', question:"Aimerais-tu que Classic+ fasse un vrai système de difficulté de raid (Exemple : HM, Mythic) ?", options:["Oui grave chaud","Oui mais pas de la merde comme SOD","Non comme sur classic"]},
   {id:'raid-loot', category:'raids', question:"Quel système de loot vous semble le plus juste ?", options:["Loot au DKP","Loot conseil (officiers)","Master Loot libre","Peu importe, à voir ensemble"]},
+
+  {id:'mem-01', category:'membres', question:"On va commencer simple pour voir si votre cerveau est ON : pourquoi Whael joue-t-il toujours Paladin Tank ?", options:["Il a toujours été fan du Power Ranger rose","Il a une passion pour la panthère rose","Passion souffrance"]},
+  {id:'mem-02', category:'membres', question:"Depuis le début des raids Aegis, qui est celui qui pisse le plus en raid ?", options:["Tryma","Oxymore","Chammaleau"]},
+  {id:'mem-03', category:'membres', question:"Pensez-vous que Chammaleau arrivera à faire un raid sans aller fumer ?", options:["Oui — sinon il doit enchaîner avec une pause Nutella, un verre d'eau et 7 bières","Non — il est focus"]},
+  {id:'mem-04', category:'membres', question:"Soliane arrivera-t-il un jour à jouer avec un WeakAura ?", options:["Oui — il n'a plus peur de faire un copier/coller","Non, impossible"]},
+  {id:'mem-05', category:'membres', question:"Last arrivera-t-il à ne pas ninja looter un objet épique alors que ce ne sont pas ses stats, mais que ça vaut 2 PO ?", options:["Oui — il vient de terminer le Bled, il sait lire à présent","Non — c'est maladif"]},
+  {id:'mem-06', category:'membres', question:"Combien de temps JeanFreeze tiendra-t-il sur Classic+ ?", options:["3 jours","20 jours","1 heure — il a déjà vanish"]},
+  {id:'mem-07', category:'membres', question:"Haltak jouera-t-il une classe autre que Guerrier ?", options:["Oui","Non, Guerrier — et je vais en faire 3 !"]},
+  {id:'mem-08', category:'membres', question:"Amasty va-t-il avoir un pseudo chelou ?", options:["Oui, il ne peut pas s'en empêcher","Non, impossible"]},
+  {id:'mem-09', category:'membres', question:"Qui ne respecte jamais les temps de pause ?", options:["Dagoth","Oxymore","Tryma","Frozen","Chamma"]},
+  {id:'mem-10', category:'membres', question:"Nekh va-t-il choisir encore une classe pétée ?", options:["Non — il veut jouer Heal, donc si c'est vert et que la vie remonte, c'est OK","Oui — c'est dans les veines"]},
+  {id:'mem-11', category:'membres', question:"Robee va-t-il repop comme il le fait souvent pour nous surprendre ?", options:["Oui — mais sous un pseudo en compte caché : Robii","Non — il est bloqué sur Minecraft"]},
+  {id:'mem-12', category:'membres', question:"Elea sera-t-elle de retour parmi nous ?", options:["Oui — les slides PowerPoint et Power BI ont été intégrés au moteur graphique du jeu","Non — elle n'arrive pas à gérer le contrôle parental et va dépasser les 152 heures de jeu en 3 jours"]},
+  {id:'mem-13', category:'membres', question:"Monia va-t-elle up toutes les classes ?", options:["Oui — et elle changera 3 fois par raid","Non — une seule ça suffit"]},
+  {id:'mem-14', category:'membres', question:"Aegis sera-t-il sur Classic+ ?", options:["Oui, avec de bonnes annonces","Non, si rien ne va"]},
 ];
 
 
