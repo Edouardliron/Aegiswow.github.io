@@ -319,6 +319,7 @@ footer{
 .chron-badge.datamine{border-color:#3d6a8a; color:#6eaad4;}
 .chron-badge.confirme{border-color:#557b45; color:#91c875;}
 .chron-badge.officiel{border-color:var(--gold); color:var(--gold-bright);}
+.chron-badge.communaute{border-color:#5f8a6e; color:#8ec99e;}
 .chron-text{color:var(--text-dim); font-size:0.9rem; line-height:1.6; margin-bottom:10px;}
 .chron-source{color:var(--gold-bright); font-size:0.76rem; text-decoration:underline;}
 .chron-disclaimer{
