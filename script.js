@@ -470,7 +470,7 @@ function startMurPolling(){
       stopMurPolling();
       return;
     }
-    renderMur();
+    refreshMurListOnly();
   }, 6000);
 }
 
@@ -563,26 +563,39 @@ async function postReaction(pseudo, message){
   }catch(e){ console.error('post reaction error', e); return {}; }
 }
 
+function buildMurListHtml(reactions, pseudo){
+  return reactions.length ? reactions.map(r=>{
+    const isMe = pseudo && r.pseudo.toLowerCase() === pseudo.toLowerCase();
+    let time = '';
+    try{ time = new Date(r.date).toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}); }catch(e){}
+    return `<div class="mur-item ${isMe?'me':''}"><div class="mur-item-top"><span class="mur-pseudo">${escapeHtml(r.pseudo)}</span><span class="mur-time">${time}</span></div><div class="mur-msg">${escapeHtml(r.message)}</div></div>`;
+  }).join('') : `<div class="mur-empty">Aucune réaction pour l'instant. Sois le premier à réagir !</div>`;
+}
+
 async function renderMur(){
   const content = document.getElementById('blizzcon-content');
   if(!content) return;
   const pseudo = getPseudo();
   const reactions = await fetchReactions();
 
-  const listHtml = reactions.length ? reactions.map(r=>{
-    const isMe = pseudo && r.pseudo.toLowerCase() === pseudo.toLowerCase();
-    let time = '';
-    try{ time = new Date(r.date).toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}); }catch(e){}
-    return `<div class="mur-item ${isMe?'me':''}"><div class="mur-item-top"><span class="mur-pseudo">${escapeHtml(r.pseudo)}</span><span class="mur-time">${time}</span></div><div class="mur-msg">${escapeHtml(r.message)}</div></div>`;
-  }).join('') : `<div class="mur-empty">Aucune réaction pour l'instant. Sois le premier à réagir !</div>`;
-
   content.innerHTML = `
     <div class="mur-form">
       <input type="text" id="mur-input" maxlength="200" placeholder="${pseudo ? 'Ta réaction en direct...' : 'Choisis un pseudo pour réagir'}" onkeydown="if(event.key==='Enter'){event.preventDefault();sendMurReaction();}">
       <button class="vote-btn" onclick="sendMurReaction()">Envoyer</button>
     </div>
-    <div class="mur-list" id="mur-list">${listHtml}</div>
+    <div class="mur-list" id="mur-list">${buildMurListHtml(reactions, pseudo)}</div>
   `;
+}
+
+// Utilisée par le rafraîchissement automatique (toutes les 6s) : ne touche QUE la liste
+// des messages, jamais le champ de saisie — pour ne pas effacer ce que le joueur est en
+// train de taper au moment où le Mur se met à jour tout seul.
+async function refreshMurListOnly(){
+  const listEl = document.getElementById('mur-list');
+  if(!listEl) return;
+  const pseudo = getPseudo();
+  const reactions = await fetchReactions();
+  listEl.innerHTML = buildMurListHtml(reactions, pseudo);
 }
 
 function sendMurReaction(){
