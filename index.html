@@ -368,6 +368,27 @@ footer{
 .roster-form input[type="text"]:focus, .roster-form select:focus{outline:none; border-color:var(--gold);}
 .roster-form select{cursor:pointer;}
 .roster-submit{width:100%; padding:14px; font-size:1.05rem; cursor:pointer;}
+.roster-confirm{
+  max-width:600px; margin:0 auto; background:var(--panel); border:1px solid #557b45;
+  border-radius:8px; padding:26px 30px; text-align:center; color:#91c875; font-size:0.95rem;
+}
+.roster-confirm .profil-change{color:var(--text-dim); margin-top:14px; display:block;}
+.roster-row{
+  display:flex; align-items:flex-start; gap:14px;
+  background:var(--panel); border:1px solid var(--line); border-radius:6px;
+  padding:14px 18px; margin-bottom:10px;
+}
+.roster-row-main{flex:1; min-width:0;}
+.roster-row-name{color:var(--gold-bright); font-family:'Cinzel'; font-size:0.95rem;}
+.roster-row-meta{color:var(--text-dim); font-size:0.82rem; margin-top:3px;}
+.roster-row-remark{color:var(--text); font-size:0.85rem; margin-top:6px; font-style:italic;}
+.roster-badge{
+  font-family:'Cinzel'; font-size:0.7rem; padding:4px 12px; border-radius:20px;
+  border:1px solid var(--line); color:var(--text-dim); white-space:nowrap; flex-shrink:0;
+}
+.roster-badge.tank{border-color:#3d6a8a; color:#6eaad4;}
+.roster-badge.heal{border-color:#557b45; color:#91c875;}
+.roster-badge.dps{border-color:#a13333; color:#d15959;}
 
 /* ---- MODAL PSEUDO ---- */
 .modal-overlay{
@@ -543,14 +564,14 @@ footer{
     <div id="blizzcon-content"></div>
   </section>
 
-  <!-- ROSTER R-HL (Recensement Hardcore) -->
+  <!-- ROSTER (Recensement Hardcore) -->
   <section id="view-roster" class="view">
     <div class="page-head">
       <h2>Recensement Roster</h2>
       <p>Objectif Top 5 Serveur. Ou du moins essayer de ne pas mourir bêtement au premier pull.</p>
     </div>
 
-    <form action="https://formspree.io/f/COLLE_TON_CODE_FORMSPREE_ICI" method="POST" class="roster-form">
+    <form id="roster-form" class="roster-form" onsubmit="submitRosterForm(event)">
       <div class="form-group">
         <label for="username">Pseudo en jeu :</label>
         <input type="text" id="username" name="username" required placeholder="Ex: Aegoric">
@@ -576,11 +597,16 @@ footer{
         <input type="text" id="remarque" name="remarque" placeholder="Ex: Je sais courir en arrière promis">
       </div>
 
-      <input type="hidden" name="_subject" value="Nouvelle inscription Roster R-HL — Guilde Aegis">
-      <input type="text" name="_gotcha" style="display:none">
-
-      <button type="submit" class="vote-btn roster-submit">Envoyer ma bêtise</button>
+      <button type="submit" id="roster-submit-btn" class="vote-btn roster-submit">Envoyer ma bêtise</button>
     </form>
+
+    <div id="roster-confirm" class="roster-confirm" style="display:none;">
+      ✅ C'est enregistré ! Merci pour ton inscription.
+      <button class="profil-change" onclick="showRosterForm()">Renvoyer une autre réponse</button>
+    </div>
+
+    <div class="page-head" style="padding-top:36px; padding-bottom:8px;"><h2 style="font-size:1.3rem;">Inscrits</h2></div>
+    <div id="roster-list"></div>
   </section>
 
 </main>
@@ -990,6 +1016,7 @@ function goTo(view){
   if(view==='classement') renderClassement();
   if(view==='grimoire') renderGrimoire();
   if(view==='blizzcon') renderBlizzcon();
+  if(view==='roster') renderRosterList();
 }
 
 // ---------- Compte à rebours BlizzCon (global, tourne en continu) ----------
@@ -1501,6 +1528,77 @@ async function renderClassement(){
   }).join('');
 
   content.innerHTML = `<div class="leaderboard">${rows}</div>`;
+}
+
+// ---------- Roster ----------
+async function postRoster(username, role, classSpec, remarque){
+  try{
+    const res = await fetch(API_URL, {
+      method:'POST',
+      body: JSON.stringify({action:'postRoster', username, role, classSpec, remarque})
+    });
+    return await res.json();
+  }catch(e){ console.error('post roster error', e); return {}; }
+}
+
+async function fetchRoster(){
+  try{
+    const res = await fetch(`${API_URL}?action=rosterList`);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  }catch(e){ console.error('fetch roster error', e); return []; }
+}
+
+function showRosterForm(){
+  document.getElementById('roster-form').style.display = '';
+  document.getElementById('roster-confirm').style.display = 'none';
+  document.getElementById('roster-form').reset();
+  const btn = document.getElementById('roster-submit-btn');
+  btn.disabled = false;
+  btn.textContent = 'Envoyer ma bêtise';
+}
+
+async function submitRosterForm(event){
+  event.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  const role = document.getElementById('role').value;
+  const classSpec = document.getElementById('class_spec').value.trim();
+  const remarque = document.getElementById('remarque').value.trim();
+  if(!username || !role || !classSpec) return;
+
+  const btn = document.getElementById('roster-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Envoi…';
+
+  await postRoster(username, role, classSpec, remarque);
+
+  document.getElementById('roster-form').style.display = 'none';
+  document.getElementById('roster-confirm').style.display = 'block';
+
+  renderRosterList();
+}
+
+async function renderRosterList(){
+  const listEl = document.getElementById('roster-list');
+  if(!listEl) return;
+  listEl.innerHTML = `<p style="color:var(--text-dim); font-size:0.85rem;">Chargement…</p>`;
+
+  const entries = await fetchRoster();
+  if(!entries.length){
+    listEl.innerHTML = `<div class="leaderboard-empty">Personne ne s'est encore inscrit. Sois le premier !</div>`;
+    return;
+  }
+
+  listEl.innerHTML = entries.map(e => `
+    <div class="roster-row">
+      <div class="roster-row-main">
+        <div class="roster-row-name">${escapeHtml(e.username)}</div>
+        <div class="roster-row-meta">${escapeHtml(e.classSpec)}</div>
+        ${e.remarque ? `<div class="roster-row-remark">« ${escapeHtml(e.remarque)} »</div>` : ''}
+      </div>
+      <span class="roster-badge ${(e.role||'').toLowerCase()}">${escapeHtml(e.role)}</span>
+    </div>
+  `).join('');
 }
 
 goTo('home');
