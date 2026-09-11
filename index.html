@@ -132,34 +132,36 @@
       <p>Objectif Top 5 Serveur. Ou du moins essayer de ne pas mourir bêtement au premier pull.</p>
     </div>
 
-    <form action="https://formspree.io/f/ton-code-formspree" method="POST" class="roster-form" style="max-width: 600px; margin: 0 auto; background: var(--panel); padding: 30px; border-radius: 8px; border: 1px solid var(--line);">
-        
-        <div class="form-group" style="margin-bottom: 20px;">
-            <label for="username" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Pseudo en jeu :</label>
-            <input type="text" id="username" name="username" required placeholder="Ex: Aegoric" style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
-        </div>
+    <form action="https://formspree.io/f/COLLE_TON_CODE_FORMSPREE_ICI" method="POST" class="roster-form">
+      <div class="form-group">
+        <label for="username">Pseudo en jeu :</label>
+        <input type="text" id="username" name="username" required placeholder="Ex: Aegoric">
+      </div>
 
-        <div class="form-group" style="margin-bottom: 20px;">
-            <label for="role" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Rôle Principal :</label>
-            <select id="role" name="role" required style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
-                <option value="" disabled selected>-- Choisir ton rôle --</option>
-                <option value="Tank">Tank (Celui qui prend les tatanes)</option>
-                <option value="Heal">Heal (Celui qui regarde les barres de vie descendre)</option>
-                <option value="DPS">DPS (Celui qui aggro avant le tank)</option>
-            </select>
-        </div>
+      <div class="form-group">
+        <label for="role">Rôle Principal :</label>
+        <select id="role" name="role" required>
+          <option value="" disabled selected>-- Choisir ton rôle --</option>
+          <option value="Tank">Tank (Celui qui prend les tatanes)</option>
+          <option value="Heal">Heal (Celui qui regarde les barres de vie descendre)</option>
+          <option value="DPS">DPS (Celui qui aggro avant le tank)</option>
+        </select>
+      </div>
 
-        <div class="form-group" style="margin-bottom: 20px;">
-            <label for="class_spec" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Classe et Spé :</label>
-            <input type="text" id="class_spec" name="class_spec" required placeholder="Ex: Mage Feu, Guerrier BDSM..." style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
-        </div>
+      <div class="form-group">
+        <label for="class_spec">Classe et Spé :</label>
+        <input type="text" id="class_spec" name="class_spec" required placeholder="Ex: Mage Feu, Guerrier BDSM...">
+      </div>
 
-        <div class="form-group" style="margin-bottom: 20px;">
-            <label for="remarque" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Un mot à ajouter (ou une excuse sur ton niveau) :</label>
-            <input type="text" id="remarque" name="remarque" placeholder="Ex: Je sais courir en arrière promis" style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
-        </div>
+      <div class="form-group">
+        <label for="remarque">Un mot à ajouter (ou une excuse sur ton niveau) :</label>
+        <input type="text" id="remarque" name="remarque" placeholder="Ex: Je sais courir en arrière promis">
+      </div>
 
-        <button type="submit" class="vote-btn" style="width: 100%; padding: 14px; font-size: 1.1rem; cursor: pointer;">Envoyer ma bêtise</button>
+      <input type="hidden" name="_subject" value="Nouvelle inscription Roster R-HL — Guilde Aegis">
+      <input type="text" name="_gotcha" style="display:none">
+
+      <button type="submit" class="vote-btn roster-submit">Envoyer ma bêtise</button>
     </form>
   </section>
 
