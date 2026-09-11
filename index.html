@@ -81,7 +81,6 @@
     <div id="polls-list"></div>
   </section>
 
-
   <!-- GRIMOIRE -->
   <section id="view-grimoire" class="view">
     <div class="page-head">
@@ -133,17 +132,16 @@
       <p>Objectif Top 5 Serveur. Remplis ce formulaire avec rigueur. Tout choix non conforme aux exigences d'optimisation (Ingénierie obligatoire) sera contacté.</p>
     </div>
 
-    <!-- Formulaire relié à Formspree (Pense à remplacer ton URL Formspree ci-dessous) -->
-    <form action="https://formspree.io/f/ton-code-formspree" method="POST" class="roster-form" style="max-width: 600px; margin: 0 auto; background: #181b22; padding: 30px; border-radius: 8px; border: 1px solid #2a2e39;">
+    <form action="https://formspree.io/f/ton-code-formspree" method="POST" class="roster-form" style="max-width: 600px; margin: 0 auto; background: var(--panel); padding: 30px; border-radius: 8px; border: 1px solid var(--line);">
         
         <div class="form-group" style="margin-bottom: 20px;">
-            <label for="username" style="display: block; margin-bottom: 8px; font-weight: 600;">Pseudo Discord / In-game :</label>
-            <input type="text" id="username" name="username" required placeholder="Ex: Aegoric" style="width: 100%; padding: 12px; background: #0f1115; border: 1px solid #2a2e39; border-radius: 4px; color: #fff; box-sizing: border-box;">
+            <label for="username" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Pseudo Discord / In-game :</label>
+            <input type="text" id="username" name="username" required placeholder="Ex: Aegoric" style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
         </div>
 
         <div class="form-group" style="margin-bottom: 20px;">
-            <label for="role" style="display: block; margin-bottom: 8px; font-weight: 600;">Rôle Principal Visé :</label>
-            <select id="role" name="role" required style="width: 100%; padding: 12px; background: #0f1115; border: 1px solid #2a2e39; border-radius: 4px; color: #fff; box-sizing: border-box;">
+            <label for="role" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Rôle Principal Visé :</label>
+            <select id="role" name="role" required style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
                 <option value="" disabled selected>-- Choisir un rôle --</option>
                 <option value="Tank">Tank (Réservé aux joueurs expérimentés)</option>
                 <option value="Heal">Heal (Réservé aux joueurs expérimentés)</option>
@@ -152,26 +150,26 @@
         </div>
 
         <div class="form-group" style="margin-bottom: 20px;">
-            <label for="class_spec" style="display: block; margin-bottom: 8px; font-weight: 600;">Classe et Spécialisation :</label>
-            <input type="text" id="class_spec" name="class_spec" required placeholder="Ex: Mage Feu, Guerrier Fury..." style="width: 100%; padding: 12px; background: #0f1115; border: 1px solid #2a2e39; border-radius: 4px; color: #fff; box-sizing: border-box;">
+            <label for="class_spec" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Classe et Spécialisation :</label>
+            <input type="text" id="class_spec" name="class_spec" required placeholder="Ex: Mage Feu, Guerrier Fury..." style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
         </div>
 
         <div class="form-group" style="margin-bottom: 20px;">
-            <label for="wcl" style="display: block; margin-bottom: 8px; font-weight: 600;">Lien Warcraft Logs ou Expérience HL :</label>
-            <input type="text" id="wcl" name="wcl" placeholder="Lien WCL ou résumé de votre passif" style="width: 100%; padding: 12px; background: #0f1115; border: 1px solid #2a2e39; border-radius: 4px; color: #fff; box-sizing: border-box;">
+            <label for="wcl" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Lien Warcraft Logs ou Expérience HL :</label>
+            <input type="text" id="wcl" name="wcl" placeholder="Lien WCL ou résumé de votre passif" style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
         </div>
 
         <div class="form-group checkbox-group" style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 12px;">
             <input type="checkbox" id="engineering" name="engineering" required style="margin-top: 4px; transform: scale(1.2); cursor: pointer;">
-            <label for="engineering" style="font-weight: normal; font-size: 0.9rem; cursor: pointer;">Je m'engage à monter l'<strong>Ingénierie</strong> et à respecter l'ensemble des pré-requis d'optimisation requis par la guilde.</label>
+            <label for="engineering" style="font-weight: normal; font-size: 0.9rem; cursor: pointer; color: var(--text);">Je m'engage à monter l'<strong>Ingénierie</strong> et à respecter l'ensemble des pré-requis d'optimisation requis par la guilde.</label>
         </div>
 
         <div class="form-group checkbox-group" style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 12px;">
             <input type="checkbox" id="availability" name="availability" required style="margin-top: 4px; transform: scale(1.2); cursor: pointer;">
-            <label for="availability" style="font-weight: normal; font-size: 0.9rem; cursor: pointer;">Je certifie avoir une présence minimale de 85% à 90% les soirs de raid.</label>
+            <label for="availability" style="font-weight: normal; font-size: 0.9rem; cursor: pointer; color: var(--text);">Je certifie avoir une présence minimale de 85% à 90% les soirs de raid.</label>
         </div>
 
-        <button type="submit" class="submit-btn" style="width: 100%; padding: 14px; background: #f39c12; color: #0f1115; border: none; border-radius: 4px; font-weight: bold; font-size: 1.1rem; cursor: pointer;">Soumettre ma candidature R-HL</button>
+        <button type="submit" class="vote-btn" style="width: 100%; padding: 14px; font-size: 1.1rem; cursor: pointer;">Soumettre ma candidature R-HL</button>
     </form>
   </section>
 
