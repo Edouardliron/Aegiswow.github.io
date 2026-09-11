@@ -1,183 +1,37 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guilde Aegis</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<nav>
-  <div class="brand" onclick="goTo('home')">
-    <svg viewBox="0 0 100 100" fill="none"><path d="M50 5 L90 20 L90 48 C90 75 72 92 50 98 C28 92 10 75 10 48 L10 20 Z" stroke="#e6c25c" stroke-width="4" fill="rgba(201,162,39,0.08)"/><path d="M50 22 L50 78 M32 40 L68 40" stroke="#e6c25c" stroke-width="4" stroke-linecap="round"/></svg>
-    Aegis
-  </div>
-  <div class="navlinks">
-    <button id="nav-home" onclick="goTo('home')">Accueil</button>
-    <button id="nav-polls" onclick="goTo('polls')">Sondages</button>
-    <button id="nav-grimoire" onclick="goTo('grimoire')">Grimoire</button>
-    <button id="nav-profil" onclick="goTo('profil')">Profil</button>
-    <button id="nav-classement" onclick="goTo('classement')">Classement</button>
-    <button id="nav-blizzcon" onclick="goTo('blizzcon')">BlizzCon</button>
-    <button id="nav-roster" onclick="goTo('roster')">Roster R-HL</button>
-  </div>
-</nav>
-
-<div class="modal-overlay" id="pseudo-modal">
-  <div class="modal-box">
-    <h3>Choisis ton pseudo</h3>
-    <p>Il sert à suivre ta progression (niveau, titre) au fil de tes votes. Utilise ton pseudo en jeu pour que la guilde te reconnaisse.</p>
-    <input type="text" id="pseudo-input" maxlength="24" placeholder="Ex: Aegoric" onkeydown="if(event.key==='Enter')submitPseudo()">
-    <button class="vote-btn" style="width:100%;" onclick="submitPseudo()">Valider</button>
-  </div>
-</div>
-
-<main>
-
-  <!-- HOME -->
-  <section id="view-home" class="view">
-    <div class="hero">
-      <svg class="emblem" viewBox="0 0 100 100" fill="none"><path d="M50 5 L90 20 L90 48 C90 75 72 92 50 98 C28 92 10 75 10 48 L10 20 Z" stroke="#e6c25c" stroke-width="3" fill="rgba(201,162,39,0.08)"/><path d="M50 22 L50 78 M32 40 L68 40" stroke="#e6c25c" stroke-width="3" stroke-linecap="round"/></svg>
-      <h1>Guilde <span class="em">Aegis</span></h1>
-      <p>Une nouvelle bannière se lève pour World of Warcraft Classic+. Rejoignez-nous pour bâtir, ensemble, la guilde que nous voulons vraiment. Ouai ouai TA RACE</p>
-      <button class="cta" onclick="goTo('polls')">Voir les sondages →</button>
-    </div>
-
-    <div class="blizzcon-countdown" id="home-blizzcon-countdown">
-      <div class="blizzcon-countdown-kicker">🎪 BlizzCon 2026 — Cérémonie d'ouverture</div>
-      <div class="blizzcon-countdown-timer" id="home-countdown-timer">…</div>
-      <div class="blizzcon-countdown-sub">Samedi 12 septembre, 19h30 (heure de Paris)</div>
-    </div>
-
-    <div class="intro-block">
-      <strong>Aegis</strong> Avant même le lancement de Classic+, nous voulons construire notre guilde sur les retours de chacun — pas d'en imposer les règles depuis le sommet, mais de les faire émerger du groupe. Mais pour certains d'entres voous c'est mort désolé on ne pourra plus rien faire sorry bro.
-    </div>
-
-    <div class="pillars">
-      <div class="pillar">
-        <h3>Entraide</h3>
-        <p>Du leveling aux premiers raids, personne n'avance seul. Les vétérans épaulent les nouveaux venus. Faux tu vas transpirez mon gars ! On en chie tous !</p>
-      </div>
-      <div class="pillar">
-        <h3>Progression</h3>
-        <p>Un rythme de raid clair, des rôles assumés, et une vraie ambition sur le contenu Classic+. Encore Faux on parle tous en même temps ! Prépare tes dolipranes car à 00h00 sinon tu sera en erreur 404.</p>
-      </div>
-      <div class="pillar">
-        <h3>Communauté</h3>
-        <p>Des événements réguliers, en jeu et hors jeu, pour que la guilde reste vivante entre deux raids. Pour une fois ça c'est vrai.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- POLLS -->
-  <section id="view-polls" class="view">
-    <div class="page-head">
-      <h2>Sondages</h2>
-      <p>Vos sondages vous donnerons des Hauts Faits ! et surtout on est là pour s'amusez alors donne ta vision du jeu que tu veux.</p>
-    </div>
-
-    <div class="cat-tabs" id="cat-tabs"></div>
-    <div id="polls-list"></div>
-  </section>
-
-  <!-- GRIMOIRE -->
-  <section id="view-grimoire" class="view">
-    <div class="page-head">
-      <h2>Grimoire d'Azeroth</h2>
-      <p>20 questions sur le WoW Classic de la guilde. Une réponse. Un destin. Aucun retour en arrière.</p>
-    </div>
-    <div id="grimoire-content"></div>
-  </section>
-
-  <!-- PROFIL -->
-  <section id="view-profil" class="view">
-    <div class="page-head">
-      <h2>Profil</h2>
-      <p>Ton niveau progresse à chaque vote sur un sondage. Certains paliers débloquent un titre.</p>
-    </div>
-    <div id="profil-content"></div>
-  </section>
-
-  <!-- CLASSEMENT -->
-  <section id="view-classement" class="view">
-    <div class="page-head">
-      <h2>Classement</h2>
-      <p>Les membres les plus actifs de la guilde, classés par nombre de votes.</p>
-    </div>
-    <div id="classement-content"></div>
-  </section>
-
-  <!-- BLIZZCON -->
-  <section id="view-blizzcon" class="view">
-    <div class="page-head">
-      <h2>🎪 BlizzCon 2026</h2>
-      <p>Tout ce qu'on sait (et surtout ce qu'on ne sait pas encore) sur l'avenir de Classic — et vos réactions en direct samedi.</p>
-    </div>
-
-    <div class="blizzcon-countdown" style="margin-bottom:24px;">
-      <div class="blizzcon-countdown-kicker">🎪 Cérémonie d'ouverture</div>
-      <div class="blizzcon-countdown-timer" id="blizzcon-page-countdown-timer">…</div>
-      <div class="blizzcon-countdown-sub">Samedi 12 septembre, 19h30 (heure de Paris)</div>
-    </div>
-
-    <div class="cat-tabs" id="blizzcon-tabs"></div>
-    <div id="blizzcon-content"></div>
-  </section>
-
-  <!-- ROSTER R-HL (Recensement Hardcore) -->
+<!-- ROSTER R-HL (Recensement Hardcore) -->
   <section id="view-roster" class="view">
     <div class="page-head">
       <h2>Recensement Roster R-HL</h2>
-      <p>Objectif Top 5 Serveur. Remplis ce formulaire avec rigueur. Tout choix non conforme aux exigences d'optimisation (Ingénierie obligatoire) sera contacté.</p>
+      <p>Objectif Top 5 Serveur. Ou du moins essayer de ne pas mourir bêtement au premier pull.</p>
     </div>
 
     <form action="https://formspree.io/f/ton-code-formspree" method="POST" class="roster-form" style="max-width: 600px; margin: 0 auto; background: var(--panel); padding: 30px; border-radius: 8px; border: 1px solid var(--line);">
         
         <div class="form-group" style="margin-bottom: 20px;">
-            <label for="username" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Pseudo Discord / In-game :</label>
+            <label for="username" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Pseudo en jeu :</label>
             <input type="text" id="username" name="username" required placeholder="Ex: Aegoric" style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
         </div>
 
         <div class="form-group" style="margin-bottom: 20px;">
-            <label for="role" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Rôle Principal Visé :</label>
+            <label for="role" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Rôle Principal :</label>
             <select id="role" name="role" required style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
-                <option value="" disabled selected>-- Choisir un rôle --</option>
-                <option value="Tank">Tank (Réservé aux joueurs expérimentés)</option>
-                <option value="Heal">Heal (Réservé aux joueurs expérimentés)</option>
-                <option value="DPS">DPS (Autonome et orienté performance)</option>
+                <option value="" disabled selected>-- Choisir ton rôle --</option>
+                <option value="Tank">Tank (Celui qui prend les tatanes)</option>
+                <option value="Heal">Heal (Celui qui regarde les barres de vie descendre)</option>
+                <option value="DPS">DPS (Celui qui aggro avant le tank)</option>
             </select>
         </div>
 
         <div class="form-group" style="margin-bottom: 20px;">
-            <label for="class_spec" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Classe et Spécialisation :</label>
-            <input type="text" id="class_spec" name="class_spec" required placeholder="Ex: Mage Feu, Guerrier Fury..." style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
+            <label for="class_spec" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Classe et Spé :</label>
+            <input type="text" id="class_spec" name="class_spec" required placeholder="Ex: Mage Feu, Guerrier BDSM..." style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
         </div>
 
         <div class="form-group" style="margin-bottom: 20px;">
-            <label for="wcl" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Lien Warcraft Logs ou Expérience HL :</label>
-            <input type="text" id="wcl" name="wcl" placeholder="Lien WCL ou résumé de votre passif" style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
+            <label for="remarque" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text);">Un mot à ajouter (ou une excuse sur ton niveau) :</label>
+            <input type="text" id="remarque" name="remarque" placeholder="Ex: Je sais courir en arrière promis" style="width: 100%; padding: 12px; background: var(--void); border: 1px solid var(--line); border-radius: 4px; color: var(--text); box-sizing: border-box;">
         </div>
 
-        <div class="form-group checkbox-group" style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 12px;">
-            <input type="checkbox" id="engineering" name="engineering" required style="margin-top: 4px; transform: scale(1.2); cursor: pointer;">
-            <label for="engineering" style="font-weight: normal; font-size: 0.9rem; cursor: pointer; color: var(--text);">Je m'engage à monter l'<strong>Ingénierie</strong> et à respecter l'ensemble des pré-requis d'optimisation requis par la guilde.</label>
-        </div>
-
-        <div class="form-group checkbox-group" style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 12px;">
-            <input type="checkbox" id="availability" name="availability" required style="margin-top: 4px; transform: scale(1.2); cursor: pointer;">
-            <label for="availability" style="font-weight: normal; font-size: 0.9rem; cursor: pointer; color: var(--text);">Je certifie avoir une présence minimale de 85% à 90% les soirs de raid.</label>
-        </div>
-
-        <button type="submit" class="vote-btn" style="width: 100%; padding: 14px; font-size: 1.1rem; cursor: pointer;">Soumettre ma candidature R-HL</button>
+        <button type="submit" class="vote-btn" style="width: 100%; padding: 14px; font-size: 1.1rem; cursor: pointer;">Envoyer ma bêtise</button>
     </form>
   </section>
-
-</main>
-
-<footer>Guilde Aegis — World of Warcraft Classic+ · 📜 Grimoire d'Azeroth</footer>
-
-<script src="script.js" defer></script>
-
-</body>
-</html>
