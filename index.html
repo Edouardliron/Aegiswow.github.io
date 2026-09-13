@@ -183,6 +183,24 @@ footer{
 .roster-badge.dps{border-color:#a13333; color:#d15959;}
 .leaderboard-empty{padding:30px 20px; text-align:center; color:var(--text-dim); font-size:0.9rem; background:var(--panel); border:1px solid var(--line); border-radius:6px;}
 
+/* ---- TALENTS ---- */
+.cat-tabs{display:flex; gap:8px; flex-wrap:wrap; margin:20px 0 28px;}
+.cat-tabs button{
+  background:var(--panel); border:1px solid var(--line); color:var(--text-dim);
+  font-family:'Inter'; font-size:0.86rem; font-weight:500;
+  padding:8px 15px; border-radius:20px; cursor:pointer; transition:all .15s;
+}
+.cat-tabs button:hover{border-color:var(--gold); color:var(--text);}
+.cat-tabs button.active{background:var(--gold); border-color:var(--gold); color:#1a1408;}
+.talent-trees{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;}
+.talent-tree{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:20px;}
+.talent-tree h3{font-size:0.98rem; color:var(--gold-bright); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+.talent-tree ul{list-style:none;}
+.talent-tree li{display:flex; justify-content:space-between; gap:8px; padding:7px 0; font-size:0.85rem; color:var(--text); border-bottom:1px solid rgba(255,255,255,0.04);}
+.talent-tree li:last-child{border-bottom:none;}
+.talent-tree li b{color:var(--text-dim); font-weight:500; white-space:nowrap; font-size:0.78rem;}
+@media (max-width:760px){.talent-trees{grid-template-columns:1fr;}}
+
 @media (max-width:640px){
   .pillars{grid-template-columns:1fr;}
   nav{padding:14px 16px;}
@@ -209,6 +227,7 @@ footer{
     <button id="nav-home" onclick="goTo('home')">Accueil</button>
     <button id="nav-actus" onclick="goTo('actus')">Actus</button>
     <button id="nav-roster" onclick="goTo('roster')">Roster</button>
+    <button id="nav-talents" onclick="goTo('talents')">Talents</button>
   </div>
 </nav>
 
@@ -297,6 +316,19 @@ footer{
     <div id="roster-list"></div>
   </section>
 
+  <!-- TALENTS -->
+  <section id="view-talents" class="view">
+    <div class="page-head">
+      <h2>🌳 Talents</h2>
+      <p>Base Classic vanilla (1.12) — WoW Forever n'a pas encore de client jouable, ces arbres serviront de point de départ.</p>
+    </div>
+    <div class="chron-disclaimer">
+      ⚠️ Liste des <strong>talents phares</strong> de chaque arbre (pas exhaustive à 100%). Pour construire un build précis point par point, utilise le <a href="https://nikftw.github.io/forevertalent/" target="_blank" rel="noopener noreferrer" style="color:var(--gold-bright); text-decoration:underline;">calculateur complet en anglais</a>.
+    </div>
+    <div class="cat-tabs" id="talents-tabs"></div>
+    <div id="talents-content"></div>
+  </section>
+
 </main>
 
 <footer>Guilde Aegis — World of Warcraft : WoW Forever</footer>
@@ -311,9 +343,11 @@ function goTo(view){
   document.getElementById('nav-home').classList.toggle('active', view==='home');
   document.getElementById('nav-actus').classList.toggle('active', view==='actus');
   document.getElementById('nav-roster').classList.toggle('active', view==='roster');
+  document.getElementById('nav-talents').classList.toggle('active', view==='talents');
   window.scrollTo({top:0, behavior:'smooth'});
   if(view==='actus') renderActus();
   if(view==='roster') renderRosterList();
+  if(view==='talents') renderTalents();
 }
 
 function escapeHtml(str){
@@ -426,6 +460,170 @@ async function renderRosterList(){
       <span class="roster-badge ${(e.role||'').toLowerCase()}">${escapeHtml(e.role)}</span>
     </div>
   `).join('');
+}
+
+// ---------- Talents (base Classic vanilla 1.12) ----------
+// Liste des talents PHARES de chaque arbre — pas exhaustive à 100%.
+// Pour un build complet point par point : https://nikftw.github.io/forevertalent/
+const TALENTS = {
+  guerrier: { label: 'Guerrier', trees: [
+    { name: 'Armes', talents: [
+      { n: 'Déviation', r: '5' }, { n: 'Charge améliorée', r: '2' }, { n: 'Maîtrise tactique', r: '5' },
+      { n: 'Blessures profondes', r: '3' }, { n: 'Spécialisation armes à deux mains', r: '5' },
+      { n: 'Frappe circulaire', r: '1' }, { n: 'Jarret amélioré', r: '3' }, { n: 'Coup Fatal', r: '1' },
+    ]},
+    { name: 'Fureur', talents: [
+      { n: 'Cruauté', r: '5' }, { n: 'Colère débridée', r: '5' }, { n: 'Frénésie sanguinaire', r: '3' },
+      { n: 'Rage', r: '5' }, { n: 'Vœu de mort', r: '1' }, { n: 'Rafale', r: '5' }, { n: 'Soif de sang', r: '1' },
+    ]},
+    { name: 'Protection', talents: [
+      { n: 'Spécialisation Bouclier', r: '5' }, { n: 'Endurance', r: '5' }, { n: "Fissure d'armure améliorée", r: '3' },
+      { n: 'Défi', r: '5' }, { n: 'Vengeance améliorée', r: '3' }, { n: 'Dernier rempart', r: '1' }, { n: 'Bouclier de vengeance', r: '1' },
+    ]},
+  ]},
+  paladin: { label: 'Paladin', trees: [
+    { name: 'Sainte', talents: [
+      { n: 'Bénédiction du pouvoir améliorée', r: '5' }, { n: 'Grâce divine améliorée', r: '3' },
+      { n: 'Guérison spirituelle', r: '5' }, { n: 'Illumination', r: '5' }, { n: 'Lumière sacrée améliorée', r: '3' }, { n: 'Zèle sacré', r: '3' },
+    ]},
+    { name: 'Protection', talents: [
+      { n: 'Robustesse', r: '5' }, { n: 'Résistance à la magie améliorée', r: '5' }, { n: 'Défense améliorée', r: '5' },
+      { n: 'Bénédiction du sanctuaire', r: '3' }, { n: 'Bouclier consacré', r: '1' }, { n: 'Bouclier ardent', r: '1' },
+    ]},
+    { name: 'Rétribution', talents: [
+      { n: 'Zèle', r: '5' }, { n: 'Lame ardente', r: '3' }, { n: 'Croisade', r: '5' },
+      { n: 'Jugement du sang', r: '1' }, { n: 'Marteau de la justice amélioré', r: '2' }, { n: 'Frappe divine', r: '1' },
+    ]},
+  ]},
+  chasseur: { label: 'Chasseur', trees: [
+    { name: 'Dressage des bêtes', talents: [
+      { n: 'Loyauté', r: '5' }, { n: 'Dressage bestial', r: '5' }, { n: 'Frénésie', r: '1' },
+      { n: 'Instincts féroces', r: '2' }, { n: 'Croc et griffe', r: '5' }, { n: 'Compagnon invincible', r: '1' },
+    ]},
+    { name: 'Précision', talents: [
+      { n: 'Tir stable amélioré', r: '5' }, { n: 'Combustion mentale', r: '5' }, { n: 'Trait mortel amélioré', r: '3' },
+      { n: 'Tir précis', r: '1' }, { n: 'Chasse au trésor', r: '1' },
+    ]},
+    { name: 'Survie', talents: [
+      { n: 'Piégeur', r: '2' }, { n: 'Frappe du serpent améliorée', r: '3' }, { n: 'Détection des pièges', r: '5' },
+      { n: 'Résistance de la nature', r: '5' }, { n: 'Tir de dispersion', r: '1' },
+    ]},
+  ]},
+  voleur: { label: 'Voleur', trees: [
+    { name: 'Assassinat', talents: [
+      { n: 'Instinct meurtrier', r: '5' }, { n: 'Poisons améliorés', r: '5' }, { n: 'Coup dans le dos amélioré', r: '3' },
+      { n: 'Sang-froid', r: '1' }, { n: 'Mise à mort', r: '5' }, { n: 'Coup fatal amélioré', r: '3' },
+    ]},
+    { name: 'Combat', talents: [
+      { n: 'Précision', r: '5' }, { n: 'Combat à deux armes', r: '5' }, { n: 'Frénésie de lame', r: '1' },
+      { n: 'Adrénaline', r: '1' }, { n: 'Frappes aveugles', r: '3' },
+    ]},
+    { name: 'Finesse', talents: [
+      { n: 'Furtivité améliorée', r: '5' }, { n: 'Camouflage', r: '5' }, { n: "Précision du couteau", r: '3' },
+      { n: 'Élusivité', r: '5' }, { n: 'Préméditation', r: '1' }, { n: 'Disparition améliorée', r: '2' },
+    ]},
+  ]},
+  pretre: { label: 'Prêtre', trees: [
+    { name: 'Discipline', talents: [
+      { n: 'Concentration améliorée', r: '5' }, { n: 'Méditation', r: '3' }, { n: 'Mot de pouvoir : Bouclier amélioré', r: '3' },
+      { n: 'Barrière de puissance', r: '1' }, { n: 'Concentration intérieure', r: '1' },
+    ]},
+    { name: 'Sainte', talents: [
+      { n: 'Guérison rapide améliorée', r: '3' }, { n: 'Bienfait spirituel', r: '5' }, { n: 'Résurrection améliorée', r: '3' },
+      { n: 'Lumière de l\'aube', r: '5' }, { n: 'Esprit de rédemption', r: '1' }, { n: 'Choc sacré', r: '1' },
+    ]},
+    { name: 'Ombre', talents: [
+      { n: 'Emprise des ombres', r: '5' }, { n: 'Douleur mentale améliorée', r: '2' }, { n: 'Toucher vampirique', r: '1' },
+      { n: 'Frénésie mentale (Forme d\'Ombre)', r: '1' }, { n: 'Torrent mental', r: '1' },
+    ]},
+  ]},
+  chaman: { label: 'Chaman', trees: [
+    { name: 'Élémentaire', talents: [
+      { n: 'Concentration élémentaire', r: '5' }, { n: 'Fureur élémentaire', r: '3' }, { n: 'Surcharge de foudre', r: '3' },
+      { n: 'Volcan', r: '5' }, { n: 'Convergence des éléments', r: '2' },
+    ]},
+    { name: 'Amélioration', talents: [
+      { n: 'Loup-esprit', r: '2' }, { n: 'Frénésie sanguine', r: '3' }, { n: 'Frappe de tempête', r: '2' },
+      { n: 'Arme du maelström', r: '5' }, { n: 'Combat à deux armes', r: '1' },
+    ]},
+    { name: 'Restauration', talents: [
+      { n: 'Concentration', r: '5' }, { n: 'Totem de régénération de mana', r: '5' }, { n: 'Chaîne de guérison', r: '1' },
+      { n: 'Réincarnation', r: '1' }, { n: 'Voie de guérison', r: '3' },
+    ]},
+  ]},
+  mage: { label: 'Mage', trees: [
+    { name: 'Arcane', talents: [
+      { n: 'Méditation arcane', r: '5' }, { n: 'Présence d\'esprit', r: '1' }, { n: 'Clairvoyance', r: '5' },
+      { n: 'Puissance arcanique', r: '1' }, { n: 'Concentration arcanique', r: '5' },
+    ]},
+    { name: 'Feu', talents: [
+      { n: 'Immolation améliorée', r: '5' }, { n: 'Combustion', r: '1' }, { n: 'Embrasement (Ignite)', r: '5' },
+      { n: 'Torrent de feu (Trait de feu amélioré)', r: '3' }, { n: 'Impact critique', r: '3' },
+    ]},
+    { name: 'Givre', talents: [
+      { n: 'Trait de givre amélioré', r: '5' }, { n: 'Armure de glace', r: '1' }, { n: 'Clarté d\'esprit', r: '3' },
+      { n: "Pouvoir absolu", r: '3' }, { n: 'Anneau de givre', r: '1' },
+    ]},
+  ]},
+  demoniste: { label: 'Démoniste', trees: [
+    { name: 'Affliction', talents: [
+      { n: 'Malédictions améliorées', r: '3' }, { n: 'Suceur d\'âme', r: '1' }, { n: 'Toucher fatal amélioré', r: '5' },
+      { n: 'Amplification du malheur', r: '2' }, { n: 'Contagion', r: '5' },
+    ]},
+    { name: 'Démonologie', talents: [
+      { n: 'Pacte impie', r: '5' }, { n: 'Endurance démoniaque', r: '5' }, { n: 'Sacrifice de démon', r: '1' },
+      { n: 'Maîtrise des félins', r: '5' }, { n: 'Rafale d\'ombre (Sacrifice démoniaque)', r: '1' },
+    ]},
+    { name: 'Destruction', talents: [
+      { n: 'Brûlure améliorée', r: '5' }, { n: 'Dévastation', r: '5' }, { n: 'Vague ardente améliorée', r: '2' },
+      { n: 'Emprise ardente', r: '3' }, { n: 'Cataclysme', r: '1' },
+    ]},
+  ]},
+  druide: { label: 'Druide', trees: [
+    { name: 'Équilibre', talents: [
+      { n: 'Concentration lunaire améliorée', r: '5' }, { n: 'Fureur naturelle', r: '1' }, { n: 'Furie stellaire améliorée', r: '5' },
+      { n: 'Forme d\'Aravel (Moonkin)', r: '1' }, { n: 'Insomnie', r: '5' },
+    ]},
+    { name: 'Farouche', talents: [
+      { n: 'Griffe déchirante améliorée', r: '3' }, { n: 'Régénération féroce', r: '3' }, { n: 'Fracasser amélioré', r: '3' },
+      { n: 'Chef de meute', r: '1' }, { n: 'Charge féroce', r: '1' },
+    ]},
+    { name: 'Restauration', talents: [
+      { n: 'Concentration naturelle améliorée', r: '5' }, { n: 'Étreinte de la nature', r: '1' }, { n: 'Toucher guérisseur amélioré', r: '2' },
+      { n: 'Renouveau amélioré', r: '3' }, { n: 'Esprit tranquille', r: '3' },
+    ]},
+  ]},
+};
+
+let talentsClass = 'guerrier';
+
+function renderTalentsTabs(){
+  const wrap = document.getElementById('talents-tabs');
+  wrap.innerHTML = Object.keys(TALENTS).map(k =>
+    `<button class="${k===talentsClass?'active':''}" onclick="switchTalentsClass('${k}')">${TALENTS[k].label}</button>`
+  ).join('');
+}
+
+function switchTalentsClass(cls){
+  talentsClass = cls;
+  renderTalentsTabs();
+  renderTalentsContent();
+}
+
+function renderTalentsContent(){
+  const content = document.getElementById('talents-content');
+  const cls = TALENTS[talentsClass];
+  content.innerHTML = `<div class="talent-trees">${cls.trees.map(tree => `
+    <div class="talent-tree">
+      <h3>${tree.name}</h3>
+      <ul>${tree.talents.map(t => `<li><span>${t.n}</span><b>${t.r} pts</b></li>`).join('')}</ul>
+    </div>
+  `).join('')}</div>`;
+}
+
+function renderTalents(){
+  renderTalentsTabs();
+  renderTalentsContent();
 }
 
 goTo('home');
