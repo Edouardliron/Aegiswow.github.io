@@ -314,6 +314,7 @@ footer{
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
 
 /* ---- PROFIL ---- */
+.qz-hint{font-size:0.78rem; color:var(--text-dim); line-height:1.6; margin:0 0 14px; max-width:60ch;}
 .qz-badge.hard{border-color:#c9732a; color:#e8a05a;}
 .qz-mini-badge{width:13px; height:15px; margin-right:7px; vertical-align:-2px; flex-shrink:0;}
 .pf-gate{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:22px; margin-bottom:14px; color:var(--text-dim); font-size:0.92rem; max-width:520px;}
@@ -975,7 +976,11 @@ async function castPollVote(pollId){
 // Les bonnes réponses, les explications et le calcul des points sont CÔTÉ SERVEUR (quiz-forever.gs) :
 // la page n'envoie que le choix du joueur. Les valeurs de QUIZ_LEVELS ci-dessous ne servent qu'à
 // l'affichage, elles doivent rester identiques à celles du serveur.
-const QUIZ_API_URL = API_URL;
+// Adresse (URL /exec) du serveur de l'épreuve = déploiement de quiz-forever.gs.
+// Colle-la ici. Si tu la laisses vide, la page utilise l'adresse générale du site (API_URL).
+const QUIZ_API_URL = '';
+const QUIZ_ENDPOINT = QUIZ_API_URL || API_URL;
+let quizLastError = null;   // dernière cause de panne, pour l'afficher clairement
 const QUIZ_DEADLINE = null;            // ex. '2026-11-04T23:00:00Z' ; null = pas de date limite
 const QUIZ_TIME = { easy: 40, normal: 50, medium: 60, hard: 70, hyper: 90 };   // secondes par question
 const QUIZ_LEVELS = {
@@ -1339,15 +1344,31 @@ function quizPts(n){ const a = Math.abs(n); return `${n > 0 ? '+' : n < 0 ? '−
 function quizScore(answers){ return Object.values(answers).reduce((s, a) => s + (Number(a.delta) || 0), 0); }
 function safeUrl(u){ return /^https:\/\//.test(u || '') ? u : ''; }
 
+async function quizParse(res){
+  const text = await res.text();
+  try{ return JSON.parse(text); }
+  catch(e){ quizLastError = /<\s*(!doctype|html)/i.test(text) ? 'html' : 'badjson'; throw e; }
+}
+
 async function quizGet(params){
-  const res = await fetch(`${QUIZ_API_URL}?${new URLSearchParams(params).toString()}`);
-  return res.json();
+  let res;
+  try{ res = await fetch(`${QUIZ_ENDPOINT}?${new URLSearchParams(params).toString()}`); }
+  catch(e){ quizLastError = 'network'; throw e; }
+  return quizParse(res);
+}
+
+// Interprète une réponse JSON du serveur : renvoie vrai si c'est une réponse valide de l'épreuve.
+function quizCheck(d){
+  if(d && d.ok === true) return true;
+  // Une réponse { ok:false, error } vient bien du module de l'épreuve ; toute autre réponse JSON vient d'un script qui ne le contient pas.
+  quizLastError = (d && d.ok === false && d.error) ? 'server:' + d.error : 'old';
+  return false;
 }
 
 async function quizFetchState(pseudo){
   try{
     const d = await quizGet({ action: 'quizState', pseudo });
-    if(d && d.ok) return { ok: true, closed: !!d.closed, answers: d.answers || {} };
+    if(quizCheck(d)) return { ok: true, closed: !!d.closed, answers: d.answers || {} };
     console.warn('quizState refusé :', d);
   }catch(e){ console.error('quizState erreur :', e); }
   return { ok: false };
@@ -1356,19 +1377,36 @@ async function quizFetchState(pseudo){
 async function quizFetchBoard(){
   try{
     const d = await quizGet({ action: 'quizLeaderboard' });
-    return Array.isArray(d) ? d : null;
+    if(Array.isArray(d)) return d;
+    quizCheck(d);
+    return null;
   }catch(e){ console.error('quizLeaderboard erreur :', e); return null; }
 }
 
 async function quizPostAnswer(pseudo, questionId, chosenIndex){
   try{
     // Pas de header Content-Type : évite le preflight que Apps Script ne gère pas.
-    const res = await fetch(QUIZ_API_URL, {
+    const res = await fetch(QUIZ_ENDPOINT, {
       method: 'POST',
       body: JSON.stringify({ action: 'quizAnswer', pseudo, questionId, chosenIndex }),
     });
-    return await res.json();
-  }catch(e){ console.error('quizAnswer erreur :', e); return null; }
+    return await quizParse(res);
+  }catch(e){ if(!quizLastError) quizLastError = 'network'; console.error('quizAnswer erreur :', e); return null; }
+}
+
+// Explication lisible de la dernière panne.
+function quizErrorHint(){
+  const tail = String(QUIZ_ENDPOINT || '').slice(-14);
+  const where = `Adresse utilisée : …${escapeHtml(tail)}`;
+  const e = quizLastError || '';
+  let msg;
+  if(e === 'network') msg = "Le navigateur n'arrive pas à joindre cette adresse (adresse erronée, déploiement supprimé ou connexion bloquée).";
+  else if(e === 'html') msg = "L'adresse répond par une page Google au lieu de données : le déploiement doit être en accès « Tout le monde », ou le script contient une erreur.";
+  else if(e === 'badjson') msg = "Le serveur répond, mais pas dans le format attendu.";
+  else if(e === 'old') msg = "Le serveur répond, mais ne connaît pas l'épreuve : le script quiz-forever.gs n'est pas déployé sur cette adresse (ou pas en nouvelle version).";
+  else if(e.indexOf('server:') === 0) msg = `Le serveur répond : « ${escapeHtml(e.slice(7))} ».`;
+  else msg = "Cause inconnue.";
+  return `<p class="qz-hint">${msg}<br>${where}</p>`;
 }
 
 function stopQuizTimer(){
@@ -1431,6 +1469,7 @@ async function quizSubmit(id){
   if(err) err.textContent = res && res.error
     ? `Réponse refusée : ${res.error}.`
     : "La réponse n'a pas pu être envoyée. Vérifie ta connexion et réessaie.";
+  if(!(res && res.error) && quizLastError) console.warn('Cause :', quizLastError);
 }
 
 function quizOptionsHtml(q, attrs){
@@ -1562,7 +1601,7 @@ async function renderQuiz(){
 
   if(!state.ok){
     root.innerHTML = `<div class="qz-card"><p class="qz-loading">Impossible de joindre le serveur de l'épreuve pour le moment.</p>
-      <button class="vote-btn" onclick="renderQuiz()">Réessayer</button></div>
+      ${quizErrorHint()}<button class="vote-btn" onclick="renderQuiz()">Réessayer</button></div>
       <h3 class="r-title">Classement</h3>${quizBoardHtml(board, pseudo)}`;
     return;
   }
@@ -1704,7 +1743,7 @@ async function renderProfil(){
 
   if(!state.ok){
     root.innerHTML = `<div class="pf-gate"><p class="qz-loading">Impossible de joindre le serveur pour le moment.</p>
-      <button class="vote-btn" onclick="renderProfil()">Réessayer</button></div>
+      ${quizErrorHint()}<button class="vote-btn" onclick="renderProfil()">Réessayer</button></div>
       <h3 class="r-title">Classement de la guilde</h3>${quizBoardHtml(board, pseudo)}`;
     return;
   }
