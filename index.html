@@ -232,9 +232,129 @@ footer{
   .comp-grid{grid-template-columns:1fr;}
 }
 
+/* ---- ÉPREUVE WoW FOREVER ---- */
+.poll-pseudo{max-width:420px;}
+.poll-pseudo-row{display:flex; gap:10px;}
+.poll-pseudo-row input{flex:1; min-width:0;}
+.poll-pseudo-row .vote-btn{padding:0 22px;}
+.qz-banner{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:6px; padding:22px 24px; margin-bottom:14px;}
+.qz-banner h3{font-size:1.4rem; color:var(--gold-bright); margin-bottom:6px;}
+.qz-banner p{color:var(--text-dim); font-size:0.92rem; max-width:62ch;}
+.qz-stats{display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin:18px 0 14px;}
+.qz-stat{background:var(--void); border:1px solid var(--line); border-radius:6px; padding:12px 10px; text-align:center;}
+.qz-stat b{display:block; font-family:'Cinzel', Georgia, serif; font-size:1.25rem; color:var(--text); line-height:1.2;}
+.qz-stat span{display:block; margin-top:4px; font-size:0.78rem; color:var(--text-dim);}
+.qz-progress{height:6px; background:var(--bar-bg); border-radius:3px; overflow:hidden;}
+.qz-progress-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-bright));}
+.qz-rules{background:rgba(201,162,39,0.04); border-left:2px solid var(--gold); padding:14px 18px; margin-bottom:18px; color:var(--text-dim); font-size:0.86rem; line-height:1.7;}
+.qz-rules strong{color:var(--text); font-weight:600;}
+.qz-gate{background:var(--panel); border:1px dashed var(--line); border-radius:6px; padding:22px; text-align:center; color:var(--text-dim); font-size:0.92rem; margin-bottom:14px;}
+.qz-card{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:22px; margin-bottom:14px;}
+.qz-card.hyper{border-color:#a13333; background:linear-gradient(180deg, rgba(161,51,51,0.10), var(--panel) 120px);}
+.qz-card.sealed{opacity:0.96;}
+.qz-loading{color:var(--text-dim); font-size:0.92rem; margin-bottom:12px;}
+.qz-card-top{display:flex; flex-wrap:wrap; align-items:center; gap:10px 12px; margin-bottom:14px;}
+.qz-num{font-family:'Cinzel', Georgia, serif; font-size:0.95rem; color:var(--gold-bright);}
+.qz-badge{font-size:0.72rem; padding:3px 10px; border-radius:20px; border:1px solid var(--line); color:var(--text-dim); white-space:nowrap;}
+.qz-badge.easy{border-color:#557b45; color:#91c875;}
+.qz-badge.normal{border-color:#3d6a8a; color:#6eaad4;}
+.qz-badge.medium{border-color:#8a6d1f; color:#d9b24a;}
+.qz-badge.hyper{border-color:#a13333; color:#e07a7a; font-weight:600;}
+.qz-timer{margin-left:auto; font-variant-numeric:tabular-nums; font-size:0.86rem; color:var(--text);}
+.qz-timer.urgent{color:#e07a7a; font-weight:600;}
+.qz-timer.calm{color:var(--text-dim); font-size:0.78rem;}
+.qz-q{font-size:1.05rem; line-height:1.55; color:var(--text); margin-bottom:16px; max-width:70ch;}
+.qz-warn{background:rgba(161,51,51,0.12); border:1px solid #a13333; color:#e8a3a3; border-radius:4px; padding:9px 12px; font-size:0.84rem; margin-bottom:14px;}
+.qz-options{display:grid; gap:8px; margin-bottom:16px;}
+.qz-option{
+  display:flex; align-items:baseline; gap:10px; width:100%; text-align:left;
+  padding:12px 14px; background:var(--void); border:1px solid var(--line); border-radius:4px;
+  color:var(--text); font-family:'Inter'; font-size:0.92rem; cursor:pointer; line-height:1.45;
+}
+.qz-option strong{color:var(--gold-bright); font-family:'Cinzel', Georgia, serif; min-width:1.2em;}
+.qz-option:hover:not(.done):not(:disabled){border-color:var(--gold);}
+.qz-option:focus-visible{outline:2px solid var(--gold-bright); outline-offset:2px;}
+.qz-option.selected{border-color:var(--gold); background:rgba(201,162,39,0.10);}
+.qz-option.done{cursor:default;}
+.qz-option.correct{border-color:#557b45; background:rgba(85,123,69,0.16);}
+.qz-option.wrong{border-color:#a13333; background:rgba(161,51,51,0.16);}
+.qz-submit:disabled{opacity:0.45; cursor:default;}
+.qz-result{margin-top:4px; padding:14px 16px; border-radius:4px; border:1px solid var(--line); font-size:0.88rem; line-height:1.6; color:var(--text-dim);}
+.qz-result.good{border-color:#557b45; background:rgba(85,123,69,0.08);}
+.qz-result.bad{border-color:#a13333; background:rgba(161,51,51,0.08);}
+.qz-result p{margin-top:6px;}
+.qz-result strong{color:var(--text);}
+.qz-result-title{font-family:'Cinzel', Georgia, serif; font-size:1rem; color:var(--text);}
+.qz-source{display:inline-block; margin-top:8px; color:var(--gold-bright); font-size:0.8rem;}
+.qz-history{margin-bottom:14px;}
+.qz-history summary{cursor:pointer; color:var(--gold-bright); font-size:0.9rem; padding:10px 0;}
+.qz-final{background:var(--panel); border:1px solid var(--gold); border-radius:6px; padding:26px 22px; text-align:center; margin-bottom:14px;}
+.qz-final-score{font-family:'Cinzel', Georgia, serif; font-size:3rem; color:var(--gold-bright); line-height:1;}
+.qz-final-title{font-family:'Cinzel', Georgia, serif; font-size:1.2rem; color:var(--text); margin:6px 0 10px;}
+.qz-final p{color:var(--text-dim); font-size:0.9rem;}
+.qz-final .qz-history{text-align:left; margin:14px 0 0;}
+.qz-recap-row{display:flex; gap:10px; align-items:baseline; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.84rem;}
+.qz-recap-num{color:var(--gold-bright); font-family:'Cinzel', Georgia, serif; min-width:2.4em;}
+.qz-recap-q{flex:1; color:var(--text-dim);}
+.qz-recap-res{white-space:nowrap; color:var(--text);}
+.qz-board{display:grid; gap:8px;}
+.qz-board-row{display:flex; align-items:center; gap:14px; background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:12px 16px;}
+.qz-board-row.me{border-color:var(--gold); background:rgba(201,162,39,0.07);}
+.qz-rank{min-width:2.2em; text-align:center; font-family:'Cinzel', Georgia, serif; font-size:1.1rem; color:var(--gold-bright);}
+.qz-who{flex:1; min-width:0;}
+.qz-pseudo{font-family:'Cinzel', Georgia, serif; font-size:1rem; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.qz-sub{font-size:0.78rem; color:var(--text-dim); margin-top:2px;}
+.qz-pts{font-size:0.82rem; color:var(--text-dim); white-space:nowrap;}
+.qz-pts b{font-family:'Cinzel', Georgia, serif; font-size:1.2rem; color:var(--gold-bright);}
+@media (max-width:480px){
+  .qz-stats{grid-template-columns:1fr;}
+  .qz-timer{margin-left:0; width:100%;}
+  .qz-card{padding:18px 14px;}
+}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+
+/* ---- PROFIL ---- */
+.qz-badge.hard{border-color:#c9732a; color:#e8a05a;}
+.qz-mini-badge{width:13px; height:15px; margin-right:7px; vertical-align:-2px; flex-shrink:0;}
+.pf-gate{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:22px; margin-bottom:14px; color:var(--text-dim); font-size:0.92rem; max-width:520px;}
+.pf-gate p{margin-bottom:14px;}
+.pf-gate .poll-pseudo-row{max-width:420px;}
+.pf-card{display:flex; gap:28px; align-items:center; background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--cc); border-radius:8px; padding:26px 28px; margin-bottom:8px;}
+.pf-badge{flex-shrink:0; text-align:center; width:132px;}
+.pf-badge-svg{width:118px; height:auto; display:block; margin:0 auto;}
+.pf-tier{margin-top:8px; font-family:'Cinzel', Georgia, serif; font-size:0.95rem; font-weight:700;}
+.pf-main{flex:1; min-width:0;}
+.pf-name{font-family:'Cinzel', Georgia, serif; font-size:1.7rem; font-weight:700; color:var(--cc); line-height:1.15; overflow-wrap:anywhere;}
+.pf-chip{display:inline-flex; align-items:center; gap:8px; margin-top:8px; font-size:0.85rem; color:var(--text-dim);}
+.pf-chip .wowicon{width:24px; height:24px; border-width:1px; border-radius:4px;}
+.pf-title{margin:8px 0 16px; font-size:1rem; color:var(--gold-bright);}
+.pf-stats{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:16px;}
+.pf-stats div{background:var(--void); border:1px solid var(--line); border-radius:6px; padding:10px 8px; text-align:center;}
+.pf-stats b{display:block; font-family:'Cinzel', Georgia, serif; font-size:1.35rem; color:var(--text); line-height:1.2;}
+.pf-stats span{display:block; margin-top:3px; font-size:0.74rem; color:var(--text-dim);}
+.pf-next{margin-top:8px; font-size:0.82rem; color:var(--text-dim);}
+.pf-change{margin-top:14px; background:none; border:none; color:var(--text-dim); text-decoration:underline; cursor:pointer; font-size:0.8rem; padding:0;}
+.pf-link{background:none; border:none; color:var(--gold-bright); text-decoration:underline; cursor:pointer; font:inherit; padding:0;}
+.pf-ach-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); gap:10px;}
+.pf-ach{background:var(--panel); border:1px dashed var(--line); border-radius:6px; padding:12px 14px; opacity:0.55;}
+.pf-ach.on{opacity:1; border-style:solid; border-color:var(--gold);}
+.pf-ach b{display:block; font-size:0.9rem; color:var(--text); font-weight:600;}
+.pf-ach.on b{color:var(--gold-bright);}
+.pf-ach span{display:block; margin-top:3px; font-size:0.78rem; color:var(--text-dim);}
+.pf-ladder{display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:8px;}
+.pf-title-chip{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:9px 12px; font-size:0.84rem; color:var(--text-dim); opacity:0.6;}
+.pf-title-chip b{display:block; font-size:0.72rem; color:var(--text-dim); font-weight:500; margin-bottom:2px;}
+.pf-title-chip.on{opacity:1; border-color:var(--gold); color:var(--text);}
+.pf-title-chip.dead.on{border-color:#a13333; color:#e8a3a3;}
+@media (max-width:640px){
+  .pf-card{flex-direction:column; text-align:center; padding:22px 16px;}
+  .pf-stats{grid-template-columns:repeat(2, 1fr);}
+  .pf-chip{justify-content:center;}
+}
+
 /* ---- SONDAGES ---- */
 .nav-short{display:none;}
-.poll-pseudo{max-width:360px; margin:0 0 22px;}
+.poll-pseudo{margin:0 0 22px;}
 .poll-pseudo label{display:block; margin-bottom:8px; font-weight:600; color:var(--text); font-size:0.92rem;}
 .poll-pseudo input{
   width:100%; padding:12px; background:var(--void); border:1px solid var(--line);
@@ -296,6 +416,7 @@ footer{
     <button id="nav-actus" onclick="goTo('actus')">Actus</button>
     <button id="nav-roster" onclick="goTo('roster')">Roster</button>
     <button id="nav-polls" onclick="goTo('polls')"><span class="nav-long">Sondages WoW Forever</span><span class="nav-short">Sondages</span></button>
+    <button id="nav-profil" onclick="goTo('profil')">Profil</button>
   </div>
 </nav>
 
@@ -370,13 +491,27 @@ footer{
   <section id="view-polls" class="view">
     <div class="page-head">
       <h2>Sondages WoW Forever</h2>
-      <p>Dis-nous ce que tu veux pour la guilde et pour WoW Forever. Un vote par question.</p>
+      <p>Teste tes connaissances sur WoW Forever et grimpe dans le classement de la guilde.</p>
     </div>
-    <div id="polls-pseudo" class="poll-pseudo" style="display:none;">
+    <div id="polls-pseudo" class="poll-pseudo">
       <label for="poll-pseudo-input">Ton pseudo en jeu</label>
-      <input type="text" id="poll-pseudo-input" placeholder="Ex: Aegoric" maxlength="30" oninput="savePollPseudo(this.value)">
+      <div class="poll-pseudo-row">
+        <input type="text" id="poll-pseudo-input" placeholder="Ex: Aegoric" maxlength="30" oninput="savePollPseudo(this.value)" onkeydown="if(event.key==='Enter')applyPseudo()">
+        <button type="button" class="vote-btn" onclick="applyPseudo()">Valider</button>
+      </div>
     </div>
+    <div id="quiz-root"></div>
     <div id="polls-list"></div>
+  </section>
+
+
+  <!-- PROFIL -->
+  <section id="view-profil" class="view">
+    <div class="page-head">
+      <h2>Profil</h2>
+      <p>Ton badge, ton rang et tes distinctions, d'après tes résultats à l'épreuve.</p>
+    </div>
+    <div id="profil-content"></div>
   </section>
 
 </main>
@@ -394,10 +529,12 @@ function goTo(view){
   document.getElementById('nav-actus').classList.toggle('active', view==='actus');
   document.getElementById('nav-roster').classList.toggle('active', view==='roster');
   document.getElementById('nav-polls').classList.toggle('active', view==='polls');
+  document.getElementById('nav-profil').classList.toggle('active', view==='profil');
   window.scrollTo({top:0, behavior:'smooth'});
   if(view==='actus') renderActus();
   if(view==='roster') renderRoster();
-  if(view==='polls') renderPolls();
+  if(view==='polls') openPollsTab();
+  if(view==='profil') renderProfil();
 }
 
 function escapeHtml(str){
@@ -802,15 +939,8 @@ function renderPollCard(poll, raw){
 
 async function renderPolls(){
   const list = document.getElementById('polls-list');
-  const pseudoBox = document.getElementById('polls-pseudo');
-  if(!POLLS.length){
-    pseudoBox.style.display = 'none';
-    list.innerHTML = `<div class="leaderboard-empty">Les premiers sondages arrivent bientôt.</div>`;
-    return;
-  }
-  pseudoBox.style.display = '';
-  document.getElementById('poll-pseudo-input').value = getPollPseudo();
-  list.innerHTML = POLLS.map(p => `<div class="poll-card" id="poll-${p.id}"></div>`).join('');
+  if(!POLLS.length){ list.innerHTML = ''; return; }
+  list.innerHTML = `<h3 class="r-title">Sondages</h3>` + POLLS.map(p => `<div class="poll-card" id="poll-${p.id}"></div>`).join('');
   POLLS.forEach(p => renderPollCard(p, {}));
   const batch = await fetchPollResults();
   POLLS.forEach(p => renderPollCard(p, batch[p.id]));
@@ -839,6 +969,801 @@ async function castPollVote(pollId){
   setLocalVote(pollId, idx);
   const batch = await fetchPollResults();
   renderPollCard(poll, batch[pollId]);
+}
+
+// ---------- Épreuve WoW Forever (quiz + classement) ----------
+// Les bonnes réponses, les explications et le calcul des points sont CÔTÉ SERVEUR (quiz-forever.gs) :
+// la page n'envoie que le choix du joueur. Les valeurs de QUIZ_LEVELS ci-dessous ne servent qu'à
+// l'affichage, elles doivent rester identiques à celles du serveur.
+const QUIZ_API_URL = API_URL;
+const QUIZ_DEADLINE = null;            // ex. '2026-11-04T23:00:00Z' ; null = pas de date limite
+const QUIZ_TIME = { easy: 40, normal: 50, medium: 60, hard: 70, hyper: 90 };   // secondes par question
+const QUIZ_LEVELS = {
+  easy:   { label: 'Facile',         points: 1, penalty: 0 },
+  normal: { label: 'Normal',         points: 2, penalty: 0 },
+  medium: { label: 'Moyenne',        points: 3, penalty: 0 },
+  hard:   { label: 'Difficile',      points: 4, penalty: 0 },
+  hyper:  { label: 'Hyper hardcore', points: 5, penalty: 4 },
+};
+const QUIZ_TITLES = [
+  [80, 'Dieu du LFG'], [69, 'Boss du Marché Noir'], [60, 'Tank Ouin-Ouin'], [51, 'Ninja Looteur'],
+  [43, 'Squatteur de banc'], [35, "Kebabier d'Orgrimmar"], [27, 'Plongeur de Dalaran'],
+  [20, 'Anti-Murloc'], [13, 'Ramasseur de crottes'], [7, 'Peon en CDI'],
+];
+
+const QUIZ_QUESTIONS = [
+ {
+  "id": "q01",
+  "level": "easy",
+  "question": "Combien de joueurs faut-il au minimum pour remplir à la fois Barrow Deeps et Hyjal Summit avec deux équipes entièrement différentes ?",
+  "options": [
+   "40",
+   "20",
+   "30",
+   "50"
+  ]
+ },
+ {
+  "id": "q02",
+  "level": "easy",
+  "question": "Combien de semaines pleines séparent le lancement de Forever (mercredi 4 novembre) de l'ouverture des deux raids (mercredi 9 décembre) ?",
+  "options": [
+   "5 semaines",
+   "4 semaines",
+   "6 semaines",
+   "7 semaines"
+  ]
+ },
+ {
+  "id": "q03",
+  "level": "easy",
+  "question": "Quelle classe, jouable seulement côté Horde dans WoW Classic, est ouverte à l'Alliance (hors Skyborne) dans Forever ?",
+  "options": [
+   "Le Paladin",
+   "Le Druide",
+   "Le Voleur",
+   "Le Chaman"
+  ]
+ },
+ {
+  "id": "q04",
+  "level": "normal",
+  "question": "Combien de jours séparent le début de la bêta (17 septembre) de l'ouverture des deux raids (9 décembre) ?",
+  "options": [
+   "77 jours",
+   "83 jours",
+   "84 jours",
+   "91 jours"
+  ]
+ },
+ {
+  "id": "q05",
+  "level": "normal",
+  "question": "Combien de races différentes peuvent jouer Paladin dans Forever, Skyborne compris ?",
+  "options": [
+   "3",
+   "2",
+   "4",
+   "5"
+  ]
+ },
+ {
+  "id": "q06",
+  "level": "normal",
+  "question": "Le raid Barrow Deeps reprend le nom de la prison des Veilleurs, sous le Mont Hyjal. Dans le lore, quelle chef des Veilleurs y gardait son plus célèbre prisonnier ?",
+  "options": [
+   "Jaina Proudmoore",
+   "Tyrande Whisperwind",
+   "Maiev Shadowsong",
+   "Sylvanas Windrunner"
+  ]
+ },
+ {
+  "id": "q07",
+  "level": "normal",
+  "question": "Le Hall of Thanes a été profané et les soupçons visent les Dark Iron. Dans Blackrock Depths, leur empereur Dagran Thaurissan a pour épouse la princesse Moira, fille de quel roi de Forgefer ?",
+  "options": [
+   "Muradin Bronzebeard",
+   "Magni Bronzebeard",
+   "Brann Bronzebeard",
+   "Kurdran Wildhammer"
+  ]
+ },
+ {
+  "id": "q08",
+  "level": "normal",
+  "question": "Les Skyborne de l'Alliance descendent d'érudits Hauts-nés d'Eldre'Thalas. Quel boss de WoW Classic est un prince de cette lignée, dans les ruines de leur cité ?",
+  "options": [
+   "Alzzin the Wildshaper",
+   "Immol'thar",
+   "King Gordok",
+   "Prince Tortheldrin"
+  ]
+ },
+ {
+  "id": "q09",
+  "level": "normal",
+  "question": "Pour combien de niveaux (de 1 à 60) un joueur a-t-il le choix entre exactement DEUX nouveaux donjons de Forever ?",
+  "options": [
+   "10 niveaux",
+   "8 niveaux",
+   "12 niveaux",
+   "14 niveaux"
+  ]
+ },
+ {
+  "id": "q10",
+  "level": "normal",
+  "question": "Parmi ces classes, laquelle compte PLUS de races jouables côté Horde que côté Alliance dans Forever (Skyborne exclus) ?",
+  "options": [
+   "Le Voleur",
+   "Le Prêtre",
+   "Le Mage",
+   "Le Paladin"
+  ]
+ },
+ {
+  "id": "q11",
+  "level": "medium",
+  "question": "En superposant les plages de niveaux des neuf nouveaux donjons, deux niveaux ISOLÉS (à partir du niveau 13) ne sont couverts par aucun d'eux. Lesquels ?",
+  "options": [
+   "Les niveaux 21 et 46",
+   "Les niveaux 34 et 54",
+   "Les niveaux 23 et 47",
+   "Les niveaux 34 et 47"
+  ]
+ },
+ {
+  "id": "q12",
+  "level": "medium",
+  "question": "Combien de races (hors Skyborne) peuvent jouer à la fois Chasseur ET Chaman dans Forever ?",
+  "options": [
+   "6",
+   "3",
+   "5",
+   "4"
+  ]
+ },
+ {
+  "id": "q13",
+  "level": "medium",
+  "question": "Quelles deux classes sont jouables par le plus petit nombre de races différentes dans Forever (les deux branches Skyborne comptant pour une seule race) ?",
+  "options": [
+   "Le Paladin et le Druide",
+   "Le Paladin et le Chaman",
+   "Le Druide et le Démoniste",
+   "Le Chaman et le Démoniste"
+  ]
+ },
+ {
+  "id": "q14",
+  "level": "medium",
+  "question": "Quelles deux races (hors Skyborne), une par faction, peuvent désormais jouer 7 classes différentes dans Forever ?",
+  "options": [
+   "Le Nain et le Troll",
+   "L'Humain et l'Orc",
+   "L'Humain et le Troll",
+   "L'Humain et le Mort-vivant"
+  ]
+ },
+ {
+  "id": "q15",
+  "level": "medium",
+  "question": "Combien de races différentes peuvent jouer Chaman dans Forever, Skyborne compris ?",
+  "options": [
+   "3",
+   "5",
+   "4",
+   "6"
+  ]
+ },
+ {
+  "id": "q16",
+  "level": "medium",
+  "question": "Combien de jours après le lancement (4 novembre) la Warcraft Forever Collection cesse-t-elle d'être disponible (11 janvier 2027) ?",
+  "options": [
+   "75 jours",
+   "61 jours",
+   "65 jours",
+   "68 jours"
+  ]
+ },
+ {
+  "id": "q17",
+  "level": "medium",
+  "question": "Dans Darkspear Islands, l'Alliance combat sous la bannière de la Theramore Expeditionary Force. Qui a fondé Theramore après la Troisième Guerre, et dans quelle zone la ville se trouve-t-elle ?",
+  "options": [
+   "Jaina Proudmoore, dans Dustwallow Marsh",
+   "Jaina Proudmoore, en Feralas",
+   "Thrall, dans Dustwallow Marsh",
+   "Daelin Proudmoore, en Feralas"
+  ]
+ },
+ {
+  "id": "q18",
+  "level": "medium",
+  "question": "Les exilés Hauts-nés de Zephras Isle ont bâti leur civilisation dans Skywall, un plan élémentaire. Quel seigneur élémentaire y règne ?",
+  "options": [
+   "Neptulon",
+   "Ragnaros",
+   "Al'Akir, le seigneur des vents",
+   "Therazane"
+  ]
+ },
+ {
+  "id": "q19",
+  "level": "hard",
+  "question": "Dans Forever, Skyborne compris, quelle faction dispose du plus grand nombre de combinaisons race/classe ?",
+  "options": [
+   "L'Alliance, nettement",
+   "L'Alliance, de justesse",
+   "La Horde, de justesse",
+   "Aucune : elles sont à égalité"
+  ]
+ },
+ {
+  "id": "q20",
+  "level": "hard",
+  "question": "Classez ces événements du plus ancien au plus récent : (1) la bataille du Mont Hyjal, (2) la trahison d'Alterac, (3) la chute de Lordaeron, (4) l'ouverture de la Porte des Ténèbres.",
+  "options": [
+   "2 → 4 → 3 → 1",
+   "4 → 2 → 3 → 1",
+   "4 → 3 → 2 → 1",
+   "4 → 2 → 1 → 3"
+  ]
+ },
+ {
+  "id": "q21",
+  "level": "hard",
+  "question": "Quels sont les deux raciaux ACTIFS du Mort-vivant de Forever, sachant que chaque race en a deux actifs et deux passifs (Will of the Forsaken, Cannibalize, Underwater Breathing, Touch of the Grave) ?",
+  "options": [
+   "Will of the Forsaken et Cannibalize",
+   "Will of the Forsaken et Underwater Breathing",
+   "Cannibalize et Touch of the Grave",
+   "Underwater Breathing et Touch of the Grave"
+  ]
+ },
+ {
+  "id": "q22",
+  "level": "hard",
+  "question": "Parmi ces affirmations sur le Paladin de Forever, laquelle est FAUSSE ?",
+  "options": [
+   "Le Sceau de Fureur permet au Jugement de provoquer la cible",
+   "Le Jugement ne consomme plus le sceau actif",
+   "Le Paladin reçoit enfin un sort d'interruption",
+   "Frappe sainte (Holy Strike) s'apprend au niveau 6"
+  ]
+ },
+ {
+  "id": "q23",
+  "level": "hard",
+  "question": "Combien de combinaisons race/classe sont NOUVELLES dans Forever par rapport à Classic, Skyborne compris (les deux factions) ?",
+  "options": [
+   "20",
+   "6",
+   "11",
+   "16"
+  ]
+ },
+ {
+  "id": "q24",
+  "level": "hard",
+  "question": "Entre Classic et Forever (Skyborne compté comme une race), combien de classes gagnent exactement DEUX races jouables supplémentaires ?",
+  "options": [
+   "1",
+   "3",
+   "2",
+   "4"
+  ]
+ },
+ {
+  "id": "q25",
+  "level": "hard",
+  "question": "Combien de races (hors Skyborne) peuvent jouer à la fois Prêtre ET Mage dans Forever ?",
+  "options": [
+   "4",
+   "3",
+   "5",
+   "6"
+  ]
+ },
+ {
+  "id": "q26",
+  "level": "hard",
+  "question": "Quelle race (hors Skyborne) ne peut être NI Mage NI Prêtre dans Forever, alors que deux races dans ce cas existaient dans Classic ?",
+  "options": [
+   "L'Elfe de la nuit",
+   "L'Orc",
+   "Le Nain",
+   "Le Tauren"
+  ]
+ },
+ {
+  "id": "q27",
+  "level": "hard",
+  "question": "La rumeur veut que le roi Varian Wrynn ait été retenu à Alcaz Prison. Qui gouverne Hurlevent en son absence à l'époque de Classic ?",
+  "options": [
+   "Le prince Anduin Wrynn",
+   "Le régent Bolvar Fordragon",
+   "L'archevêque Benedictus",
+   "Lady Katrana Prestor"
+  ]
+ },
+ {
+  "id": "q28",
+  "level": "hyper",
+  "question": "Combien de niveaux, de 1 à 60, sont couverts par au moins un des neuf nouveaux donjons de Forever ?",
+  "options": [
+   "47",
+   "38",
+   "41",
+   "51"
+  ]
+ },
+ {
+  "id": "q29",
+  "level": "hyper",
+  "question": "Combien de combinaisons race/classe offre Forever au total, les deux factions et les Skyborne compris ?",
+  "options": [
+   "60",
+   "46",
+   "52",
+   "56"
+  ]
+ },
+ {
+  "id": "q30",
+  "level": "hyper",
+  "question": "Combien de classes sont jouables par EXACTEMENT 5 races différentes dans Forever (Skyborne compté comme une seule race) ?",
+  "options": [
+   "2",
+   "1",
+   "3",
+   "4"
+  ]
+ }
+];
+
+const QUIZ_MAX = QUIZ_QUESTIONS.reduce((t, q) => t + QUIZ_LEVELS[q.level].points, 0);   // 92
+let quizTimerHandle = null;
+let quizRenderId = 0;
+
+function quizLetter(i){ return String.fromCharCode(65 + i); }
+function quizClosedLocal(){ return QUIZ_DEADLINE ? new Date() > new Date(QUIZ_DEADLINE) : false; }
+function quizTitle(s){
+  if(s < 0) return 'Mort en Hardcore';
+  for(const [min, t] of QUIZ_TITLES){ if(s >= min) return t; }
+  return 'Aucun titre';
+}
+function quizPts(n){ const a = Math.abs(n); return `${n > 0 ? '+' : n < 0 ? '−' : ''}${a} point${a > 1 ? 's' : ''}`; }
+function quizScore(answers){ return Object.values(answers).reduce((s, a) => s + (Number(a.delta) || 0), 0); }
+function safeUrl(u){ return /^https:\/\//.test(u || '') ? u : ''; }
+
+async function quizGet(params){
+  const res = await fetch(`${QUIZ_API_URL}?${new URLSearchParams(params).toString()}`);
+  return res.json();
+}
+
+async function quizFetchState(pseudo){
+  try{
+    const d = await quizGet({ action: 'quizState', pseudo });
+    if(d && d.ok) return { ok: true, closed: !!d.closed, answers: d.answers || {} };
+    console.warn('quizState refusé :', d);
+  }catch(e){ console.error('quizState erreur :', e); }
+  return { ok: false };
+}
+
+async function quizFetchBoard(){
+  try{
+    const d = await quizGet({ action: 'quizLeaderboard' });
+    return Array.isArray(d) ? d : null;
+  }catch(e){ console.error('quizLeaderboard erreur :', e); return null; }
+}
+
+async function quizPostAnswer(pseudo, questionId, chosenIndex){
+  try{
+    // Pas de header Content-Type : évite le preflight que Apps Script ne gère pas.
+    const res = await fetch(QUIZ_API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'quizAnswer', pseudo, questionId, chosenIndex }),
+    });
+    return await res.json();
+  }catch(e){ console.error('quizAnswer erreur :', e); return null; }
+}
+
+function stopQuizTimer(){
+  if(quizTimerHandle){ clearInterval(quizTimerHandle); quizTimerHandle = null; }
+}
+
+function startQuizTimer(id, seconds){
+  stopQuizTimer();
+  let remaining = seconds;
+  const el = document.getElementById('qz-timer-' + id);
+  if(!el) return;
+  const paint = () => {
+    el.textContent = `⏱️ ${remaining}s`;
+    el.classList.toggle('urgent', remaining <= 10);
+  };
+  paint();
+  quizTimerHandle = setInterval(() => {
+    remaining -= 1;
+    if(remaining <= 0){ stopQuizTimer(); quizAutoSubmit(id); return; }
+    paint();
+  }, 1000);
+}
+
+// Temps écoulé : on scelle le choix en cours, ou « aucune réponse » (-1) si rien n'était choisi.
+// Sans réponse, la question compte comme une mauvaise réponse.
+function quizAutoSubmit(id){
+  const s = document.getElementById('qz-submit-' + id);
+  if(!s || s.dataset.busy) return;
+  if(s.dataset.selected === undefined) s.dataset.selected = '-1';
+  quizSubmit(id);
+}
+
+function quizSelect(id, index){
+  if(quizClosedLocal()) return;
+  document.querySelectorAll(`[data-qz-option="${id}"]`).forEach(b =>
+    b.classList.toggle('selected', parseInt(b.dataset.index, 10) === index));
+  const s = document.getElementById('qz-submit-' + id);
+  if(s){ s.disabled = false; s.dataset.selected = String(index); }
+}
+
+async function quizSubmit(id){
+  const s = document.getElementById('qz-submit-' + id);
+  if(!s || s.dataset.busy || s.dataset.selected === undefined) return;
+  const q = QUIZ_QUESTIONS.find(x => x.id === id);
+  const choice = parseInt(s.dataset.selected, 10);
+  if(!q || !Number.isInteger(choice) || choice < -1 || choice >= q.options.length) return;
+
+  stopQuizTimer();
+  s.dataset.busy = '1';
+  s.disabled = true;
+  s.textContent = 'Envoi…';
+  const err = document.getElementById('qz-err-' + id);
+
+  const res = await quizPostAnswer(getPollPseudo(), id, choice);
+  if(res && (res.ok || res.error === 'déjà répondu')){ renderQuiz(); return; }
+
+  delete s.dataset.busy;
+  s.disabled = false;
+  s.textContent = 'Sceller ma réponse';
+  if(err) err.textContent = res && res.error
+    ? `Réponse refusée : ${res.error}.`
+    : "La réponse n'a pas pu être envoyée. Vérifie ta connexion et réessaie.";
+}
+
+function quizOptionsHtml(q, attrs){
+  return q.options.map((o, j) =>
+    `<button type="button" class="qz-option" data-qz-option="${q.id}" data-index="${j}" ${attrs} onclick="quizSelect('${q.id}',${j})"><strong>${quizLetter(j)}.</strong><span>${escapeHtml(o)}</span></button>`
+  ).join('');
+}
+
+function quizLevelBadge(q){
+  const lv = QUIZ_LEVELS[q.level];
+  const cost = lv.penalty ? ` · −${lv.penalty} si faux` : '';
+  return `<span class="qz-badge ${q.level}">${q.level === 'hyper' ? '☠️ ' : ''}${lv.label} · +${lv.points} si juste${cost}</span>`;
+}
+
+function quizCardLive(q, i, withTimer, closed){
+  const lv = QUIZ_LEVELS[q.level];
+  const timer = withTimer
+    ? `<span class="qz-timer" id="qz-timer-${q.id}">⏱️ ${QUIZ_TIME[q.level]}s</span>`
+    : (i === 0 ? `<span class="qz-timer calm">Pas de chrono sur cette question</span>` : '');
+  const warn = lv.penalty
+    ? `<div class="qz-warn">Attention : une mauvaise réponse, ou le temps écoulé, te retire ${lv.penalty} points.</div>` : '';
+  return `<div class="qz-card ${q.level}">
+    <div class="qz-card-top"><span class="qz-num">Question ${i + 1} / ${QUIZ_QUESTIONS.length}</span>${quizLevelBadge(q)}${timer}</div>
+    <div class="qz-q">${escapeHtml(q.question)}</div>
+    ${warn}
+    <div class="qz-options">${quizOptionsHtml(q, closed ? 'disabled' : '')}</div>
+    <button type="button" class="vote-btn qz-submit" id="qz-submit-${q.id}" disabled onclick="quizSubmit('${q.id}')">${closed ? 'Épreuve terminée' : 'Sceller ma réponse'}</button>
+    <div class="poll-error" id="qz-err-${q.id}"></div>
+  </div>`;
+}
+
+function quizCardDone(q, i, a){
+  const ok = !!a.correct;
+  const d = Number(a.delta) || 0;
+  const noAnswer = a.chosenIndex === -1;
+  const opts = q.options.map((o, j) => {
+    const cls = j === a.correctIndex ? ' correct' : (j === a.chosenIndex ? ' wrong' : '');
+    return `<div class="qz-option done${cls}"><strong>${quizLetter(j)}.</strong><span>${escapeHtml(o)}</span></div>`;
+  }).join('');
+  const src = safeUrl(a.source)
+    ? `<a class="qz-source" href="${safeUrl(a.source)}" target="_blank" rel="noopener noreferrer">Vérifier la source</a>` : '';
+  return `<div class="qz-card ${q.level} sealed">
+    <div class="qz-card-top"><span class="qz-num">Question ${i + 1} / ${QUIZ_QUESTIONS.length}</span>${quizLevelBadge(q)}<span class="qz-timer calm">Réponse scellée</span></div>
+    <div class="qz-q">${escapeHtml(q.question)}</div>
+    <div class="qz-options">${opts}</div>
+    <div class="qz-result ${ok ? 'good' : 'bad'}">
+      <div class="qz-result-title">${ok ? '🏆 Bonne réponse' : (noAnswer ? '⌛ Temps écoulé' : '☠️ Mauvaise réponse')} · ${quizPts(d)}</div>
+      <p><strong>Bonne réponse : ${quizLetter(a.correctIndex)}. ${escapeHtml(q.options[a.correctIndex] || '')}</strong></p>
+      <p>${escapeHtml(a.explanation || '')}</p>${src}
+    </div>
+  </div>`;
+}
+
+function quizBannerHtml(answers){
+  const n = QUIZ_QUESTIONS.filter(q => answers[q.id]).length;
+  const total = QUIZ_QUESTIONS.length;
+  const s = quizScore(answers);
+  return `<div class="qz-banner">
+    <h3>Le Grimoire de Forever</h3>
+    <p>${total} questions sur le lore, la bêta et les mécaniques de WoW Forever, jusqu'au Classic d'origine. Tu peux chercher sur Google, mais la plupart des réponses se déduisent en croisant plusieurs informations : elles ne se copient pas. Une seule réponse par question, et les meilleurs montent dans le classement.</p>
+    <div class="qz-stats">
+      <div class="qz-stat"><b>${n}/${total}</b><span>Questions</span></div>
+      <div class="qz-stat"><b>${s}</b><span>Points sur ${QUIZ_MAX}</span></div>
+      <div class="qz-stat"><b>${escapeHtml(quizTitle(s))}</b><span>Titre actuel</span></div>
+    </div>
+    <div class="qz-progress"><div class="qz-progress-fill" style="width:${Math.round(n / total * 100)}%"></div></div>
+  </div>`;
+}
+
+function quizRulesHtml(){
+  const L = QUIZ_LEVELS;
+  return `<div class="qz-rules"><strong>Règles</strong><br>
+    Une seule réponse par question, scellée dès la validation : impossible de revenir en arrière.
+    Tu as de <strong>${QUIZ_TIME.easy} à ${QUIZ_TIME.hard} secondes</strong> selon la difficulté (<strong>${QUIZ_TIME.hyper} secondes</strong> pour les hyper hardcore) ;
+    passé ce délai, la question est verrouillée avec ton choix en cours, ou sans réponse si tu n'as rien choisi.<br>
+    Une bonne réponse rapporte des points (Facile +${L.easy.points} · Normal +${L.normal.points} · Moyenne +${L.medium.points} · Difficile +${L.hard.points}).
+    <strong>Une mauvaise réponse ne retire aucun point.</strong><br>
+    Sauf pour les <strong>3 dernières questions, hyper hardcore ☠️</strong> : +${L.hyper.points} points si tu as juste, <strong>−${L.hyper.penalty} points</strong> si tu te trompes.
+    Score maximum : <strong>${QUIZ_MAX} points</strong>.</div>`;
+}
+
+function quizBoardHtml(board, pseudo){
+  if(board === null) return `<div class="leaderboard-empty">Le classement est momentanément indisponible. Réessaie dans un instant.</div>`;
+  if(!board.length) return `<div class="leaderboard-empty">Personne n'a encore de score. Lance-toi !</div>`;
+  const medals = ['🥇', '🥈', '🥉'];
+  return `<div class="qz-board">${board.map((m, idx) => {
+    const me = pseudo && String(m.pseudo).toLowerCase() === pseudo.toLowerCase();
+    const s = Number(m.score) || 0;
+    return `<div class="qz-board-row ${me ? 'me' : ''}">
+      <div class="qz-rank">${medals[idx] || idx + 1}</div>
+      <div class="qz-who"><div class="qz-pseudo">${miniBadge(quizTier(s))}${escapeHtml(m.pseudo)}${me ? ' (toi)' : ''}</div>
+        <div class="qz-sub">${escapeHtml(quizTitle(s))} · ${Number(m.answered) || 0}/${QUIZ_QUESTIONS.length} questions</div></div>
+      <div class="qz-pts"><b>${s}</b> pts</div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function quizFinalHtml(answers){
+  const s = quizScore(answers);
+  const good = QUIZ_QUESTIONS.filter(q => answers[q.id] && answers[q.id].correct).length;
+  const rows = QUIZ_QUESTIONS.map((q, i) => {
+    const a = answers[q.id];
+    return `<div class="qz-recap-row ${a.correct ? 'good' : 'bad'}"><span class="qz-recap-num">Q${i + 1}</span><span class="qz-recap-q">${escapeHtml(q.question)}</span><span class="qz-recap-res">${a.correct ? '✅' : '❌'} ${quizPts(Number(a.delta) || 0)}</span></div>`;
+  }).join('');
+  return `<div class="qz-final"><div class="qz-final-score">${s}</div><div class="qz-final-title">${escapeHtml(quizTitle(s))}</div>
+    <p>Épreuve terminée : ${good}/${QUIZ_QUESTIONS.length} bonnes réponses.</p>
+    <details class="qz-history"><summary>Voir le récapitulatif question par question</summary><div class="qz-recap">${rows}</div></details></div>`;
+}
+
+async function renderQuiz(){
+  stopQuizTimer();
+  const root = document.getElementById('quiz-root');
+  if(!root) return;
+  const myRender = ++quizRenderId;
+  const pseudo = getPollPseudo();
+
+  if(!pseudo){
+    root.innerHTML = quizBannerHtml({}) + quizRulesHtml() +
+      `<div class="qz-gate">Entre ton pseudo en jeu ci-dessus, puis valide-le pour commencer l'épreuve.</div>`;
+    const board = await quizFetchBoard();
+    if(myRender !== quizRenderId) return;
+    root.innerHTML += `<h3 class="r-title">Classement</h3>${quizBoardHtml(board, '')}`;
+    return;
+  }
+
+  root.innerHTML = `<div class="qz-card"><p class="qz-loading">Chargement de ton épreuve…</p></div>`;
+  const [state, board] = await Promise.all([quizFetchState(pseudo), quizFetchBoard()]);
+  if(myRender !== quizRenderId) return;
+
+  if(!state.ok){
+    root.innerHTML = `<div class="qz-card"><p class="qz-loading">Impossible de joindre le serveur de l'épreuve pour le moment.</p>
+      <button class="vote-btn" onclick="renderQuiz()">Réessayer</button></div>
+      <h3 class="r-title">Classement</h3>${quizBoardHtml(board, pseudo)}`;
+    return;
+  }
+
+  const answers = state.answers;
+  const closed = quizClosedLocal() || state.closed;
+  const allDone = QUIZ_QUESTIONS.every(q => answers[q.id]);
+
+  let html = quizBannerHtml(answers) + quizRulesHtml();
+  let history = '', live = '', liveQuestion = null, doneCount = 0;
+  for(let i = 0; i < QUIZ_QUESTIONS.length; i++){
+    const q = QUIZ_QUESTIONS[i];
+    if(answers[q.id]){ history += quizCardDone(q, i, answers[q.id]); doneCount++; continue; }
+    if(closed){
+      live = `<div class="qz-gate">L'épreuve est terminée. Tu as répondu à ${doneCount}/${QUIZ_QUESTIONS.length} questions ; tes réponses restent consultables ci-dessus.</div>`;
+    } else {
+      const withTimer = i !== 0;
+      live = quizCardLive(q, i, withTimer, false);
+      if(withTimer) liveQuestion = q;
+    }
+    break;
+  }
+  if(history) html += `<details class="qz-history"><summary>Voir mes ${doneCount} réponse${doneCount > 1 ? 's' : ''} précédente${doneCount > 1 ? 's' : ''}</summary>${history}</details>`;
+  html += live;
+  if(allDone) html += quizFinalHtml(answers);
+  html += `<h3 class="r-title">Classement</h3>${quizBoardHtml(board, pseudo)}`;
+  root.innerHTML = html;
+
+  if(liveQuestion) startQuizTimer(liveQuestion.id, QUIZ_TIME[liveQuestion.level]);
+}
+
+function applyPseudo(){
+  const input = document.getElementById('poll-pseudo-input');
+  const v = input.value.trim();
+  if(!v){ input.focus(); return; }
+  savePollPseudo(v);
+  renderQuiz();
+  if(typeof renderPolls === 'function') renderPolls();
+}
+
+function openPollsTab(){
+  document.getElementById('poll-pseudo-input').value = getPollPseudo();
+  renderQuiz();
+  renderPolls();
+}
+
+// ---------- Profil, badge et distinctions ----------
+// Palier du badge selon le score (sur QUIZ_MAX points).
+function quizTier(score){
+  if(score < 0)   return { key: 'dead',   label: 'Mort en Hardcore', color: '#b04a4a', stars: 0 };
+  if(score >= 80) return { key: 'mythic', label: 'Mythique',         color: '#b48bff', stars: 4 };
+  if(score >= 51) return { key: 'gold',   label: 'Or',               color: '#e6c25c', stars: 3 };
+  if(score >= 27) return { key: 'silver', label: 'Argent',           color: '#c3ccd8', stars: 2 };
+  if(score >= 7)  return { key: 'bronze', label: 'Bronze',           color: '#c98a4b', stars: 1 };
+  return { key: 'none', label: 'Recrue', color: '#5d6978', stars: 0 };
+}
+
+const BADGE_SHIELD = 'M50 4 L92 20 L92 52 C92 84 74 104 50 114 C26 104 8 84 8 52 L8 20 Z';
+const BADGE_STAR = 'M0-6 L1.8-1.9 L6.2-1.6 L2.8 1.3 L3.9 5.7 L0 3.3 L-3.9 5.7 L-2.8 1.3 L-6.2-1.6 L-1.8-1.9Z';
+
+function badgeSvg(tier, ck, uid){
+  const c = tier.color;
+  const icon = ck && ICON_DATA.classes[ck]
+    ? `<clipPath id="bc${uid}"><circle cx="50" cy="52" r="22"/></clipPath>
+       <image href="${ICON_DATA.classes[ck]}" x="28" y="30" width="44" height="44" clip-path="url(#bc${uid})" preserveAspectRatio="xMidYMid slice"/>
+       <circle cx="50" cy="52" r="22" fill="none" stroke="${c}" stroke-width="2.5"/>`
+    : (tier.key === 'dead'
+        ? `<text x="50" y="66" text-anchor="middle" font-size="40" fill="${c}">☠</text>`
+        : `<path d="M50 34 L50 70 M38 46 L62 46" stroke="${c}" stroke-width="5" stroke-linecap="round" fill="none"/>`);
+  const stars = Array.from({ length: tier.stars }, (_, i) => {
+    const gap = tier.stars > 3 ? 12 : 15;
+    const x = 50 + (i - (tier.stars - 1) / 2) * gap;
+    return `<path d="${BADGE_STAR}" transform="translate(${x} 91)" fill="${c}"/>`;
+  }).join('');
+  const glow = (tier.key === 'gold' || tier.key === 'mythic') ? `style="filter:drop-shadow(0 0 7px ${c})"` : '';
+  return `<svg class="pf-badge-svg" viewBox="0 0 100 118" role="img" aria-label="Badge ${escapeHtml(tier.label)}" ${glow}>
+    <defs><linearGradient id="bg${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".32"/><stop offset="1" stop-color="${c}" stop-opacity=".05"/></linearGradient></defs>
+    <path d="${BADGE_SHIELD}" fill="url(#bg${uid})" stroke="${c}" stroke-width="4" stroke-linejoin="round"${tier.key === 'none' ? ' stroke-dasharray="6 5"' : ''}/>
+    ${icon}${stars}</svg>`;
+}
+
+function miniBadge(tier){
+  return `<svg class="qz-mini-badge" viewBox="0 0 100 118" aria-hidden="true"><path d="${BADGE_SHIELD}" fill="${tier.color}" fill-opacity="${tier.key === 'none' ? 0.1 : 0.35}" stroke="${tier.color}" stroke-width="9" stroke-linejoin="round"/></svg>`;
+}
+
+const QUIZ_ACHIEVEMENTS = [
+  { label: 'Épreuve lancée',    desc: 'Sceller sa première réponse',            test: a => a.n >= 1 },
+  { label: 'Mi-parcours',       desc: '15 questions scellées',                  test: a => a.n >= 15 },
+  { label: 'Épreuve terminée',  desc: 'Répondre aux 30 questions',              test: a => a.n >= QUIZ_QUESTIONS.length },
+  { label: 'Intouchable',       desc: 'Les 3 questions hyper hardcore justes',  test: a => a.hyperGood >= 3 },
+  { label: 'Sans faute',        desc: 'Toutes les questions justes',            test: a => a.good >= QUIZ_QUESTIONS.length },
+  { label: 'Sur le podium',     desc: 'Dans le top 3 du classement',            test: a => a.rank && a.rank <= 3 && a.score > 0 },
+];
+
+function findRosterPlayer(pseudo){
+  const n = norm(pseudo);
+  return (typeof ROSTER !== 'undefined' ? ROSTER : []).find(p => norm(p.name) === n) || null;
+}
+
+function setPseudo(v){
+  savePollPseudo(v);
+  ['poll-pseudo-input', 'profil-pseudo-input'].forEach(id => { const el = document.getElementById(id); if(el) el.value = v; });
+}
+
+function applyProfilPseudo(){
+  const input = document.getElementById('profil-pseudo-input');
+  const v = input.value.trim();
+  if(!v){ input.focus(); return; }
+  setPseudo(v);
+  renderProfil();
+}
+
+function changePseudo(){
+  setPseudo('');
+  renderProfil();
+  renderQuiz();
+}
+
+let profilRenderId = 0;
+
+async function renderProfil(){
+  const root = document.getElementById('profil-content');
+  if(!root) return;
+  const my = ++profilRenderId;
+  const pseudo = getPollPseudo();
+
+  if(!pseudo){
+    root.innerHTML = `<div class="pf-gate"><p>Entre ton pseudo en jeu pour retrouver ton badge, ton rang et tes distinctions.</p>
+      <div class="poll-pseudo-row"><input type="text" id="profil-pseudo-input" placeholder="Ex: Aegoric" maxlength="30" onkeydown="if(event.key==='Enter')applyProfilPseudo()"><button type="button" class="vote-btn" onclick="applyProfilPseudo()">Valider</button></div></div>`;
+    const board = await quizFetchBoard();
+    if(my !== profilRenderId) return;
+    root.innerHTML += `<h3 class="r-title">Classement de la guilde</h3>${quizBoardHtml(board, '')}`;
+    return;
+  }
+
+  root.innerHTML = `<div class="pf-gate"><p class="qz-loading">Chargement de ton profil…</p></div>`;
+  const [state, board] = await Promise.all([quizFetchState(pseudo), quizFetchBoard()]);
+  if(my !== profilRenderId) return;
+
+  if(!state.ok){
+    root.innerHTML = `<div class="pf-gate"><p class="qz-loading">Impossible de joindre le serveur pour le moment.</p>
+      <button class="vote-btn" onclick="renderProfil()">Réessayer</button></div>
+      <h3 class="r-title">Classement de la guilde</h3>${quizBoardHtml(board, pseudo)}`;
+    return;
+  }
+
+  const answers = state.answers;
+  const list = Object.values(answers);
+  const score = quizScore(answers);
+  const n = list.length;
+  const good = list.filter(a => a.correct).length;
+  const hyperGood = QUIZ_QUESTIONS.filter(q => q.level === 'hyper' && answers[q.id] && answers[q.id].correct).length;
+  const idx = board ? board.findIndex(m => String(m.pseudo).toLowerCase() === pseudo.toLowerCase()) : -1;
+  const rank = idx >= 0 ? idx + 1 : null;
+  const tier = quizTier(score);
+  const player = findRosterPlayer(pseudo);
+  const ck = player && player.ck;
+  const cls = ck ? CLASSES[ck] : null;
+
+  // Progression vers le titre suivant
+  const asc = QUIZ_TITLES.map(t => t[0]).sort((a, b) => a - b);
+  const next = asc.find(t => t > score);
+  const prev = [0].concat(asc).filter(t => t <= score).pop();
+  const pct = next ? Math.max(0, Math.min(100, Math.round((score - prev) / (next - prev) * 100))) : 100;
+  const nextTitle = next ? QUIZ_TITLES.find(t => t[0] === next)[1] : null;
+
+  const ctx = { n, good, hyperGood, rank, score };
+  const ach = QUIZ_ACHIEVEMENTS.map(a => {
+    const ok = !!a.test(ctx);
+    return `<div class="pf-ach ${ok ? 'on' : ''}"><b>${ok ? '✔ ' : ''}${escapeHtml(a.label)}</b><span>${escapeHtml(a.desc)}</span></div>`;
+  }).join('');
+
+  const ladder = QUIZ_TITLES.slice().reverse().map(t =>
+    `<div class="pf-title-chip ${score >= t[0] ? 'on' : ''}"><b>${t[0]} pts</b>${escapeHtml(t[1])}</div>`).join('') +
+    `<div class="pf-title-chip dead ${score < 0 ? 'on' : ''}"><b>Sous 0</b>Mort en Hardcore</div>`;
+
+  root.innerHTML = `
+    <div class="pf-card" style="--cc:${cls ? cls.color : tier.color}">
+      <div class="pf-badge">${badgeSvg(tier, ck, 'p')}<div class="pf-tier" style="color:${tier.color}">${escapeHtml(tier.label)}</div></div>
+      <div class="pf-main">
+        <div class="pf-name">${escapeHtml(pseudo)}</div>
+        ${cls ? `<div class="pf-chip"><img class="wowicon" src="${ICON_DATA.classes[ck]}" alt=""><span>${escapeHtml(cls.label)} · ${escapeHtml(player.specLabel)}</span></div>` : ''}
+        <div class="pf-title">${escapeHtml(quizTitle(score))}</div>
+        <div class="pf-stats">
+          <div><b>${score}</b><span>points sur ${QUIZ_MAX}</span></div>
+          <div><b>${rank ? '#' + rank : '—'}</b><span>${rank ? `sur ${board.length}` : 'pas encore classé'}</span></div>
+          <div><b>${n}/${QUIZ_QUESTIONS.length}</b><span>questions</span></div>
+          <div><b>${good}</b><span>bonnes réponses</span></div>
+        </div>
+        <div class="qz-progress"><div class="qz-progress-fill" style="width:${pct}%"></div></div>
+        <div class="pf-next">${next ? `Encore ${next - score} point${next - score > 1 ? 's' : ''} avant « ${escapeHtml(nextTitle)} » (${next} pts)` : 'Titre maximum atteint !'}</div>
+        <button type="button" class="pf-change" onclick="changePseudo()">Ce n'est pas moi, changer de pseudo</button>
+      </div>
+    </div>
+    ${n === 0 ? `<div class="qz-gate">Tu n'as pas encore répondu à une question. <button type="button" class="pf-link" onclick="goTo('polls')">Commencer l'épreuve</button></div>` : ''}
+    <h3 class="r-title">Distinctions</h3>
+    <div class="pf-ach-grid">${ach}</div>
+    <h3 class="r-title">Titres à débloquer</h3>
+    <div class="pf-ladder">${ladder}</div>
+    <h3 class="r-title">Classement de la guilde</h3>
+    ${quizBoardHtml(board, pseudo)}`;
 }
 
 goTo('home');
