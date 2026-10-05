@@ -140,47 +140,12 @@ footer{
   padding:14px 16px; border-left:2px solid var(--gold); background:rgba(201,162,39,0.04);
 }
 
-/* ---- FORMULAIRE ROSTER ---- */
-.roster-form{
-  max-width:600px; margin:0 auto; background:var(--panel);
-  padding:30px; border-radius:8px; border:1px solid var(--line);
-}
-.roster-form .form-group{margin-bottom:20px;}
-.roster-form label{display:block; margin-bottom:8px; font-weight:600; color:var(--text); font-size:0.92rem;}
-.roster-form input[type="text"], .roster-form select{
-  width:100%; padding:12px; background:var(--void); border:1px solid var(--line);
-  border-radius:4px; color:var(--text); font-family:'Inter'; font-size:0.92rem;
-  box-sizing:border-box;
-}
-.roster-form input[type="text"]:focus, .roster-form select:focus{outline:none; border-color:var(--gold);}
-.roster-form select{cursor:pointer;}
-.roster-submit{width:100%; padding:14px; font-size:1.05rem; cursor:pointer;}
+/* ---- BOUTON ---- */
 .vote-btn{
   background:linear-gradient(180deg, var(--gold-bright), var(--gold));
   color:#1a1408; font-weight:600; font-family:'Inter';
   border:none; border-radius:3px; padding:10px 20px; cursor:pointer;
 }
-.roster-confirm{
-  max-width:600px; margin:0 auto; background:var(--panel); border:1px solid #557b45;
-  border-radius:8px; padding:26px 30px; text-align:center; color:#91c875; font-size:0.95rem;
-}
-.roster-confirm .profil-change{color:var(--text-dim); margin-top:14px; display:block; background:none; border:none; text-decoration:underline; cursor:pointer; font-size:0.8rem;}
-.roster-row{
-  display:flex; align-items:flex-start; gap:14px;
-  background:var(--panel); border:1px solid var(--line); border-radius:6px;
-  padding:14px 18px; margin-bottom:10px;
-}
-.roster-row-main{flex:1; min-width:0;}
-.roster-row-name{color:var(--gold-bright); font-family:'Cinzel'; font-size:0.95rem;}
-.roster-row-meta{color:var(--text-dim); font-size:0.82rem; margin-top:3px;}
-.roster-row-remark{color:var(--text); font-size:0.85rem; margin-top:6px; font-style:italic;}
-.roster-badge{
-  font-family:'Cinzel'; font-size:0.7rem; padding:4px 12px; border-radius:20px;
-  border:1px solid var(--line); color:var(--text-dim); white-space:nowrap; flex-shrink:0;
-}
-.roster-badge.tank{border-color:#3d6a8a; color:#6eaad4;}
-.roster-badge.heal{border-color:#557b45; color:#91c875;}
-.roster-badge.dps{border-color:#a13333; color:#d15959;}
 .leaderboard-empty{padding:30px 20px; text-align:center; color:var(--text-dim); font-size:0.9rem; background:var(--panel); border:1px solid var(--line); border-radius:6px;}
 
 
@@ -212,10 +177,6 @@ footer{
   width:44px; height:44px; flex-shrink:0; border-radius:5px; display:block; background:var(--void);
   border:2px solid var(--cc, var(--line)); box-shadow:0 0 0 1px #000, 0 2px 8px rgba(0,0,0,0.5);
 }
-.r-source{display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:var(--text-dim); font-size:0.8rem; margin:2px 0 22px;}
-.r-source a{color:var(--gold-bright);}
-.r-dot{width:8px; height:8px; border-radius:50%; background:#557b45; box-shadow:0 0 8px #557b45;}
-.r-dot.off{background:var(--text-dim); box-shadow:none;}
 .r-stats{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:14px;}
 .r-stat{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:14px 12px; text-align:center;}
 .r-stat b{display:block; font-family:'Cinzel', Georgia, serif; font-size:1.7rem; color:var(--text); line-height:1.1;}
@@ -261,8 +222,6 @@ footer{
 .comp-p small{display:block; font-size:0.72rem; color:var(--text-dim);}
 .comp-empty{color:var(--text-dim); font-size:0.82rem; padding:6px 0;}
 .comp-note{color:var(--text-dim); font-size:0.8rem; margin-top:10px;}
-.r-join{margin-top:56px; padding-top:8px; border-top:1px solid var(--line);}
-.r-mini-icon{width:34px; height:34px; border-width:1px;}
 @media (max-width:760px){
   .comp-grid{grid-template-columns:repeat(2, 1fr);}
   .r-stats{grid-template-columns:repeat(2, 1fr);}
@@ -397,60 +356,14 @@ footer{
   <section id="view-roster" class="view">
     <div class="page-head">
       <h2>Roster</h2>
-      <p>Objectif Top 5 Serveur. Ou du moins essayer de ne pas mourir bêtement au premier pull.</p>
     </div>
 
-    <div class="r-source" id="r-source"></div>
     <div class="r-stats" id="r-stats"></div>
     <div class="r-classbar" id="r-classbar"></div>
 
     <h3 class="r-title">Tous les joueurs</h3>
     <div class="cat-tabs" id="roster-filters" style="margin:0 0 4px;"></div>
     <div id="roster-grid"></div>
-
-    <div class="r-join">
-      <div class="page-head" style="padding-top:28px;">
-        <h2 style="font-size:1.4rem;">Rejoindre le roster</h2>
-        <p>Pas encore dans la liste ? Remplis le formulaire, on s'occupe du reste.</p>
-      </div>
-
-      <form id="roster-form" class="roster-form" onsubmit="submitRosterForm(event)">
-        <div class="form-group">
-          <label for="username">Pseudo en jeu :</label>
-          <input type="text" id="username" name="username" required placeholder="Ex: Aegoric">
-        </div>
-
-        <div class="form-group">
-          <label for="role">Rôle Principal :</label>
-          <select id="role" name="role" required>
-            <option value="" disabled selected>-- Choisir ton rôle --</option>
-            <option value="Tank">Tank (Celui qui prend les tatanes)</option>
-            <option value="Heal">Heal (Celui qui regarde les barres de vie descendre)</option>
-            <option value="DPS">DPS (Celui qui aggro avant le tank)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="class_spec">Classe et Spé :</label>
-          <input type="text" id="class_spec" name="class_spec" required placeholder="Ex: Mage Feu, Guerrier BDSM...">
-        </div>
-
-        <div class="form-group">
-          <label for="remarque">Un mot à ajouter (ou une excuse sur ton niveau) :</label>
-          <input type="text" id="remarque" name="remarque" placeholder="Ex: Je sais courir en arrière promis">
-        </div>
-
-        <button type="submit" id="roster-submit-btn" class="vote-btn roster-submit">Envoyer ma bêtise</button>
-      </form>
-
-      <div id="roster-confirm" class="roster-confirm" style="display:none;">
-        ✅ C'est enregistré ! Merci pour ton inscription.
-        <button class="profil-change" onclick="showRosterForm()">Renvoyer une autre réponse</button>
-      </div>
-
-      <div class="page-head" style="padding-top:36px; padding-bottom:8px;"><h2 style="font-size:1.3rem;">Inscrits via le formulaire</h2></div>
-      <div id="roster-list"></div>
-    </div>
   </section>
 
   <!-- SONDAGES -->
@@ -483,7 +396,7 @@ function goTo(view){
   document.getElementById('nav-polls').classList.toggle('active', view==='polls');
   window.scrollTo({top:0, behavior:'smooth'});
   if(view==='actus') renderActus();
-  if(view==='roster'){ renderRoster(); renderRosterList(); }
+  if(view==='roster') renderRoster();
   if(view==='polls') renderPolls();
 }
 
@@ -526,81 +439,6 @@ async function renderActus(){
   }).join('');
 
   content.innerHTML = rows;
-}
-
-// ---------- Roster ----------
-async function postRoster(username, role, classSpec, remarque){
-  try{
-    const res = await fetch(API_URL, {
-      method:'POST',
-      body: JSON.stringify({action:'postRoster', username, role, classSpec, remarque})
-    });
-    return await res.json();
-  }catch(e){ console.error('post roster error', e); return {}; }
-}
-
-async function fetchRoster(){
-  try{
-    const res = await fetch(`${API_URL}?action=rosterList`);
-    const data = await res.json();
-    return Array.isArray(data) ? data : [];
-  }catch(e){ console.error('fetch roster error', e); return []; }
-}
-
-function showRosterForm(){
-  document.getElementById('roster-form').style.display = '';
-  document.getElementById('roster-confirm').style.display = 'none';
-  document.getElementById('roster-form').reset();
-  const btn = document.getElementById('roster-submit-btn');
-  btn.disabled = false;
-  btn.textContent = 'Envoyer ma bêtise';
-}
-
-async function submitRosterForm(event){
-  event.preventDefault();
-  const username = document.getElementById('username').value.trim();
-  const role = document.getElementById('role').value;
-  const classSpec = document.getElementById('class_spec').value.trim();
-  const remarque = document.getElementById('remarque').value.trim();
-  if(!username || !role || !classSpec) return;
-
-  const btn = document.getElementById('roster-submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Envoi…';
-
-  await postRoster(username, role, classSpec, remarque);
-
-  document.getElementById('roster-form').style.display = 'none';
-  document.getElementById('roster-confirm').style.display = 'block';
-
-  renderRosterList();
-}
-
-async function renderRosterList(){
-  const listEl = document.getElementById('roster-list');
-  if(!listEl) return;
-  listEl.innerHTML = `<p style="color:var(--text-dim); font-size:0.85rem;">Chargement…</p>`;
-
-  const entries = await fetchRoster();
-  if(!entries.length){
-    listEl.innerHTML = `<div class="leaderboard-empty">Personne ne s'est encore inscrit. Sois le premier !</div>`;
-    return;
-  }
-
-  listEl.innerHTML = entries.map(e => {
-    const ck = classKey(e.classSpec);
-    const ico = ck ? iconImg({ck}, 'wowicon r-mini-icon') : '';
-    return `
-    <div class="roster-row" style="${ck ? '--cc:'+CLASSES[ck].color : ''}">
-      ${ico}
-      <div class="roster-row-main">
-        <div class="roster-row-name">${escapeHtml(e.username)}</div>
-        <div class="roster-row-meta">${escapeHtml(e.classSpec)}</div>
-        ${e.remarque ? `<div class="roster-row-remark">« ${escapeHtml(e.remarque)} »</div>` : ''}
-      </div>
-      <span class="roster-badge ${(e.role||'').toLowerCase()}">${escapeHtml(e.role)}</span>
-    </div>
-  `;}).join('');
 }
 
 // ---------- Décompte WoW Forever ----------
@@ -796,10 +634,6 @@ function playerByName(name){
 function ccStyle(p){ return p.ck ? `--cc:${CLASSES[p.ck].color}` : '--cc:#8f9aa8'; }
 
 function renderRosterHeader(){
-  const src = document.getElementById('r-source');
-  src.innerHTML = `<span class="r-dot ${rosterLive ? '' : 'off'}"></span>
-    <span>${rosterLive ? 'Synchronisé avec le' : 'Données du'} <a href="${SHEET_URL}" target="_blank" rel="noopener noreferrer">Google Sheet Roster Forever</a></span>`;
-
   const count = rk => ROSTER.filter(p => p.rk === rk).length;
   const dps = count('melee') + count('ranged');
   document.getElementById('r-stats').innerHTML = `
@@ -888,6 +722,123 @@ async function syncRosterFromSheet(){
     }catch(e){ console.warn('Synchro Google Sheet impossible (' + url.split('/').slice(-1)[0].slice(0, 30) + ') :', e.message); }
   }
   console.warn('Copie intégrée du Sheet utilisée.');
+}
+
+// ---------- Sondages WoW Forever ----------
+// Ajoute tes questions ici. Chaque sondage a un id unique (ne jamais le changer une fois publié,
+// les votes y sont rattachés), une question et une liste d'options. Exemple :
+//   { id:'forever-faction', question:'Quelle faction pour la guilde ?', options:['Alliance', 'Horde'] },
+const POLLS = [
+];
+
+// Les votes passent par le Google Apps Script (actions « vote » et « resultsBatch »).
+const POLLS_API_URL = API_URL;
+
+function getPollPseudo(){
+  try{ return localStorage.getItem('aegis-pseudo') || ''; }catch(e){ return ''; }
+}
+function savePollPseudo(v){
+  try{ localStorage.setItem('aegis-pseudo', v.trim()); }catch(e){}
+}
+function getLocalVote(pollId){
+  try{
+    const v = localStorage.getItem('aegis-voted:' + pollId);
+    return v === null ? null : parseInt(v, 10);
+  }catch(e){ return null; }
+}
+function setLocalVote(pollId, idx){
+  try{ localStorage.setItem('aegis-voted:' + pollId, String(idx)); }catch(e){}
+}
+
+async function fetchPollResults(){
+  try{
+    const ids = POLLS.map(p => p.id).join(',');
+    const res = await fetch(`${POLLS_API_URL}?action=resultsBatch&pollIds=${encodeURIComponent(ids)}`);
+    return (await res.json()) || {};
+  }catch(e){ console.error('fetch poll results error', e); return {}; }
+}
+
+async function sendPollVote(pollId, optionIndex, pseudo){
+  try{
+    // Pas de header Content-Type ici : évite le preflight que Apps Script ne gère pas.
+    const res = await fetch(POLLS_API_URL, {
+      method: 'POST',
+      body: JSON.stringify({action:'vote', pollId, optionIndex, pseudo})
+    });
+    return (await res.json()) || {};
+  }catch(e){ console.error('send poll vote error', e); return null; }
+}
+
+function pollCounts(poll, raw){
+  return poll.options.map((_, i) => Number((raw || {})[i]) || 0);
+}
+
+function renderPollCard(poll, raw){
+  const card = document.getElementById('poll-' + poll.id);
+  if(!card) return;
+  const counts = pollCounts(poll, raw);
+  const total = counts.reduce((a, b) => a + b, 0);
+  const mine = getLocalVote(poll.id);
+  const head = `<div class="poll-head"><h3>${escapeHtml(poll.question)}</h3><span class="poll-meta">${total} ${total > 1 ? 'votes' : 'vote'}</span></div>`;
+
+  if(mine !== null){
+    card.innerHTML = head + poll.options.map((opt, i) => {
+      const pct = total ? Math.round(counts[i] / total * 100) : 0;
+      return `<div class="bar-row ${i === mine ? 'mine' : ''}">
+        <div class="bar-label"><span>${escapeHtml(opt)}</span><b>${pct}%</b></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+      </div>`;
+    }).join('');
+    return;
+  }
+
+  card.innerHTML = head + poll.options.map((opt, i) => `
+    <div class="opt-row" onclick="document.getElementById('${poll.id}-${i}').checked = true">
+      <input type="radio" name="${poll.id}" id="${poll.id}-${i}" value="${i}">
+      <label for="${poll.id}-${i}" onclick="event.stopPropagation()">${escapeHtml(opt)}</label>
+    </div>`).join('') +
+    `<button class="vote-btn" onclick="castPollVote('${poll.id}')">Voter</button><div class="poll-error" id="err-${poll.id}"></div>`;
+}
+
+async function renderPolls(){
+  const list = document.getElementById('polls-list');
+  const pseudoBox = document.getElementById('polls-pseudo');
+  if(!POLLS.length){
+    pseudoBox.style.display = 'none';
+    list.innerHTML = `<div class="leaderboard-empty">Les premiers sondages arrivent bientôt.</div>`;
+    return;
+  }
+  pseudoBox.style.display = '';
+  document.getElementById('poll-pseudo-input').value = getPollPseudo();
+  list.innerHTML = POLLS.map(p => `<div class="poll-card" id="poll-${p.id}"></div>`).join('');
+  POLLS.forEach(p => renderPollCard(p, {}));
+  const batch = await fetchPollResults();
+  POLLS.forEach(p => renderPollCard(p, batch[p.id]));
+}
+
+async function castPollVote(pollId){
+  const poll = POLLS.find(p => p.id === pollId);
+  const card = document.getElementById('poll-' + pollId);
+  const err = document.getElementById('err-' + pollId);
+  const checked = card.querySelector('input[type=radio]:checked');
+  const pseudo = document.getElementById('poll-pseudo-input').value.trim();
+  if(!checked){ err.textContent = 'Choisis une option avant de voter.'; return; }
+  if(!pseudo){ err.textContent = 'Indique ton pseudo en jeu en haut de la page.'; return; }
+
+  const btn = card.querySelector('.vote-btn');
+  btn.disabled = true; btn.textContent = 'Envoi…'; err.textContent = '';
+  savePollPseudo(pseudo);
+
+  const idx = parseInt(checked.value, 10);
+  const res = await sendPollVote(pollId, idx, pseudo);
+  if(res === null || res.error){
+    btn.disabled = false; btn.textContent = 'Voter';
+    err.textContent = 'Le vote n\u2019a pas pu être enregistré. Réessaie dans un instant.';
+    return;
+  }
+  setLocalVote(pollId, idx);
+  const batch = await fetchPollResults();
+  renderPollCard(poll, batch[pollId]);
 }
 
 goTo('home');
