@@ -314,6 +314,7 @@ footer{
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
 
 /* ---- PROFIL ---- */
+.qz-sealed{margin-left:auto; font-size:0.78rem; color:var(--text-dim);}
 .qz-hint{font-size:0.78rem; color:var(--text-dim); line-height:1.6; margin:0 0 14px; max-width:60ch;}
 .qz-badge.hard{border-color:#c9732a; color:#e8a05a;}
 .qz-mini-badge{width:13px; height:15px; margin-right:7px; vertical-align:-2px; flex-shrink:0;}
@@ -608,7 +609,12 @@ function tickCountdown(){
 
 function initCountdown(){
   tickCountdown();
-  cdTimer = setInterval(tickCountdown, 1000);
+  // ne travaille que si l'accueil est affiché et l'onglet du navigateur visible
+  cdTimer = setInterval(() => {
+    const hv = document.getElementById('view-home');
+    if(document.hidden || !hv || !hv.classList.contains('active')) return;
+    tickCountdown();
+  }, 1000);
 }
 
 // ---------- Roster : données du Google Sheet "Roster Forever - Aegis" ----------
@@ -982,7 +988,6 @@ const QUIZ_API_URL = 'https://script.google.com/macros/s/AKfycbx0fdb69oHj9HrftCo
 const QUIZ_ENDPOINT = QUIZ_API_URL || API_URL;
 let quizLastError = null;   // dernière cause de panne, pour l'afficher clairement
 const QUIZ_DEADLINE = null;            // ex. '2026-11-04T23:00:00Z' ; null = pas de date limite
-const QUIZ_TIME = { easy: 40, normal: 50, medium: 60, hard: 70, hyper: 90 };   // secondes par question
 const QUIZ_LEVELS = {
   easy:   { label: 'Facile',         points: 1, penalty: 0 },
   normal: { label: 'Normal',         points: 2, penalty: 0 },
@@ -1330,7 +1335,6 @@ const QUIZ_QUESTIONS = [
 ];
 
 const QUIZ_MAX = QUIZ_QUESTIONS.reduce((t, q) => t + QUIZ_LEVELS[q.level].points, 0);   // 92
-let quizTimerHandle = null;
 let quizRenderId = 0;
 
 function quizLetter(i){ return String.fromCharCode(65 + i); }
@@ -1410,36 +1414,6 @@ function quizErrorHint(){
   return `<p class="qz-hint">${msg}<br>${where}</p>`;
 }
 
-function stopQuizTimer(){
-  if(quizTimerHandle){ clearInterval(quizTimerHandle); quizTimerHandle = null; }
-}
-
-function startQuizTimer(id, seconds){
-  stopQuizTimer();
-  let remaining = seconds;
-  const el = document.getElementById('qz-timer-' + id);
-  if(!el) return;
-  const paint = () => {
-    el.textContent = `⏱️ ${remaining}s`;
-    el.classList.toggle('urgent', remaining <= 10);
-  };
-  paint();
-  quizTimerHandle = setInterval(() => {
-    remaining -= 1;
-    if(remaining <= 0){ stopQuizTimer(); quizAutoSubmit(id); return; }
-    paint();
-  }, 1000);
-}
-
-// Temps écoulé : on scelle le choix en cours, ou « aucune réponse » (-1) si rien n'était choisi.
-// Sans réponse, la question compte comme une mauvaise réponse.
-function quizAutoSubmit(id){
-  const s = document.getElementById('qz-submit-' + id);
-  if(!s || s.dataset.busy) return;
-  if(s.dataset.selected === undefined) s.dataset.selected = '-1';
-  quizSubmit(id);
-}
-
 function quizSelect(id, index){
   if(quizClosedLocal()) return;
   document.querySelectorAll(`[data-qz-option="${id}"]`).forEach(b =>
@@ -1455,7 +1429,6 @@ async function quizSubmit(id){
   const choice = parseInt(s.dataset.selected, 10);
   if(!q || !Number.isInteger(choice) || choice < -1 || choice >= q.options.length) return;
 
-  stopQuizTimer();
   s.dataset.busy = '1';
   s.disabled = true;
   s.textContent = 'Envoi…';
@@ -1485,15 +1458,12 @@ function quizLevelBadge(q){
   return `<span class="qz-badge ${q.level}">${q.level === 'hyper' ? '☠️ ' : ''}${lv.label} · +${lv.points} si juste${cost}</span>`;
 }
 
-function quizCardLive(q, i, withTimer, closed){
+function quizCardLive(q, i, closed){
   const lv = QUIZ_LEVELS[q.level];
-  const timer = withTimer
-    ? `<span class="qz-timer" id="qz-timer-${q.id}">⏱️ ${QUIZ_TIME[q.level]}s</span>`
-    : (i === 0 ? `<span class="qz-timer calm">Pas de chrono sur cette question</span>` : '');
   const warn = lv.penalty
-    ? `<div class="qz-warn">Attention : une mauvaise réponse, ou le temps écoulé, te retire ${lv.penalty} points.</div>` : '';
+    ? `<div class="qz-warn">Attention : une mauvaise réponse te retire ${lv.penalty} points.</div>` : '';
   return `<div class="qz-card ${q.level}">
-    <div class="qz-card-top"><span class="qz-num">Question ${i + 1} / ${QUIZ_QUESTIONS.length}</span>${quizLevelBadge(q)}${timer}</div>
+    <div class="qz-card-top"><span class="qz-num">Question ${i + 1} / ${QUIZ_QUESTIONS.length}</span>${quizLevelBadge(q)}</div>
     <div class="qz-q">${escapeHtml(q.question)}</div>
     ${warn}
     <div class="qz-options">${quizOptionsHtml(q, closed ? 'disabled' : '')}</div>
@@ -1513,7 +1483,7 @@ function quizCardDone(q, i, a){
   const src = safeUrl(a.source)
     ? `<a class="qz-source" href="${safeUrl(a.source)}" target="_blank" rel="noopener noreferrer">Vérifier la source</a>` : '';
   return `<div class="qz-card ${q.level} sealed">
-    <div class="qz-card-top"><span class="qz-num">Question ${i + 1} / ${QUIZ_QUESTIONS.length}</span>${quizLevelBadge(q)}<span class="qz-timer calm">Réponse scellée</span></div>
+    <div class="qz-card-top"><span class="qz-num">Question ${i + 1} / ${QUIZ_QUESTIONS.length}</span>${quizLevelBadge(q)}<span class="qz-sealed">Réponse scellée</span></div>
     <div class="qz-q">${escapeHtml(q.question)}</div>
     <div class="qz-options">${opts}</div>
     <div class="qz-result ${ok ? 'good' : 'bad'}">
@@ -1543,9 +1513,7 @@ function quizBannerHtml(answers){
 function quizRulesHtml(){
   const L = QUIZ_LEVELS;
   return `<div class="qz-rules"><strong>Règles</strong><br>
-    Une seule réponse par question, scellée dès la validation : impossible de revenir en arrière.
-    Tu as de <strong>${QUIZ_TIME.easy} à ${QUIZ_TIME.hard} secondes</strong> selon la difficulté (<strong>${QUIZ_TIME.hyper} secondes</strong> pour les hyper hardcore) ;
-    passé ce délai, la question est verrouillée avec ton choix en cours, ou sans réponse si tu n'as rien choisi.<br>
+    Une seule réponse par question, scellée dès la validation : impossible de revenir en arrière. Pas de chronomètre, prends le temps de réfléchir.<br>
     Une bonne réponse rapporte des points (Facile +${L.easy.points} · Normal +${L.normal.points} · Moyenne +${L.medium.points} · Difficile +${L.hard.points}).
     <strong>Une mauvaise réponse ne retire aucun point.</strong><br>
     Sauf pour les <strong>3 dernières questions, hyper hardcore ☠️</strong> : +${L.hyper.points} points si tu as juste, <strong>−${L.hyper.penalty} points</strong> si tu te trompes.
@@ -1581,7 +1549,6 @@ function quizFinalHtml(answers){
 }
 
 async function renderQuiz(){
-  stopQuizTimer();
   const root = document.getElementById('quiz-root');
   if(!root) return;
   const myRender = ++quizRenderId;
@@ -1612,16 +1579,14 @@ async function renderQuiz(){
   const allDone = QUIZ_QUESTIONS.every(q => answers[q.id]);
 
   let html = quizBannerHtml(answers) + quizRulesHtml();
-  let history = '', live = '', liveQuestion = null, doneCount = 0;
+  let history = '', live = '', doneCount = 0;
   for(let i = 0; i < QUIZ_QUESTIONS.length; i++){
     const q = QUIZ_QUESTIONS[i];
     if(answers[q.id]){ history += quizCardDone(q, i, answers[q.id]); doneCount++; continue; }
     if(closed){
       live = `<div class="qz-gate">L'épreuve est terminée. Tu as répondu à ${doneCount}/${QUIZ_QUESTIONS.length} questions ; tes réponses restent consultables ci-dessus.</div>`;
     } else {
-      const withTimer = i !== 0;
-      live = quizCardLive(q, i, withTimer, false);
-      if(withTimer) liveQuestion = q;
+      live = quizCardLive(q, i, false);
     }
     break;
   }
@@ -1631,7 +1596,6 @@ async function renderQuiz(){
   html += `<h3 class="r-title">Classement</h3>${quizBoardHtml(board, pseudo)}`;
   root.innerHTML = html;
 
-  if(liveQuestion) startQuizTimer(liveQuestion.id, QUIZ_TIME[liveQuestion.level]);
 }
 
 function applyPseudo(){
