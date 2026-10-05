@@ -1403,6 +1403,7 @@ function quizErrorHint(){
   if(e === 'network') msg = "Le navigateur n'arrive pas à joindre cette adresse (adresse erronée, déploiement supprimé ou connexion bloquée).";
   else if(e === 'html') msg = "L'adresse répond par une page Google au lieu de données : le déploiement doit être en accès « Tout le monde », ou le script contient une erreur.";
   else if(e === 'badjson') msg = "Le serveur répond, mais pas dans le format attendu.";
+  else if(e === 'old' && !QUIZ_API_URL) msg = "Aucune adresse dédiée à l'épreuve n'est renseignée dans index.html (la ligne QUIZ_API_URL est vide). La page interroge donc l'ancien script du site, qui répond mais ne contient pas l'épreuve. Déploie quiz-forever.gs comme un nouveau projet, puis colle son adresse /exec dans QUIZ_API_URL.";
   else if(e === 'old') msg = "Le serveur répond, mais ne connaît pas l'épreuve : le script quiz-forever.gs n'est pas déployé sur cette adresse (ou pas en nouvelle version).";
   else if(e.indexOf('server:') === 0) msg = `Le serveur répond : « ${escapeHtml(e.slice(7))} ».`;
   else msg = "Cause inconnue.";
