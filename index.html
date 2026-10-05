@@ -978,7 +978,7 @@ async function castPollVote(pollId){
 // l'affichage, elles doivent rester identiques à celles du serveur.
 // Adresse (URL /exec) du serveur de l'épreuve = déploiement de quiz-forever.gs.
 // Colle-la ici. Si tu la laisses vide, la page utilise l'adresse générale du site (API_URL).
-const QUIZ_API_URL = '';
+const QUIZ_API_URL = 'https://script.google.com/macros/s/AKfycbx0fdb69oHj9HrftColuY3xZjzF3awWEqwU-3YcK1mrwdvpvmrWJAy2tucMpvSy0CjJ_A/exec';
 const QUIZ_ENDPOINT = QUIZ_API_URL || API_URL;
 let quizLastError = null;   // dernière cause de panne, pour l'afficher clairement
 const QUIZ_DEADLINE = null;            // ex. '2026-11-04T23:00:00Z' ; null = pas de date limite
